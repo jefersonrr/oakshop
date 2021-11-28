@@ -4,9 +4,25 @@
         <servlet-name>NewServlet</servlet-name>
         <servlet-class>ControladorVistas.NewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Registro</servlet-name>
+        <servlet-class>ControladorVistas.Registro</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MostrarRopaIndex</servlet-name>
+        <servlet-class>ControladorVistas.MostrarRopaIndex</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Registro</servlet-name>
+        <url-pattern>/Registro.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MostrarRopaIndex</servlet-name>
+        <url-pattern>/MostrarRopaIndex.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

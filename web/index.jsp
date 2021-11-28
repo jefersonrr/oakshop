@@ -7,6 +7,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+     <%
+            String path = request.getContextPath();
+            String basePath = request.getScheme() + "://" + request.getServerName() + ":"
+                    + request.getServerPort() + path + "/";
+            
+                if(request.getSession().getAttribute("listaServiciosIndex")== null){
+                  request.getRequestDispatcher(("MostrarRopaIndex.do")).forward(request, response);
+                
+                }
+        %>
+        <base href="<%=basePath%>">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,9 +29,9 @@
         <!-- CSS de Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <!-- CSS restantes -->
-        <link rel="stylesheet" href="./css/menu.css"/>
+        <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
     </head>
-    <body>
+    <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
         
         <!--menú -->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
@@ -86,15 +97,15 @@
                     <template id="NoSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">INICIAR SESIÓN</a>
+                                <a class="nav-link" href="<%=basePath%>jsp/iniciarsesion.jsp">INICIAR SESIÓN</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">REGISTRARSE</a>
+                                <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
                             </li>
                         </ul>
                     </template>
-                    <!-- Usuario logueado
-                    <template id="SiSesion">
+                    <!-- Usuario logueado-->
+                     <template id="SiSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item dropdown" style="list-style-type: none;">
                                 <a  class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -102,8 +113,8 @@
                                 </a>
                                 <ul class="dropdown-menu text-small "aria-labelledby="dropdownUser2"  >
                                     <li><a class="dropdown-item" href="#" >Mi Cuenta</a></li>
-                                    <li><a class="dropdown-item" href="./MisVehiculos.do" >Mis Vehiculos</a></li>
-                                    <li><a class="dropdown-item" href="#" >Mis Servicios</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>MisVehiculos.do" >Mis Vehiculos</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>MisServiciosUsu.do" >Mis Servicios</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
                                 </ul>
@@ -116,7 +127,7 @@
 
                         </ul>
                     </template>
-                     --> 
+
                 </div>
             </div>
         </nav>
@@ -126,5 +137,6 @@
         
         <!-- JS de Bootstrap -->      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script src="./js/sesion.js"></script>
     </body>
 </html>
