@@ -80,4 +80,9 @@ public class PersonaDAO {
        p.setIdRol(rol);
        this.create(p);
     }
+      
+      public boolean usuarioValido(String cedula, String clave) {
+        Persona user = readPersona(cedula);
+        return user.getContraseña().equals(clave);
+    }
 }
