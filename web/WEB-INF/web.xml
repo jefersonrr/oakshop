@@ -4,8 +4,10 @@
         <filter-name>validarSesion.do</filter-name>
         <filter-class>ControladorVistas.validarSesion</filter-class>
     </filter>
-    <filter-mapping>
+   <filter-mapping>
          <filter-name>validarSesion.do</filter-name>
+         <url-pattern>/jsp/index.jsp</url-pattern>
+
     </filter-mapping>
         <servlet>
         <servlet-name>IniciarSesion</servlet-name>
