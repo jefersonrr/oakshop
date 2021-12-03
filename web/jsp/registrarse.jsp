@@ -4,10 +4,16 @@
     Author     : Acer
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+         <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://" + request.getServerName() + ":" +     
+        request.getServerPort() + path + "/";
+%>
+<base href="<%=basePath%>">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,20 +22,22 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
         <!-- CSS de Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
         <!--Normallize css: proyecto que corrige estilos predeterminados de los diferentes navegadores, para evitar usar el selector universal
         en la hoja de estilos CSS. -->
         <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
         <!--Importar CSS -->
-        <link href="../css/menu.css" rel="stylesheet" type="text/css"/>
-        <link href="../css/registro.css" rel="stylesheet" type="text/css"/>
+        <link href="<%=basePath%>css/menu.css" rel="stylesheet" type="text/css"/>
+        <link href="<%=basePath%>css/registro.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body>
+    <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>'">
         
         <!--menú -->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
-                <a class="navbar-brand" href="index.jsp">
+                <a class="navbar-brand" href="<%=basePath%>index.jsp">
                    <!-- <img src="#" alt="" width="140px" height="120px" /> -->
                    Oakshop
                 </a>
@@ -42,7 +50,7 @@
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">INICIO</a>
+                            <a class="nav-link active" aria-current="page" href="<%=basePath%>index.jsp">INICIO</a>
                         </li>
                         
                         <li class="nav-item dropdown">
@@ -89,37 +97,14 @@
                     <template id="NoSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">INICIAR SESIÓN</a>
+                                <a class="nav-link" href="<%=basePath%>/jsp/iniciarsesion.jsp">INICIAR SESIÓN</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">REGISTRARSE</a>
+                                <a class="nav-link" href="<%=basePath%>/jsp/registrarse.jsp">REGISTRARSE</a>
                             </li>
                         </ul>
                     </template>
-                    <!-- Usuario logueado
-                    <template id="SiSesion">
-                        <ul class="navbar-nav ml-auto m-4">
-                            <li class="nav-item dropdown" style="list-style-type: none;">
-                                <a  class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                    <%=request.getSession().getAttribute("nameUser")%>
-                                </a>
-                                <ul class="dropdown-menu text-small "aria-labelledby="dropdownUser2"  >
-                                    <li><a class="dropdown-item" href="#" >Mi Cuenta</a></li>
-                                    <li><a class="dropdown-item" href="./MisVehiculos.do" >Mis Vehiculos</a></li>
-                                    <li><a class="dropdown-item" href="#" >Mis Servicios</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
-                                </ul>
-                            </li>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" style="color:#fff" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                            </svg>
-
-                        </ul>
-                    </template>
-                     --> 
+                    
                 </div>
             </div>
         </nav>
@@ -242,7 +227,18 @@
         </main>
         
         <!-- JS formulario -->
-         <script src="../js/formulario.js"></script>
+         <script src="<%=basePath%>js/formulario.js" type="text/javascript"></script>
+         <script>
+    
+            document.body.onload = function exist(){            
+                let existe = '<%=valor%>';
+                            if(existe==="existe Usuario"){
+                                alert('El usuario ya existe!');
+                            }else if(existe === "existe Correo"){
+                                alert('El correo digitado, ya exite!');
+                            }
+                        }
+            </script>
         <!-- JS de Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <!-- Enlace a los iconos que se trabajan. -->
