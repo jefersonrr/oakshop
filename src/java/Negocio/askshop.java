@@ -11,7 +11,10 @@ import DAO.TipoDAO;
 import DTO.Categoria;
 import DTO.Publicacion;
 import DTO.Tipo;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -93,4 +96,14 @@ public class askshop {
     }
   
 
+    
+    public String getFecha(Date fecha){
+            SimpleDateFormat formateador = new SimpleDateFormat(
+                 "dd '/' MM '/' yyyy", new Locale("es_ES"));
+            SimpleDateFormat formateador2 = new SimpleDateFormat(
+                 "hh:mm", new Locale("es_ES"));
+            String fechad = formateador.format(fecha);
+            String horas = formateador2.format(fecha);
+        return "Dia: "+fechad.replace(" ", "")+"<br>Hora: "+horas;
+    }
 }
