@@ -5,8 +5,12 @@
  */
 package Negocio;
 
+import DAO.CategoriaDAO;
 import DAO.PublicacionDAO;
+import DAO.TipoDAO;
+import DTO.Categoria;
 import DTO.Publicacion;
+import DTO.Tipo;
 import java.util.List;
 
 /**
@@ -14,9 +18,7 @@ import java.util.List;
  * @author USUARIO
  */
 public class askshop {
-    
-    
-    
+
     public String mostrarRopaIndex() {
 
         PublicacionDAO p = new PublicacionDAO();
@@ -40,4 +42,55 @@ public class askshop {
 
         return "<h1>Carga index</h1>";
     }
+
+    public String mostrarCategoriasAdmin() {
+
+        CategoriaDAO cdao = new CategoriaDAO();
+        List<Categoria> categorias = cdao.read();
+        String rta = "";
+        for (Categoria c : categorias) {
+
+            rta += "    <tr>\n"
+                    + "                                        <td>"+c.getId()+"</td>\n"
+                    + "                                        <td>"+c.getNombre()+"</td>\n"
+                    + "                                        <td>"+c.getEstado()+"</td>\n"
+                    + "                                        <!-- Acciones: editar y cancelar. -->\n"
+                    + "                                        <td>\n"
+                    + "                                            <div class=\"icons-acciones\">\n"
+                    + "                                                <div>\n"
+                    + "                                                    <button type=\"button\" style=\"background: transparent\" class=\"fas fa-edit\" data-bs-toggle=\"modal\" data-bs-target=\"#modal2\" data-bs-whatever = \"\" ></button>\n"
+                    + "                                                </div>\n"
+                    + "                                            </div>\n"
+                    + "                                        </td>\n"
+                    + "                                    </tr>";
+
+        }
+        return rta;
+    }
+
+    public String mostrarTiposAdmin() {
+        TipoDAO tdao = new TipoDAO();
+        List<Tipo> tipos = tdao.read();
+        String rta = "";
+        for (Tipo t : tipos) {
+
+            rta += "    <tr>\n"
+                    + "                                        <td>"+t.getId()+"</td>\n"
+                    + "                                        <td>"+t.getNombre()+"</td>\n"
+                    + "                                        <td>"+t.getEstado()+"</td>\n"
+                    + "                                        <!-- Acciones: editar y cancelar. -->\n"
+                    + "                                        <td>\n"
+                    + "                                            <div class=\"icons-acciones\">\n"
+                    + "                                                <div>\n"
+                    + "                                                    <button type=\"button\" style=\"background: transparent\" class=\"fas fa-edit\" data-bs-toggle=\"modal\" data-bs-target=\"#modal3\" data-bs-whatever = \"\" ></button>\n"
+                    + "                                                </div>\n"
+                    + "                                            </div>\n"
+                    + "                                        </td>\n"
+                    + "                                    </tr>";
+
+        }
+        return rta;
+    }
+  
+
 }
