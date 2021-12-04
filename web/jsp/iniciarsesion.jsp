@@ -29,11 +29,7 @@
         <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
 
         <!--Importar CSS -->
-<<<<<<< HEAD:build/web/jsp/iniciosesion.jsp
-        <link href="/jsp/registrarse.jspcss/menu.css" rel="stylesheet" type="text/css"/>
-=======
         <link href="<%=basePath%>css/menu.css" rel="stylesheet" type="text/css"/>
->>>>>>> Test:web/jsp/iniciarsesion.jsp
         <!--Importar CSS -->
         <link href="<%=basePath%>/css/iniciarsesion.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
