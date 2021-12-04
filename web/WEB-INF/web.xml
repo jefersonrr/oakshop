@@ -6,6 +6,8 @@
     </filter>
     <filter-mapping>
          <filter-name>validarSesion.do</filter-name>
+         <url-pattern>/jsp/index.jsp</url-pattern>
+
     </filter-mapping>
         <servlet>
         <servlet-name>IniciarSesion</servlet-name>
