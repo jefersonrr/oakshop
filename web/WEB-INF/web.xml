@@ -7,7 +7,10 @@
    <filter-mapping>
          <filter-name>validarSesion.do</filter-name>
          <url-pattern>/jsp/index.jsp</url-pattern>
+<<<<<<< HEAD
+=======
          <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
+>>>>>>> Test
 
     </filter-mapping>
         <servlet>
