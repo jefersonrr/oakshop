@@ -7,6 +7,7 @@
    <filter-mapping>
          <filter-name>validarSesion.do</filter-name>
          <url-pattern>/jsp/index.jsp</url-pattern>
+         <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
 
     </filter-mapping>
         <servlet>
@@ -29,10 +30,14 @@
         <servlet-name>MostrarRopaIndex</servlet-name>
         <servlet-class>ControladorVistas.MostrarRopaIndex</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>IniciarSesion</servlet-name>
-        <url-pattern>/IniciarSesion.do</url-pattern>
-    </servlet-mapping>
+     <servlet>
+        <servlet-name>adminAddCliente</servlet-name>
+        <servlet-class>ControladorVistas.adminAddCliente</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>adminUpdateCliente</servlet-name>
+        <servlet-class>ControladorVistas.adminUpdateCliente</servlet-class>
+    </servlet>
        <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
         <url-pattern>/cerrarSesion.do</url-pattern>
@@ -49,9 +54,21 @@
         <servlet-name>MostrarRopaIndex</servlet-name>
         <url-pattern>/MostrarRopaIndex.do</url-pattern>
     </servlet-mapping>
+       <servlet-mapping>
+        <servlet-name>IniciarSesion</servlet-name>
+        <url-pattern>/IniciarSesion.do</url-pattern>
+    </servlet-mapping>
+       <servlet-mapping>
+        <servlet-name>adminAddCliente</servlet-name>
+        <url-pattern>/adminAddCliente.do</url-pattern>
+    </servlet-mapping>
+      <servlet-mapping>
+        <servlet-name>adminUpdateCliente</servlet-name>
+        <url-pattern>/adminUpdateCliente.do</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            15
+            35
         </session-timeout>
     </session-config>
 </web-app>
