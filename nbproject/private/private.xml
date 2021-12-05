@@ -3,9 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
-        </group>
-        <group>
             <file>file:/D:/Proyecto%20AyD/oakshop/web/css/index.css</file>
             <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/MostrarRopaIndex.java</file>
@@ -15,6 +12,13 @@
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/js/menuAdministrador.js</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/WEB-INF/web.xml</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/index.jsp</file>
+        </group>
+        <group>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/css/index.css</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/productos.jsp</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/detalle-producto.jsp</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/css/productos.css</file>
         </group>
     </open-files>
 </project-private>

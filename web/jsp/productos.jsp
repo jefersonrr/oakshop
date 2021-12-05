@@ -39,7 +39,7 @@
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
         
-                <!--menú -->
+        <!--menú -->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
@@ -301,8 +301,11 @@
 				<!-- Block2 -->
 				<div class="block2">
                                     <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                        <img src="<%=basePath%>img/item-02.jpg" alt="IMG-PRODUCT 2">
-
+                                        
+                                        <div class="imagen-producto">
+                                        <img class="img-fluid" src="https://www.circokidstore.com/wp-content/uploads/2021/02/19EV9801721001.jpg" height="368" alt="IMG-PRODUCT 2">
+                                        </div>
+                                        
 					<div class="block2-overlay trans-0-4">
 
                                             <div class="block2-btn-addcart w-size1 trans-0-4">
@@ -313,7 +316,9 @@
                                             </div>
 					</div>
                                     </div>
-
+                                    
+                                    
+                                                
                                     <div class="block2-txt p-t-20">
 					<a href="#" class="block2-name dis-block s-text3 p-b-5">
                                             Nombre producto
