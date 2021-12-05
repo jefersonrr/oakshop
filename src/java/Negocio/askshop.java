@@ -218,7 +218,68 @@ public class askshop {
         
         for(Galeriaimg img : galeria){
             
-            rta+="";
+            rta+="<div class = \"product-imgs\">\n" +
+"          <div class = \"img-display\">\n" +
+"            <div class = \"img-showcase\">\n" +
+"              <img src = \"<%=basePath%>img/product-03.jpg\" alt = \"shoe image\">\n" +
+"              <img src = \"<%=basePath%>img/single_2.jpg\" alt = \"shoe image\">\n" +
+"              <img src = \"<%=basePath%>img/single_3.jpg\" alt = \"shoe image\">\n" +
+"              <img src = \"<%=basePath%>img/single_1.jpg\" alt = \"shoe image\">\n" +
+"            </div>\n" +
+"          </div>\n" +
+"          <div class = \"img-select\">\n" +
+"            <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"1\">\n" +
+"                <img src = \"<%=basePath%>img/single_1.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"            <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"2\">\n" +
+"                <img src = \"<%=basePath%>img/single_2.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"            <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"3\">\n" +
+"                <img src = \"<%=basePath%>img/single_3.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"            <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"4\">\n" +
+"                <img src = \"<%=basePath%>img/single_1.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"              <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"5\">\n" +
+"                <img src = \"<%=basePath%>img/single_1.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"              <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"6\">\n" +
+"                <img src = \"<%=basePath%>img/single_1.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"              <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"4\">\n" +
+"                <img src = \"<%=basePath%>img/single_1.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"              <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"4\">\n" +
+"                <img src = \"<%=basePath%>img/single_1.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"              <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"4\">\n" +
+"                <img src = \"<%=basePath%>img/single_1.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"              <div class = \"img-item\">\n" +
+"              <a href = \"#\" data-id = \"4\">\n" +
+"                <img src = \"<%=basePath%>img/product-03.jpg\" alt = \"shoe image\">\n" +
+"              </a>\n" +
+"            </div>\n" +
+"          </div>\n" +
+"        </div>";
         
         }
         
