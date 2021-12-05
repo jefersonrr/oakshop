@@ -58,4 +58,20 @@ public class GaleriaimgDAO {
         }
         
     }
+    
+    public Galeriaimg fisrtImg(int id){
+    
+        List<Galeriaimg> galeria = read();
+        Galeriaimg gale;
+        for(Galeriaimg g : galeria){
+            
+            if(g.getIdPublicacion().getId().equals(id)){
+                return g;
+            
+            }
+           
+        }
+         return null;
+    
+    }
 }
