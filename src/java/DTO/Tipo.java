@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Tipo")
@@ -94,8 +94,8 @@ public class Tipo implements Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    @XmlTransient
+    
+     @XmlTransient
     public List<Publicacion> getPublicacionList() {
         return publicacionList;
     }
@@ -137,5 +137,5 @@ public class Tipo implements Serializable {
     public String toString() {
         return "DTO.Tipo[ id=" + id + " ]";
     }
-    
+
 }

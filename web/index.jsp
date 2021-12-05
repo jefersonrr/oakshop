@@ -24,12 +24,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Oakshop</title>
         
+    <!--Normallize css: proyecto que corrige estilos predeterminados de los diferentes navegadores, para evitar usar el selector universal
+    en la hoja de estilos CSS. -->
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+        
         <!-- Fuente de google: Open Sans - Regular 400 -->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
         <!-- CSS de Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <!-- CSS restantes -->
         <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
+        <link rel="stylesheet" href="<%=basePath%>css/index.css"/>
+        
+        
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
         
@@ -71,7 +78,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">BLUSAS</a></li>
-                                <li><a class="dropdown-item" href="#">VESTIDOS</a></li>
+                                <li><a class="dropdown-item" href="<%=basePath%>PublicacionesCategoria.do">VESTIDOS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
                              </ul>
@@ -133,6 +140,197 @@
         </nav>
         <!--Fin menú -->
         
+        <!-- Carousel -->
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="img/slide-01.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 style="color: #000;">First slide label</h5>
+        <p style="color: #000;">Some representative placeholder content for the first slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="img/slide-02.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 style="color: #000;">Second slide label</h5>
+        <p style="color: #000;">Some representative placeholder content for the second slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="img/slide-03.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 style="color: #000;">Third slide label</h5>
+        <p style="color: #000;">Some representative placeholder content for the third slide.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        <!-- Fin carousel -->
+        
+        <main>
+            
+            <!-- Hombres -->
+            <section>
+            <div class="container">
+                <div class="titulo-secciones">
+                        Hombres
+                </div>
+                <div class="row row-cols-3 row-cols-md-4 g-4">
+                   
+                    <div class="col">
+                        <div class="card bg-danger">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Polos</button>                          
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card bg-danger">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Camisetas</button>                          
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card bg-danger">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Jeans</button>                          
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card bg-danger">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Calzado</button>                          
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            </div>
+            </section>
+            
+            <!-- Mujeres -->
+            <section>
+            <div class="container">
+                <div class="titulo-secciones">
+                        Mujeres
+                </div>
+                <div class="row row-cols-3 row-cols-md-4 g-4">
+                   
+                    <div class="col">
+                        <div class="card" style="background: #FFD2F3;">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Blusas</button>                          
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card" style="background: #FFD2F3;">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Vestidos</button>                          
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card" style="background: #FFD2F3;">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Jeans</button>                          
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card" style="background: #FFD2F3;">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Calzado</button>                          
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            </div>
+            </section>
+            
+            <!-- Niños -->
+        <section>
+            <div class="container">
+                <div class="titulo-secciones">
+                        Kids
+                </div>
+                <div class="row row-cols-3 row-cols-md-4 g-4">
+                   
+                    <div class="col">
+                        <div class="card" style="background: #B2ABFF;">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Camisetas</button>                          
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card" style="background: #B2ABFF;">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Bermudas</button>                          
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card" style="background: #B2ABFF;">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Jeans</button>                          
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card" style="background: #B2ABFF;">
+                            <div class="card-body d-flex flex-column">
+                                 <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                <button type="button" class="btn btn-light mt-auto align-self-center">Calzado</button>                          
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            </div>
+            </section>
+            
+            
+            
+            
+            
+            
+            
+        </main>
         
         
         <!-- JS de Bootstrap -->      
