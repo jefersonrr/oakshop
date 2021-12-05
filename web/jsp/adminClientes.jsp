@@ -70,7 +70,7 @@
                     <span class="tooltip">Clientes</span>
                 </li>
                 <li>
-                    <a href="<%=basePath%>MostrarServiciosAdmin.do">
+                    <a href="<%=basePath%>MostrarCategorias.do">
                         <i class="fas fa-user-cog"></i>
                         <span class="links_name">Categorias</span>
                     </a>
