@@ -78,7 +78,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">BLUSAS</a></li>
-                                <li><a class="dropdown-item" href="#">VESTIDOS</a></li>
+                                <li><a class="dropdown-item" href="<%=basePath%>PublicacionesCategoria.do">VESTIDOS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
                              </ul>

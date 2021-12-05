@@ -7,27 +7,24 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-     <%
-            String path = request.getContextPath();
-            String basePath = request.getScheme() + "://" + request.getServerName() + ":"
-                    + request.getServerPort() + path + "/";
-            
-                if(request.getSession().getAttribute("listaServiciosIndex")== null){
-                  request.getRequestDispatcher(("MostrarRopaIndex.do")).forward(request, response);
-                
-                }
-        %>
-        <base href="<%=basePath%>">
+    <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://" + request.getServerName() + ":"
+                + request.getServerPort() + path + "/";
+
+
+    %>
+    <base href="<%=basePath%>">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Oakshop</title>
-        
-    <!--Normallize css: proyecto que corrige estilos predeterminados de los diferentes navegadores, para evitar usar el selector universal
-    en la hoja de estilos CSS. -->
-    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-        
+
+        <!--Normallize css: proyecto que corrige estilos predeterminados de los diferentes navegadores, para evitar usar el selector universal
+        en la hoja de estilos CSS. -->
+        <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+
         <!-- Fuente de google: Open Sans - Regular 400 -->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
         <!-- CSS de Bootstrap -->
@@ -35,17 +32,17 @@
         <!-- CSS restantes -->
         <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/productos.css"/>
-        
+
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
-        
-                <!--menú -->
+
+        <!--menú -->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
                 <a class="navbar-brand" href="index.jsp">
-                   <!-- <img src="#" alt="" width="140px" height="120px" /> -->
-                   Oakshop
+                    <!-- <img src="#" alt="" width="140px" height="120px" /> -->
+                    Oakshop
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +55,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">INICIO</a>
                         </li>
-                        
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 HOMBRE
@@ -68,9 +65,9 @@
                                 <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                            </ul>
                         </li>
-                        
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 MUJERES
@@ -80,9 +77,9 @@
                                 <li><a class="dropdown-item" href="#">VESTIDOS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                            </ul>
                         </li>
-                        
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 KIDS
@@ -92,9 +89,9 @@
                                 <li><a class="dropdown-item" href="#">BERMUDAS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                            </ul>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
                         </li>
@@ -103,7 +100,7 @@
                     <template id="NoSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" href="<%=basePath%>iniciarSesion.do">INICIAR SESIÓN</a>
+                                <a class="nav-link" href="<%=basePath%>IniciarSesion.do">INICIAR SESIÓN</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
@@ -111,7 +108,7 @@
                         </ul>
                     </template>
                     <!-- Usuario logueado-->
-                     <template id="SiSesion">
+                    <template id="SiSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item dropdown" style="list-style-type: none;">
                                 <a  class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -138,348 +135,272 @@
             </div>
         </nav>
         <!--Fin menú -->
-        
-        
+        <%
+            String productos = request.getSession().getAttribute("productos").toString();
+            String tipoName = request.getSession().getAttribute("tipo").toString();
+            String tallas = request.getSession().getAttribute("selectTalla").toString();
+            String[] colores = null;
+            String sTalla = "";
+            String sPrecio = "";
+            if (request.getSession().getAttribute("colores") != null) {
+                colores = (String[]) request.getSession().getAttribute("colores");
+            }
+            if (request.getSession().getAttribute("sTalla") != null) {
+                sTalla = request.getSession().getAttribute("sTalla").toString();
+                request.getSession().removeAttribute("sTalla");
+            }
+
+            if (request.getSession().getAttribute("sPrecio") != null) {
+                sPrecio = request.getSession().getAttribute("sPrecio").toString();
+                request.getSession().removeAttribute("sPrecio");
+            }
+
+
+        %>
+
         <!-- Title Page -->
-	<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m">
-		<h2 class="l-text2 t-center">
-			Nombre categoría 
-		</h2>
-	</section>
-        
-	<!-- Content page -->
-	<section class="bgwhite p-t-55 p-b-65">
+        <section class="bg-title-page p-t-50 p-b-40 flex-col-c-m">
+
+            <h2 class="l-text2 t-center">
+                Categoría <%=tipoName%> 
+            </h2>
+        </section>
+
+        <!-- Content page -->
+        <section class="bgwhite p-t-55 p-b-65">
             <div class="container">
-		<div class="row">
+                <div class="row">
                     <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
-			<div class="leftbar p-r-20 p-r-0-sm">
+                        <div class="leftbar p-r-20 p-r-0-sm">
 
                             <h4 class="m-text14 p-b-7">
-				Categorias
+                                Categorias
                             </h4>
-<!--
-                            <ul class="p-b-54">
-				<li class="p-t-4">
-                                    <a href="#" class="s-text13 active1">
-					All
-                                    </a>
-				</li>
-
-				<li class="p-t-4">
-                                    <a href="#" class="s-text13">
-					Women
-                                    </a>
-				</li>
-
-				<li class="p-t-4">
-                                    <a href="#" class="s-text13">
-					Men
-                                    </a>
-				</li>
-
-				<li class="p-t-4">
-                                    <a href="#" class="s-text13">
-					Kids
-                                    </a>
-				</li>
-
-				<li class="p-t-4">
-                                    <a href="#" class="s-text13">
-					Accesories
-                                    </a>
-				</li>
-			</ul>
--->
-						
-                            <h4 class="m-text14 p-b-32">
-				Filtrar
-                            </h4>
-
-                    <form action="action">  
-
-                            <div class="filter-color p-t-22 p-b-50 bo3">
-				<div class="m-text15 p-b-12">
-                                    Talla
-                                </div>
-                                
-                                <div class="d-flex flex-column">
-                                    <select class="select__1 align-self-center" name="tallas" required>
-					<option value="default" selected disabled>Seleccione una talla</option>
-					<option>S</option>
-					<option>M</option>
-					<option>L</option>
-                                        <option>XL</option>
-                                    </select>
-				</div>
-                                
-                            </div>
-
-                            <div class="filter-color p-t-22 p-b-50 bo3">
-				<div class="m-text15 p-b-12">
-                                    Color
-                                </div>
+                            <!--
+                                                        <ul class="p-b-54">
+                                                            <li class="p-t-4">
+                                                                <a href="#" class="s-text13 active1">
+                                                                    All
+                                                                </a>
+                                                            </li>
                             
+                                                            <li class="p-t-4">
+                                                                <a href="#" class="s-text13">
+                                                                    Women
+                                                                </a>
+                                                            </li>
+                            
+                                                            <li class="p-t-4">
+                                                                <a href="#" class="s-text13">
+                                                                    Men
+                                                                </a>
+                                                            </li>
+                            
+                                                            <li class="p-t-4">
+                                                                <a href="#" class="s-text13">
+                                                                    Kids
+                                                                </a>
+                                                            </li>
+                            
+                                                            <li class="p-t-4">
+                                                                <a href="#" class="s-text13">
+                                                                    Accesories
+                                                                </a>
+                                                            </li>
+                                                    </ul>
+                            -->
 
-                        <ul class="flex-w">
-                            <li class="m-r-10">
-                                <input class="checkbox-color-filter" id="color-filter1" type="checkbox" name="color-filter1">
-                                <label class="color-filter color-filter1" for="color-filter1"></label>
-                            </li>
 
-                            <li class="m-r-10">
-				<input class="checkbox-color-filter" id="color-filter2" type="checkbox" name="color-filter2">
-                                <label class="color-filter color-filter2" for="color-filter2"></label>
-                            </li>
 
-                            <li class="m-r-10">
-				<input class="checkbox-color-filter" id="color-filter3" type="checkbox" name="color-filter3">
-				<label class="color-filter color-filter3" for="color-filter3"></label>
-                            </li>
+                            <form action="<%=basePath%>PublicacionesCategoria.do" method="POST"> 
+                                <div class="row">
+                                    <h4 class="m-text14 p-b-32 col-4">
+                                        Filtrar 
+                                    </h4>
+                                    <div class="filter-color  p-b-32  col-8" >
+                                        <button type="submit" class="btn btn-primary align-self-center">TODO</button>
+                                    </div>  
+                                </div>
+                            </form> 
 
-                            <li class="m-r-10">
-				<input class="checkbox-color-filter" id="color-filter4" type="checkbox" name="color-filter4">
-				<label class="color-filter color-filter4" for="color-filter4"></label>
-                            </li>
 
-                            <li class="m-r-10">
-				<input class="checkbox-color-filter" id="color-filter5" type="checkbox" name="color-filter5">
-				<label class="color-filter color-filter5" for="color-filter5"></label>
-                            </li>
+                            <form action="<%=basePath%>/FiltrarPublicaciones.do" method="GET">  
 
-                            <li class="m-r-10">
-				<input class="checkbox-color-filter" id="color-filter6" type="checkbox" name="color-filter6">
-				<label class="color-filter color-filter6" for="color-filter6"></label>
-                            </li>
+                                <div class="filter-color p-t-22 p-b-50 bo3">
+                                    <div class="m-text15 p-b-12">
+                                        Talla
+                                    </div>
 
-                            <li class="m-r-10">
-				<input class="checkbox-color-filter" id="color-filter7" type="checkbox" name="color-filter7">
-				<label class="color-filter color-filter7" for="color-filter7"></label>
-                            </li>
-			</ul>
-			
-                            </div>
-                        
-                            <div class="filter-color p-t-22 p-b-50 bo3 d-flex flex-column">
-                                <button type="submit" class="btn btn-danger align-self-center">FILTRAR</button>
-                            </div>                       
-                        
-                    </form> 
+                                    <div class="d-flex flex-column">
+                                        <select class="select__1 align-self-center" id="sTalla" name="talla" required>
+                                            <option value="default" selected disabled>Seleccione una talla</option>
+                                            <%=tallas%>
+                                        </select>
+                                    </div>
 
-			</div>
+                                </div>
+
+                                <div class="filter-color p-t-22 p-b-50 bo3">
+                                    <div class="m-text15 p-b-12">
+                                        Color
+                                    </div>
+
+
+                                    <ul class="flex-w" id="colores">
+                                        <li class="m-r-10">
+                                            <input class="checkbox-color-filter" id="color-filter1" type="checkbox" value="Blanco" name="color">
+                                            <label class="color-filter color-filter1" for="color-filter1"></label>
+                                        </li>
+
+                                        <li class="m-r-10">
+                                            <input class="checkbox-color-filter" id="color-filter2" type="checkbox" value="Azul" name="color">
+                                            <label class="color-filter color-filter2" for="color-filter2"></label>
+                                        </li>
+
+                                        <li class="m-r-10">
+                                            <input class="checkbox-color-filter" id="color-filter3" type="checkbox" value="Rojo" name="color">
+                                            <label class="color-filter color-filter3" for="color-filter3"></label>
+                                        </li>
+
+                                        <li class="m-r-10">
+                                            <input class="checkbox-color-filter" id="color-filter4" type="checkbox" value="Negro" name="color">
+                                            <label class="color-filter color-filter4" for="color-filter4"></label>
+                                        </li>
+
+                                        <li class="m-r-10">
+                                            <input class="checkbox-color-filter" id="color-filter5" type="checkbox" value="Verde" name="color">
+                                            <label class="color-filter color-filter5" for="color-filter5"></label>
+                                        </li>
+
+                                        <li class="m-r-10">
+                                            <input class="checkbox-color-filter" id="color-filter6" type="checkbox" value="Amarillo" name="color">
+                                            <label class="color-filter color-filter6" for="color-filter6"></label>
+                                        </li>
+
+                                        <li class="m-r-10">
+                                            <input class="checkbox-color-filter" id="color-filter7" type="checkbox" value="Gris" name="color">
+                                            <label class="color-filter color-filter7" for="color-filter7"></label>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+
+                                <div class="rs2-select2 bo4 of-hidden filter-color p-t-22 p-b-50 bo3 w-size12 m-t-5 m-b-5 m-r-10">
+                                    <div class="m-text15 p-b-12">
+                                        Precio
+                                    </div>
+                                    <select class="select__1" id="sPrecio" name="precio">
+                                        <option value="default" selected disabled>Rango de precio</option>
+                                        <option value="0-40" >$0.00 - $40.000</option>
+                                        <option value="40-50" >$40.000 - $50.000</option>
+                                        <option value="50-60" >$50.000 - $60.000</option>
+                                        <option value="60-70" >$60.000 - $70.000</option>
+                                        <option value="70-+">$70.000+</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="filter-color p-t-22 p-b-50 bo3 d-flex flex-column " >
+                                    <button type="submit" class="btn btn-danger align-self-center ">FILTRAR</button>
+                                </div>                       
+
+                            </form> 
+
+
+
+                        </div>
                     </div>
 
                     <div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
-					<!--  -->
-			<div class="flex-sb-m flex-w p-b-35">
+                        <!--  -->
+                        <div class="flex-sb-m flex-w p-b-35">
                             <div class="flex-w">
-				<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                                    
-                                    <select class="select__1" name="ordenar" required>
-					<option value="default" selected disabled>Por defecto</option>
-					<option>Más vendidos</option>
-					<option>Fecha de lanzamiento</option>
-                                    </select>
-				</div>
+                                <!-- <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
+    
+                                     <select class="select__1" name="ordenar" required>
+                                         <option value="default" selected disabled>Por defecto</option>
+                                         <option>Más vendidos</option>
+                                         <option>Fecha de lanzamiento</option>
+                                     </select>
+                                 </div> -->
 
-				<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                                    <select class="select__1" name="precio">
-					<option value="default" selected disabled>Rango de precio</option>
-					<option>$0.00 - $40.000</option>
-					<option>$40.000 - $50.000</option>
-					<option>$50.000 - $60.000</option>
-					<option>$60.000 - $70.000</option>
-					<option>$70.000+</option>
-                                    </select>
-				</div>
+                                <!-- <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
+                                     <select class="select__1" name="precio">
+                                         <option value="default" selected disabled>Rango de precio</option>
+                                         <option>$0.00 - $40.000</option>
+                                         <option>$40.000 - $50.000</option>
+                                         <option>$50.000 - $60.000</option>
+                                         <option>$60.000 - $70.000</option>
+                                         <option>$70.000+</option>
+                                     </select>
+                                 </div>-->
                             </div>
                         </div>
 
-			<!-- Product -->
-			<div class="row">
-                            
-                            <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-				<!-- Block2 -->
-				<div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                        <img src="<%=basePath%>img/item-02.jpg" alt="IMG-PRODUCT 2">
+                        <!-- Product -->
+                        <div class="row">  
+                            <!-- Block2 -->
+                            <%=productos%>
 
-					<div class="block2-overlay trans-0-4">
-
-                                            <div class="block2-btn-addcart w-size1 trans-0-4">
-						<!-- Button -->
-						<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                    Detalles
-						</button>
-                                            </div>
-					</div>
-                                    </div>
-
-                                    <div class="block2-txt p-t-20">
-					<a href="#" class="block2-name dis-block s-text3 p-b-5">
-                                            Nombre producto
-					</a>
-
-                                        <span class="block2-price m-text6 p-r-5">
-                                            $60.000
-                                        </span>
-                                    </div>
-				</div>
-                            </div>
-                                        
-                            <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-				<!-- Block2 -->
-				<div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                        <img src="<%=basePath%>img/item-02.jpg" alt="IMG-PRODUCT 2">
-
-					<div class="block2-overlay trans-0-4">
-
-                                            <div class="block2-btn-addcart w-size1 trans-0-4">
-						<!-- Button -->
-						<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                    Detalles
-						</button>
-                                            </div>
-					</div>
-                                    </div>
-
-                                    <div class="block2-txt p-t-20">
-					<a href="#" class="block2-name dis-block s-text3 p-b-5">
-                                            Nombre producto
-					</a>
-
-                                        <span class="block2-price m-text6 p-r-5">
-                                            $60.000
-                                        </span>
-                                    </div>
-				</div>
-                            </div>
-                            
-                            <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-				<!-- Block2 -->
-				<div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                        <img src="<%=basePath%>img/item-02.jpg" alt="IMG-PRODUCT 2">
-
-					<div class="block2-overlay trans-0-4">
-
-                                            <div class="block2-btn-addcart w-size1 trans-0-4">
-						<!-- Button -->
-						<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                    Detalles
-						</button>
-                                            </div>
-					</div>
-                                    </div>
-
-                                    <div class="block2-txt p-t-20">
-					<a href="#" class="block2-name dis-block s-text3 p-b-5">
-                                            Nombre producto
-					</a>
-
-                                        <span class="block2-price m-text6 p-r-5">
-                                            $60.000
-                                        </span>
-                                    </div>
-				</div>
-                            </div>
-                            
-                            <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-				<!-- Block2 -->
-				<div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                        <img src="<%=basePath%>img/item-02.jpg" alt="IMG-PRODUCT 2">
-
-					<div class="block2-overlay trans-0-4">
-
-                                            <div class="block2-btn-addcart w-size1 trans-0-4">
-						<!-- Button -->
-						<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                    Detalles
-						</button>
-                                            </div>
-					</div>
-                                    </div>
-
-                                    <div class="block2-txt p-t-20">
-					<a href="#" class="block2-name dis-block s-text3 p-b-5">
-                                            Nombre producto
-					</a>
-
-                                        <span class="block2-price m-text6 p-r-5">
-                                            $60.000
-                                        </span>
-                                    </div>
-				</div>
-                            </div>
-                                        
-                            <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-				<!-- Block2 -->
-				<div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                        <img src="<%=basePath%>img/item-02.jpg" alt="IMG-PRODUCT 2">
-
-					<div class="block2-overlay trans-0-4">
-
-                                            <div class="block2-btn-addcart w-size1 trans-0-4">
-						<!-- Button -->
-						<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                    Detalles
-						</button>
-                                            </div>
-					</div>
-                                    </div>
-
-                                    <div class="block2-txt p-t-20">
-					<a href="#" class="block2-name dis-block s-text3 p-b-5">
-                                            Nombre producto
-					</a>
-
-                                        <span class="block2-price m-text6 p-r-5">
-                                            $60.000
-                                        </span>
-                                    </div>
-				</div>
-                            </div>
-                            
-                            <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-				<!-- Block2 -->
-				<div class="block2">
-                                    <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                                        <img src="<%=basePath%>img/item-02.jpg" alt="IMG-PRODUCT 2">
-
-					<div class="block2-overlay trans-0-4">
-
-                                            <div class="block2-btn-addcart w-size1 trans-0-4">
-						<!-- Button -->
-						<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                    Detalles
-						</button>
-                                            </div>
-					</div>
-                                    </div>
-
-                                    <div class="block2-txt p-t-20">
-					<a href="#" class="block2-name dis-block s-text3 p-b-5">
-                                            Nombre producto
-					</a>
-
-                                        <span class="block2-price m-text6 p-r-5">
-                                            $60.000
-                                        </span>
-                                    </div>
-				</div>
-                            </div>
-                                      
-			</div>
+                        </div>
 
                     </div>
+
                 </div>
             </div>
-	</section>      
-        
-        <!-- JS de Bootstrap -->      
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <script src="./js/sesion.js"></script>
-    </body>
+        </div>
+    </section>      
+    <script>
+
+        document.body.onload = function () {
+
+            if (<%=!sTalla.equals("")%>) {
+
+                OptionTalla = document.querySelector('#sTalla').querySelectorAll('option');
+                var i;
+                for (i = 0; i < OptionTalla.length; i++) {
+
+                    if (OptionTalla[i].value === "<%=sTalla%>") {
+
+                        OptionTalla[i].setAttribute("selected", "");
+                        // request.getSession().removeAttribute("sTalla");
+                        break;
+                    }
+
+                }
+
+            }
+
+            if (<%=!sPrecio.equals("")%>) {
+
+                OptionPrecio = document.querySelector('#sPrecio').querySelectorAll('option');
+                var i;
+                for (i = 0; i < OptionPrecio.length; i++) {
+
+                    if (OptionPrecio[i].value === "<%=sPrecio%>") {
+
+                        OptionPrecio[i].setAttribute("selected", "");
+
+
+                        break;
+                    }
+
+                }
+
+            }
+
+
+
+
+
+        };
+
+
+
+    </script>
+    <!-- JS de Bootstrap -->      
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="./js/sesion.js"></script>
+</body>
 </html>

@@ -4,21 +4,10 @@
         <filter-name>validarSesion.do</filter-name>
         <filter-class>ControladorVistas.validarSesion</filter-class>
     </filter>
-<<<<<<< HEAD
     <filter-mapping>
         <filter-name>validarSesion.do</filter-name>
         <url-pattern>/jsp/index.jsp</url-pattern>
         <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
-=======
-   <filter-mapping>
-         <filter-name>validarSesion.do</filter-name>
-         <url-pattern>/jsp/index.jsp</url-pattern>
-<<<<<<< HEAD
-=======
-         <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
->>>>>>> Test
-
->>>>>>> Test
     </filter-mapping>
     <servlet>
         <servlet-name>IniciarSesion</servlet-name>
@@ -68,6 +57,14 @@
         <servlet-name>AddTipo</servlet-name>
         <servlet-class>ControladorVistas.AddTipo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PublicacionesCategoria</servlet-name>
+        <servlet-class>ControladorVistas.PublicacionesCategoria</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FiltrarPublicaciones</servlet-name>
+        <servlet-class>ControladorVistas.FiltrarPublicaciones</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
         <url-pattern>/cerrarSesion.do</url-pattern>
@@ -115,6 +112,14 @@
     <servlet-mapping>
         <servlet-name>AddTipo</servlet-name>
         <url-pattern>/AddTipo.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PublicacionesCategoria</servlet-name>
+        <url-pattern>/PublicacionesCategoria.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FiltrarPublicaciones</servlet-name>
+        <url-pattern>/FiltrarPublicaciones.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
