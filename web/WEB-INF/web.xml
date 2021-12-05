@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-     <filter>
+    <filter>
         <filter-name>validarSesion.do</filter-name>
         <filter-class>ControladorVistas.validarSesion</filter-class>
     </filter>
-   <filter-mapping>
-         <filter-name>validarSesion.do</filter-name>
-         <url-pattern>/jsp/index.jsp</url-pattern>
-<<<<<<< HEAD
-=======
-         <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
->>>>>>> Test
-
+    <filter-mapping>
+        <filter-name>validarSesion.do</filter-name>
+        <url-pattern>/jsp/index.jsp</url-pattern>
+        <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
     </filter-mapping>
-        <servlet>
+    <servlet>
         <servlet-name>IniciarSesion</servlet-name>
         <servlet-class>ControladorVistas.IniciarSesion</servlet-class>
     </servlet>
-      <servlet>
+    <servlet>
         <servlet-name>cerrarSesion</servlet-name>
         <servlet-class>ControladorVistas.cerrarSesion</servlet-class>
     </servlet>
@@ -33,15 +29,43 @@
         <servlet-name>MostrarRopaIndex</servlet-name>
         <servlet-class>ControladorVistas.MostrarRopaIndex</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>adminAddCliente</servlet-name>
         <servlet-class>ControladorVistas.adminAddCliente</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>adminUpdateCliente</servlet-name>
         <servlet-class>ControladorVistas.adminUpdateCliente</servlet-class>
     </servlet>
-       <servlet-mapping>
+    <servlet>
+        <servlet-name>MostrarCategorias</servlet-name>
+        <servlet-class>ControladorVistas.MostrarCategorias</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateTipo</servlet-name>
+        <servlet-class>ControladorVistas.UpdateTipo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCategoria</servlet-name>
+        <servlet-class>ControladorVistas.UpdateCategoria</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCategoria</servlet-name>
+        <servlet-class>ControladorVistas.AddCategoria</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddTipo</servlet-name>
+        <servlet-class>ControladorVistas.AddTipo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PublicacionesCategoria</servlet-name>
+        <servlet-class>ControladorVistas.PublicacionesCategoria</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FiltrarPublicaciones</servlet-name>
+        <servlet-class>ControladorVistas.FiltrarPublicaciones</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
         <url-pattern>/cerrarSesion.do</url-pattern>
     </servlet-mapping>
@@ -57,17 +81,45 @@
         <servlet-name>MostrarRopaIndex</servlet-name>
         <url-pattern>/MostrarRopaIndex.do</url-pattern>
     </servlet-mapping>
-       <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>IniciarSesion</servlet-name>
         <url-pattern>/IniciarSesion.do</url-pattern>
     </servlet-mapping>
-       <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>adminAddCliente</servlet-name>
         <url-pattern>/adminAddCliente.do</url-pattern>
     </servlet-mapping>
-      <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>adminUpdateCliente</servlet-name>
         <url-pattern>/adminUpdateCliente.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MostrarCategorias</servlet-name>
+        <url-pattern>/MostrarCategorias.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateTipo</servlet-name>
+        <url-pattern>/UpdateTipo.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCategoria</servlet-name>
+        <url-pattern>/UpdateCategoria.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCategoria</servlet-name>
+        <url-pattern>/AddCategoria.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddTipo</servlet-name>
+        <url-pattern>/AddTipo.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PublicacionesCategoria</servlet-name>
+        <url-pattern>/PublicacionesCategoria.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FiltrarPublicaciones</servlet-name>
+        <url-pattern>/FiltrarPublicaciones.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
