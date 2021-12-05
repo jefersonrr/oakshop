@@ -56,7 +56,7 @@
                 </li>
 
                 <li>
-                    <a href="<%=basePath%>CitasAdmin.do">
+                    <a href="<%=basePath%>jsp/adminPublicaciones.jsp">
                         <i class="far fa-calendar-alt"></i>
                         <span class="links_name">Publicaciones</span>
                     </a>
@@ -117,7 +117,7 @@
                 </div>
             </div>
 
-            <%
+            <%  
                 PersonaDAO p = new PersonaDAO();
                 List<Persona> lista = p.read();
                 if (lista.isEmpty()) {%>

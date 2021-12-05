@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-     <filter>
+    <filter>
         <filter-name>validarSesion.do</filter-name>
         <filter-class>ControladorVistas.validarSesion</filter-class>
     </filter>
-   <filter-mapping>
-         <filter-name>validarSesion.do</filter-name>
-         <url-pattern>/jsp/index.jsp</url-pattern>
-         <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
-
+    <filter-mapping>
+        <filter-name>validarSesion.do</filter-name>
+        <url-pattern>/jsp/index.jsp</url-pattern>
+        <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
     </filter-mapping>
-        <servlet>
+    <servlet>
         <servlet-name>IniciarSesion</servlet-name>
         <servlet-class>ControladorVistas.IniciarSesion</servlet-class>
     </servlet>
-      <servlet>
+    <servlet>
         <servlet-name>cerrarSesion</servlet-name>
         <servlet-class>ControladorVistas.cerrarSesion</servlet-class>
     </servlet>
@@ -30,15 +29,43 @@
         <servlet-name>MostrarRopaIndex</servlet-name>
         <servlet-class>ControladorVistas.MostrarRopaIndex</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>adminAddCliente</servlet-name>
         <servlet-class>ControladorVistas.adminAddCliente</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>adminUpdateCliente</servlet-name>
         <servlet-class>ControladorVistas.adminUpdateCliente</servlet-class>
     </servlet>
-       <servlet-mapping>
+    <servlet>
+        <servlet-name>AgregarPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.AgregarPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AgregarProductos</servlet-name>
+        <servlet-class>ControladorVistas.AgregarProductos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CrearPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.CrearPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.EditarPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarProductosPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.EditarProductosPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActualizarPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.ActualizarPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.EliminarPublicacion</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
         <url-pattern>/cerrarSesion.do</url-pattern>
     </servlet-mapping>
@@ -54,17 +81,45 @@
         <servlet-name>MostrarRopaIndex</servlet-name>
         <url-pattern>/MostrarRopaIndex.do</url-pattern>
     </servlet-mapping>
-       <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>IniciarSesion</servlet-name>
         <url-pattern>/IniciarSesion.do</url-pattern>
     </servlet-mapping>
-       <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>adminAddCliente</servlet-name>
         <url-pattern>/adminAddCliente.do</url-pattern>
     </servlet-mapping>
-      <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>adminUpdateCliente</servlet-name>
         <url-pattern>/adminUpdateCliente.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarPublicacion</servlet-name>
+        <url-pattern>/AgregarPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarProductos</servlet-name>
+        <url-pattern>/AgregarProductos.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrearPublicacion</servlet-name>
+        <url-pattern>/CrearPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarPublicacion</servlet-name>
+        <url-pattern>/EditarPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarProductosPublicacion</servlet-name>
+        <url-pattern>/EditarProductosPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarPublicacion</servlet-name>
+        <url-pattern>/ActualizarPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarPublicacion</servlet-name>
+        <url-pattern>/EliminarPublicacion.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

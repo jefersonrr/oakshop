@@ -21,13 +21,12 @@ import DTO.Calificacion;
 import DTO.Producto;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
-import Persistencia.exceptions.PreexistingEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
 public class ProductoJpaController implements Serializable {
 
@@ -40,7 +39,7 @@ public class ProductoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Producto producto) throws PreexistingEntityException, Exception {
+    public void create(Producto producto) {
         if (producto.getDetalleCompraList() == null) {
             producto.setDetalleCompraList(new ArrayList<DetalleCompra>());
         }
@@ -71,19 +70,19 @@ public class ProductoJpaController implements Serializable {
             }
             List<DetalleCompra> attachedDetalleCompraList = new ArrayList<DetalleCompra>();
             for (DetalleCompra detalleCompraListDetalleCompraToAttach : producto.getDetalleCompraList()) {
-                detalleCompraListDetalleCompraToAttach = em.getReference(detalleCompraListDetalleCompraToAttach.getClass(), detalleCompraListDetalleCompraToAttach.getDetalleCompraPK());
+                detalleCompraListDetalleCompraToAttach = em.getReference(detalleCompraListDetalleCompraToAttach.getClass(), detalleCompraListDetalleCompraToAttach.getIdCompra());
                 attachedDetalleCompraList.add(detalleCompraListDetalleCompraToAttach);
             }
             producto.setDetalleCompraList(attachedDetalleCompraList);
             List<Carrito> attachedCarritoList = new ArrayList<Carrito>();
             for (Carrito carritoListCarritoToAttach : producto.getCarritoList()) {
-                carritoListCarritoToAttach = em.getReference(carritoListCarritoToAttach.getClass(), carritoListCarritoToAttach.getCarritoPK());
+                carritoListCarritoToAttach = em.getReference(carritoListCarritoToAttach.getClass(), carritoListCarritoToAttach.getIdCliente());
                 attachedCarritoList.add(carritoListCarritoToAttach);
             }
             producto.setCarritoList(attachedCarritoList);
             List<Calificacion> attachedCalificacionList = new ArrayList<Calificacion>();
             for (Calificacion calificacionListCalificacionToAttach : producto.getCalificacionList()) {
-                calificacionListCalificacionToAttach = em.getReference(calificacionListCalificacionToAttach.getClass(), calificacionListCalificacionToAttach.getCalificacionPK());
+                calificacionListCalificacionToAttach = em.getReference(calificacionListCalificacionToAttach.getClass(), calificacionListCalificacionToAttach.getIdCliente());
                 attachedCalificacionList.add(calificacionListCalificacionToAttach);
             }
             producto.setCalificacionList(attachedCalificacionList);
@@ -101,38 +100,33 @@ public class ProductoJpaController implements Serializable {
                 idTalla = em.merge(idTalla);
             }
             for (DetalleCompra detalleCompraListDetalleCompra : producto.getDetalleCompraList()) {
-                Producto oldProductoOfDetalleCompraListDetalleCompra = detalleCompraListDetalleCompra.getProducto();
-                detalleCompraListDetalleCompra.setProducto(producto);
+                Producto oldIdProductoOfDetalleCompraListDetalleCompra = detalleCompraListDetalleCompra.getIdProducto();
+                detalleCompraListDetalleCompra.setIdProducto(producto);
                 detalleCompraListDetalleCompra = em.merge(detalleCompraListDetalleCompra);
-                if (oldProductoOfDetalleCompraListDetalleCompra != null) {
-                    oldProductoOfDetalleCompraListDetalleCompra.getDetalleCompraList().remove(detalleCompraListDetalleCompra);
-                    oldProductoOfDetalleCompraListDetalleCompra = em.merge(oldProductoOfDetalleCompraListDetalleCompra);
+                if (oldIdProductoOfDetalleCompraListDetalleCompra != null) {
+                    oldIdProductoOfDetalleCompraListDetalleCompra.getDetalleCompraList().remove(detalleCompraListDetalleCompra);
+                    oldIdProductoOfDetalleCompraListDetalleCompra = em.merge(oldIdProductoOfDetalleCompraListDetalleCompra);
                 }
             }
             for (Carrito carritoListCarrito : producto.getCarritoList()) {
-                Producto oldProductoOfCarritoListCarrito = carritoListCarrito.getProducto();
-                carritoListCarrito.setProducto(producto);
+                Producto oldIdProductoOfCarritoListCarrito = carritoListCarrito.getIdProducto();
+                carritoListCarrito.setIdProducto(producto);
                 carritoListCarrito = em.merge(carritoListCarrito);
-                if (oldProductoOfCarritoListCarrito != null) {
-                    oldProductoOfCarritoListCarrito.getCarritoList().remove(carritoListCarrito);
-                    oldProductoOfCarritoListCarrito = em.merge(oldProductoOfCarritoListCarrito);
+                if (oldIdProductoOfCarritoListCarrito != null) {
+                    oldIdProductoOfCarritoListCarrito.getCarritoList().remove(carritoListCarrito);
+                    oldIdProductoOfCarritoListCarrito = em.merge(oldIdProductoOfCarritoListCarrito);
                 }
             }
             for (Calificacion calificacionListCalificacion : producto.getCalificacionList()) {
-                Producto oldProductoOfCalificacionListCalificacion = calificacionListCalificacion.getProducto();
-                calificacionListCalificacion.setProducto(producto);
+                Producto oldIdProductoOfCalificacionListCalificacion = calificacionListCalificacion.getIdProducto();
+                calificacionListCalificacion.setIdProducto(producto);
                 calificacionListCalificacion = em.merge(calificacionListCalificacion);
-                if (oldProductoOfCalificacionListCalificacion != null) {
-                    oldProductoOfCalificacionListCalificacion.getCalificacionList().remove(calificacionListCalificacion);
-                    oldProductoOfCalificacionListCalificacion = em.merge(oldProductoOfCalificacionListCalificacion);
+                if (oldIdProductoOfCalificacionListCalificacion != null) {
+                    oldIdProductoOfCalificacionListCalificacion.getCalificacionList().remove(calificacionListCalificacion);
+                    oldIdProductoOfCalificacionListCalificacion = em.merge(oldIdProductoOfCalificacionListCalificacion);
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findProducto(producto.getId()) != null) {
-                throw new PreexistingEntityException("Producto " + producto + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -164,7 +158,7 @@ public class ProductoJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain DetalleCompra " + detalleCompraListOldDetalleCompra + " since its producto field is not nullable.");
+                    illegalOrphanMessages.add("You must retain DetalleCompra " + detalleCompraListOldDetalleCompra + " since its idProducto field is not nullable.");
                 }
             }
             for (Carrito carritoListOldCarrito : carritoListOld) {
@@ -172,7 +166,7 @@ public class ProductoJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Carrito " + carritoListOldCarrito + " since its producto field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Carrito " + carritoListOldCarrito + " since its idProducto field is not nullable.");
                 }
             }
             for (Calificacion calificacionListOldCalificacion : calificacionListOld) {
@@ -180,7 +174,7 @@ public class ProductoJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Calificacion " + calificacionListOldCalificacion + " since its producto field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Calificacion " + calificacionListOldCalificacion + " since its idProducto field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -200,21 +194,21 @@ public class ProductoJpaController implements Serializable {
             }
             List<DetalleCompra> attachedDetalleCompraListNew = new ArrayList<DetalleCompra>();
             for (DetalleCompra detalleCompraListNewDetalleCompraToAttach : detalleCompraListNew) {
-                detalleCompraListNewDetalleCompraToAttach = em.getReference(detalleCompraListNewDetalleCompraToAttach.getClass(), detalleCompraListNewDetalleCompraToAttach.getDetalleCompraPK());
+                detalleCompraListNewDetalleCompraToAttach = em.getReference(detalleCompraListNewDetalleCompraToAttach.getClass(), detalleCompraListNewDetalleCompraToAttach.getIdCompra());
                 attachedDetalleCompraListNew.add(detalleCompraListNewDetalleCompraToAttach);
             }
             detalleCompraListNew = attachedDetalleCompraListNew;
             producto.setDetalleCompraList(detalleCompraListNew);
             List<Carrito> attachedCarritoListNew = new ArrayList<Carrito>();
             for (Carrito carritoListNewCarritoToAttach : carritoListNew) {
-                carritoListNewCarritoToAttach = em.getReference(carritoListNewCarritoToAttach.getClass(), carritoListNewCarritoToAttach.getCarritoPK());
+                carritoListNewCarritoToAttach = em.getReference(carritoListNewCarritoToAttach.getClass(), carritoListNewCarritoToAttach.getIdCliente());
                 attachedCarritoListNew.add(carritoListNewCarritoToAttach);
             }
             carritoListNew = attachedCarritoListNew;
             producto.setCarritoList(carritoListNew);
             List<Calificacion> attachedCalificacionListNew = new ArrayList<Calificacion>();
             for (Calificacion calificacionListNewCalificacionToAttach : calificacionListNew) {
-                calificacionListNewCalificacionToAttach = em.getReference(calificacionListNewCalificacionToAttach.getClass(), calificacionListNewCalificacionToAttach.getCalificacionPK());
+                calificacionListNewCalificacionToAttach = em.getReference(calificacionListNewCalificacionToAttach.getClass(), calificacionListNewCalificacionToAttach.getIdCliente());
                 attachedCalificacionListNew.add(calificacionListNewCalificacionToAttach);
             }
             calificacionListNew = attachedCalificacionListNew;
@@ -246,34 +240,34 @@ public class ProductoJpaController implements Serializable {
             }
             for (DetalleCompra detalleCompraListNewDetalleCompra : detalleCompraListNew) {
                 if (!detalleCompraListOld.contains(detalleCompraListNewDetalleCompra)) {
-                    Producto oldProductoOfDetalleCompraListNewDetalleCompra = detalleCompraListNewDetalleCompra.getProducto();
-                    detalleCompraListNewDetalleCompra.setProducto(producto);
+                    Producto oldIdProductoOfDetalleCompraListNewDetalleCompra = detalleCompraListNewDetalleCompra.getIdProducto();
+                    detalleCompraListNewDetalleCompra.setIdProducto(producto);
                     detalleCompraListNewDetalleCompra = em.merge(detalleCompraListNewDetalleCompra);
-                    if (oldProductoOfDetalleCompraListNewDetalleCompra != null && !oldProductoOfDetalleCompraListNewDetalleCompra.equals(producto)) {
-                        oldProductoOfDetalleCompraListNewDetalleCompra.getDetalleCompraList().remove(detalleCompraListNewDetalleCompra);
-                        oldProductoOfDetalleCompraListNewDetalleCompra = em.merge(oldProductoOfDetalleCompraListNewDetalleCompra);
+                    if (oldIdProductoOfDetalleCompraListNewDetalleCompra != null && !oldIdProductoOfDetalleCompraListNewDetalleCompra.equals(producto)) {
+                        oldIdProductoOfDetalleCompraListNewDetalleCompra.getDetalleCompraList().remove(detalleCompraListNewDetalleCompra);
+                        oldIdProductoOfDetalleCompraListNewDetalleCompra = em.merge(oldIdProductoOfDetalleCompraListNewDetalleCompra);
                     }
                 }
             }
             for (Carrito carritoListNewCarrito : carritoListNew) {
                 if (!carritoListOld.contains(carritoListNewCarrito)) {
-                    Producto oldProductoOfCarritoListNewCarrito = carritoListNewCarrito.getProducto();
-                    carritoListNewCarrito.setProducto(producto);
+                    Producto oldIdProductoOfCarritoListNewCarrito = carritoListNewCarrito.getIdProducto();
+                    carritoListNewCarrito.setIdProducto(producto);
                     carritoListNewCarrito = em.merge(carritoListNewCarrito);
-                    if (oldProductoOfCarritoListNewCarrito != null && !oldProductoOfCarritoListNewCarrito.equals(producto)) {
-                        oldProductoOfCarritoListNewCarrito.getCarritoList().remove(carritoListNewCarrito);
-                        oldProductoOfCarritoListNewCarrito = em.merge(oldProductoOfCarritoListNewCarrito);
+                    if (oldIdProductoOfCarritoListNewCarrito != null && !oldIdProductoOfCarritoListNewCarrito.equals(producto)) {
+                        oldIdProductoOfCarritoListNewCarrito.getCarritoList().remove(carritoListNewCarrito);
+                        oldIdProductoOfCarritoListNewCarrito = em.merge(oldIdProductoOfCarritoListNewCarrito);
                     }
                 }
             }
             for (Calificacion calificacionListNewCalificacion : calificacionListNew) {
                 if (!calificacionListOld.contains(calificacionListNewCalificacion)) {
-                    Producto oldProductoOfCalificacionListNewCalificacion = calificacionListNewCalificacion.getProducto();
-                    calificacionListNewCalificacion.setProducto(producto);
+                    Producto oldIdProductoOfCalificacionListNewCalificacion = calificacionListNewCalificacion.getIdProducto();
+                    calificacionListNewCalificacion.setIdProducto(producto);
                     calificacionListNewCalificacion = em.merge(calificacionListNewCalificacion);
-                    if (oldProductoOfCalificacionListNewCalificacion != null && !oldProductoOfCalificacionListNewCalificacion.equals(producto)) {
-                        oldProductoOfCalificacionListNewCalificacion.getCalificacionList().remove(calificacionListNewCalificacion);
-                        oldProductoOfCalificacionListNewCalificacion = em.merge(oldProductoOfCalificacionListNewCalificacion);
+                    if (oldIdProductoOfCalificacionListNewCalificacion != null && !oldIdProductoOfCalificacionListNewCalificacion.equals(producto)) {
+                        oldIdProductoOfCalificacionListNewCalificacion.getCalificacionList().remove(calificacionListNewCalificacion);
+                        oldIdProductoOfCalificacionListNewCalificacion = em.merge(oldIdProductoOfCalificacionListNewCalificacion);
                     }
                 }
             }
@@ -312,21 +306,21 @@ public class ProductoJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Producto (" + producto + ") cannot be destroyed since the DetalleCompra " + detalleCompraListOrphanCheckDetalleCompra + " in its detalleCompraList field has a non-nullable producto field.");
+                illegalOrphanMessages.add("This Producto (" + producto + ") cannot be destroyed since the DetalleCompra " + detalleCompraListOrphanCheckDetalleCompra + " in its detalleCompraList field has a non-nullable idProducto field.");
             }
             List<Carrito> carritoListOrphanCheck = producto.getCarritoList();
             for (Carrito carritoListOrphanCheckCarrito : carritoListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Producto (" + producto + ") cannot be destroyed since the Carrito " + carritoListOrphanCheckCarrito + " in its carritoList field has a non-nullable producto field.");
+                illegalOrphanMessages.add("This Producto (" + producto + ") cannot be destroyed since the Carrito " + carritoListOrphanCheckCarrito + " in its carritoList field has a non-nullable idProducto field.");
             }
             List<Calificacion> calificacionListOrphanCheck = producto.getCalificacionList();
             for (Calificacion calificacionListOrphanCheckCalificacion : calificacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Producto (" + producto + ") cannot be destroyed since the Calificacion " + calificacionListOrphanCheckCalificacion + " in its calificacionList field has a non-nullable producto field.");
+                illegalOrphanMessages.add("This Producto (" + producto + ") cannot be destroyed since the Calificacion " + calificacionListOrphanCheckCalificacion + " in its calificacionList field has a non-nullable idProducto field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
