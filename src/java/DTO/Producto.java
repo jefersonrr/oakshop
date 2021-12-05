@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -26,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
 @Entity
 @Table(name = "Producto")
@@ -36,13 +38,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Producto.findById", query = "SELECT p FROM Producto p WHERE p.id = :id")
     , @NamedQuery(name = "Producto.findByReferencia", query = "SELECT p FROM Producto p WHERE p.referencia = :referencia")
     , @NamedQuery(name = "Producto.findByCosto", query = "SELECT p FROM Producto p WHERE p.costo = :costo")
-    , @NamedQuery(name = "Producto.findByDescuento", query = "SELECT p FROM Producto p WHERE p.descuento = :descuento")})
+    , @NamedQuery(name = "Producto.findByDescuento", query = "SELECT p FROM Producto p WHERE p.descuento = :descuento")
+    , @NamedQuery(name = "Producto.findByCantidad", query = "SELECT p FROM Producto p WHERE p.cantidad = :cantidad")})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -64,9 +67,13 @@ public class Producto implements Serializable {
     @NotNull
     @Column(name = "descuento")
     private int descuento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cantidad")
+    private int cantidad;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<DetalleCompra> detalleCompraList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<Carrito> carritoList;
     @JoinColumn(name = "idColor", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -77,7 +84,7 @@ public class Producto implements Serializable {
     @JoinColumn(name = "idTalla", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Talla idTalla;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<Calificacion> calificacionList;
 
     public Producto() {
@@ -87,12 +94,13 @@ public class Producto implements Serializable {
         this.id = id;
     }
 
-    public Producto(Integer id, String referencia, String descripcion, double costo, int descuento) {
+    public Producto(Integer id, String referencia, String descripcion, double costo, int descuento, int cantidad) {
         this.id = id;
         this.referencia = referencia;
         this.descripcion = descripcion;
         this.costo = costo;
         this.descuento = descuento;
+        this.cantidad = cantidad;
     }
 
     public Integer getId() {
@@ -133,6 +141,14 @@ public class Producto implements Serializable {
 
     public void setDescuento(int descuento) {
         this.descuento = descuento;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     @XmlTransient

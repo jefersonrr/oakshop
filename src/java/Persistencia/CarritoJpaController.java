@@ -6,7 +6,6 @@
 package Persistencia;
 
 import DTO.Carrito;
-import DTO.CarritoPK;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -14,15 +13,17 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import DTO.Persona;
 import DTO.Producto;
+import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
 import Persistencia.exceptions.PreexistingEntityException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
 public class CarritoJpaController implements Serializable {
 
@@ -35,12 +36,21 @@ public class CarritoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Carrito carrito) throws PreexistingEntityException, Exception {
-        if (carrito.getCarritoPK() == null) {
-            carrito.setCarritoPK(new CarritoPK());
+    public void create(Carrito carrito) throws IllegalOrphanException, PreexistingEntityException, Exception {
+        List<String> illegalOrphanMessages = null;
+        Persona personaOrphanCheck = carrito.getPersona();
+        if (personaOrphanCheck != null) {
+            Carrito oldCarritoOfPersona = personaOrphanCheck.getCarrito();
+            if (oldCarritoOfPersona != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("The Persona " + personaOrphanCheck + " already has an item of type Carrito whose persona column cannot be null. Please make another selection for the persona field.");
+            }
         }
-        carrito.getCarritoPK().setIdProducto(carrito.getProducto().getId());
-        carrito.getCarritoPK().setIdCliente(carrito.getPersona().getCedula());
+        if (illegalOrphanMessages != null) {
+            throw new IllegalOrphanException(illegalOrphanMessages);
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -50,23 +60,23 @@ public class CarritoJpaController implements Serializable {
                 persona = em.getReference(persona.getClass(), persona.getCedula());
                 carrito.setPersona(persona);
             }
-            Producto producto = carrito.getProducto();
-            if (producto != null) {
-                producto = em.getReference(producto.getClass(), producto.getId());
-                carrito.setProducto(producto);
+            Producto idProducto = carrito.getIdProducto();
+            if (idProducto != null) {
+                idProducto = em.getReference(idProducto.getClass(), idProducto.getId());
+                carrito.setIdProducto(idProducto);
             }
             em.persist(carrito);
             if (persona != null) {
-                persona.getCarritoList().add(carrito);
+                persona.setCarrito(carrito);
                 persona = em.merge(persona);
             }
-            if (producto != null) {
-                producto.getCarritoList().add(carrito);
-                producto = em.merge(producto);
+            if (idProducto != null) {
+                idProducto.getCarritoList().add(carrito);
+                idProducto = em.merge(idProducto);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findCarrito(carrito.getCarritoPK()) != null) {
+            if (findCarrito(carrito.getIdCliente()) != null) {
                 throw new PreexistingEntityException("Carrito " + carrito + " already exists.", ex);
             }
             throw ex;
@@ -77,48 +87,59 @@ public class CarritoJpaController implements Serializable {
         }
     }
 
-    public void edit(Carrito carrito) throws NonexistentEntityException, Exception {
-        carrito.getCarritoPK().setIdProducto(carrito.getProducto().getId());
-        carrito.getCarritoPK().setIdCliente(carrito.getPersona().getCedula());
+    public void edit(Carrito carrito) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Carrito persistentCarrito = em.find(Carrito.class, carrito.getCarritoPK());
+            Carrito persistentCarrito = em.find(Carrito.class, carrito.getIdCliente());
             Persona personaOld = persistentCarrito.getPersona();
             Persona personaNew = carrito.getPersona();
-            Producto productoOld = persistentCarrito.getProducto();
-            Producto productoNew = carrito.getProducto();
+            Producto idProductoOld = persistentCarrito.getIdProducto();
+            Producto idProductoNew = carrito.getIdProducto();
+            List<String> illegalOrphanMessages = null;
+            if (personaNew != null && !personaNew.equals(personaOld)) {
+                Carrito oldCarritoOfPersona = personaNew.getCarrito();
+                if (oldCarritoOfPersona != null) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("The Persona " + personaNew + " already has an item of type Carrito whose persona column cannot be null. Please make another selection for the persona field.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             if (personaNew != null) {
                 personaNew = em.getReference(personaNew.getClass(), personaNew.getCedula());
                 carrito.setPersona(personaNew);
             }
-            if (productoNew != null) {
-                productoNew = em.getReference(productoNew.getClass(), productoNew.getId());
-                carrito.setProducto(productoNew);
+            if (idProductoNew != null) {
+                idProductoNew = em.getReference(idProductoNew.getClass(), idProductoNew.getId());
+                carrito.setIdProducto(idProductoNew);
             }
             carrito = em.merge(carrito);
             if (personaOld != null && !personaOld.equals(personaNew)) {
-                personaOld.getCarritoList().remove(carrito);
+                personaOld.setCarrito(null);
                 personaOld = em.merge(personaOld);
             }
             if (personaNew != null && !personaNew.equals(personaOld)) {
-                personaNew.getCarritoList().add(carrito);
+                personaNew.setCarrito(carrito);
                 personaNew = em.merge(personaNew);
             }
-            if (productoOld != null && !productoOld.equals(productoNew)) {
-                productoOld.getCarritoList().remove(carrito);
-                productoOld = em.merge(productoOld);
+            if (idProductoOld != null && !idProductoOld.equals(idProductoNew)) {
+                idProductoOld.getCarritoList().remove(carrito);
+                idProductoOld = em.merge(idProductoOld);
             }
-            if (productoNew != null && !productoNew.equals(productoOld)) {
-                productoNew.getCarritoList().add(carrito);
-                productoNew = em.merge(productoNew);
+            if (idProductoNew != null && !idProductoNew.equals(idProductoOld)) {
+                idProductoNew.getCarritoList().add(carrito);
+                idProductoNew = em.merge(idProductoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                CarritoPK id = carrito.getCarritoPK();
+                String id = carrito.getIdCliente();
                 if (findCarrito(id) == null) {
                     throw new NonexistentEntityException("The carrito with id " + id + " no longer exists.");
                 }
@@ -131,7 +152,7 @@ public class CarritoJpaController implements Serializable {
         }
     }
 
-    public void destroy(CarritoPK id) throws NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -139,19 +160,19 @@ public class CarritoJpaController implements Serializable {
             Carrito carrito;
             try {
                 carrito = em.getReference(Carrito.class, id);
-                carrito.getCarritoPK();
+                carrito.getIdCliente();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The carrito with id " + id + " no longer exists.", enfe);
             }
             Persona persona = carrito.getPersona();
             if (persona != null) {
-                persona.getCarritoList().remove(carrito);
+                persona.setCarrito(null);
                 persona = em.merge(persona);
             }
-            Producto producto = carrito.getProducto();
-            if (producto != null) {
-                producto.getCarritoList().remove(carrito);
-                producto = em.merge(producto);
+            Producto idProducto = carrito.getIdProducto();
+            if (idProducto != null) {
+                idProducto.getCarritoList().remove(carrito);
+                idProducto = em.merge(idProducto);
             }
             em.remove(carrito);
             em.getTransaction().commit();
@@ -186,7 +207,7 @@ public class CarritoJpaController implements Serializable {
         }
     }
 
-    public Carrito findCarrito(CarritoPK id) {
+    public Carrito findCarrito(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Carrito.class, id);

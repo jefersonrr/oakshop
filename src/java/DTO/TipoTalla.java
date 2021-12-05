@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
 @Entity
 @Table(name = "Tipo_Talla")
