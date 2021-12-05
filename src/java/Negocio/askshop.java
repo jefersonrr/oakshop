@@ -299,16 +299,6 @@ public class askshop {
         return rta;
     }
 
-    public String getFecha(Date fecha) {
-        SimpleDateFormat formateador = new SimpleDateFormat(
-                "dd '/' MM '/' yyyy", new Locale("es_ES"));
-        SimpleDateFormat formateador2 = new SimpleDateFormat(
-                "hh:mm", new Locale("es_ES"));
-        String fechad = formateador.format(fecha);
-        String horas = formateador2.format(fecha);
-        return "Dia: " + fechad.replace(" ", "") + "<br>Hora: " + horas;
-    }
-
     public String publicacionesTipoCliente(int id) {
 
         PublicacionDAO pudao = new PublicacionDAO();
