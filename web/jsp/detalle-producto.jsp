@@ -13,10 +13,7 @@
             String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                     + request.getServerPort() + path + "/";
             
-                if(request.getSession().getAttribute("listaServiciosIndex")== null){
-                  request.getRequestDispatcher(("MostrarRopaIndex.do")).forward(request, response);
-                
-                }
+               
         %>
         <base href="<%=basePath%>">
     <head>
@@ -146,7 +143,7 @@
         <div class = "product-imgs">
           <div class = "img-display">
             <div class = "img-showcase">
-              <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              <img src = "<%=basePath%>img/product-03.jpg" alt = "shoe image">
               <img src = "<%=basePath%>img/single_2.jpg" alt = "shoe image">
               <img src = "<%=basePath%>img/single_3.jpg" alt = "shoe image">
               <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
@@ -171,6 +168,36 @@
             <div class = "img-item">
               <a href = "#" data-id = "4">
                 <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "5">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "6">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "4">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "4">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "4">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "4">
+                <img src = "<%=basePath%>img/product-03.jpg" alt = "shoe image">
               </a>
             </div>
           </div>

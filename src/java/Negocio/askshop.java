@@ -208,5 +208,23 @@ public class askshop {
 
     }
     
+    
+    public String imagenesPublicacion(int id ){
+    
+        PublicacionDAO pdao = new PublicacionDAO();
+         Publicacion publi = pdao.readPublicacion(id);
+        List<Galeriaimg> galeria = publi.getGaleriaimgList();
+        String rta= "";
+        
+        for(Galeriaimg img : galeria){
+            
+            rta+="";
+        
+        }
+        
+        
+    return "";
+    }
+    
    
 }
