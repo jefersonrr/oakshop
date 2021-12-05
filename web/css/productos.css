@@ -227,6 +227,16 @@ select{
 
 /* productos */
 
+.imagen-producto{
+    width: 100%;
+    height: 360px;
+}
+
+.imagen-producto img{
+    width: 100%;
+    height: 100%;
+}
+
 .wrap-pic-w img {width: 100%;}
 .pos-relative {position: relative;}
 
@@ -355,3 +365,11 @@ select{
     text-transform: uppercase;
 }
 .p-r-5 {padding-right: 5px;}
+
+
+
+
+
+
+
+

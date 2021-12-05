@@ -35,7 +35,6 @@
 
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
-
         <!--menú -->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
