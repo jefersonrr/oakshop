@@ -6,7 +6,6 @@
 package DAO;
 
 import DTO.Calificacion;
-import DTO.CalificacionPK;
 import Persistencia.CalificacionJpaController;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
@@ -38,7 +37,7 @@ public class CalificacionDAO {
         return cit.findCalificacionEntities();
     }
     
-    public Calificacion readCalificacion(CalificacionPK id){
+    public Calificacion readCalificacion(String id){
         return cit.findCalificacion(id);
     }
     
@@ -50,13 +49,9 @@ public class CalificacionDAO {
         }
     }
     
-    public void delete(CalificacionPK id) throws IllegalOrphanException, NonexistentEntityException{
+    public void delete(String id) throws IllegalOrphanException, NonexistentEntityException{
         
-        try {
-            cit.destroy(id);
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(CalificacionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cit.destroy(id);
         
     }
 }

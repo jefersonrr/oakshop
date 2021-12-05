@@ -1,13 +1,17 @@
+<%-- 
+    Document   : EditarPublicacion
+    Created on : 4/12/2021, 06:07:41 PM
+    Author     : Cristian
+--%>
 
 
-<%@page import="Negocio.askshop"%>
-<%@page import="java.util.List"%>
 <%@page import="DTO.Publicacion"%>
 <%@page import="DAO.PublicacionDAO"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        
         <%
             String path = request.getContextPath();
             String basePath = request.getScheme() + "://" + request.getServerName() + ":"
@@ -102,117 +106,108 @@
         </div>
 
         <section class="home-section">
-            <div class="title">            
-                <div class="titulo">
-                    <h1>Lista de Publicaciones</h1>
-                </div>
+            <div class="col-md-8 container" role="document">
+                <div class="">
+                  <div class="modal-header justify-content-center align-items-center">
+                    <h2 class="modal-title">Editar Publicacion</h2>
+                  </div>
+                  <div class="modal-body">
+                            <form action="EditarProductosPublicacion.do">
+                              <div class="row d-flex text-center">
+                                <div class="col-md-6">
+                                    <%  PublicacionDAO p = new PublicacionDAO();
+                                            Publicacion pu = p.readPublicacion(Integer.parseInt(request.getSession().getAttribute("editar").toString()));
+                                        %>
+                                  <label for="exampleInputNombre" class="form-label"
+                                    >Nombre</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="exampleInputNombre"
+                                    name="nombre"
+                                    required
+                                    value="<%=pu.getNombre() %>"
+                                  />
+                                </div>
+                                <div class="col-md-6">
+                                  <label for="exampleInputNombre" class="form-label"
+                                    >Marca</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="exampleInputNombre"
+                                    name="marca"
+                                    required
+                                    value="<%=pu.getMarca()%>"
+                                  />
+                                </div>
+                              </div>
+                              <br />
+                              <br><br>
+                              <div class="row d-flex text-center">
+                                <div class="col-md-6">
+                                  <label for="exampleInputDuracion" class="form-label"
+                                    >Tipo</label><br />
 
-                <div class="boton">
-                    <form action="AgregarPublicacion.do">
-                    <button type="submit" class="btn btn-primary btn-lg" >Añadir Publicacion</button>
+                                        <select
+                                        class="custom-select"
+                                        style="height: 40px; width: 250px"  disabled
+                                        >
+
+                                        <option selected><%=pu.getIdTipo().getNombre()%></option>
+
+
+
+                                  </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <label for="exampleInputDuracion" class="form-label"
+                                    >Categoria</label
+                                  ><br />
+                                  <select
+                                      class="custom-select" disabled
+                                    style="height: 40px; width: 250px" name="categoria"
+                                  >
+                                      <option selected value="<%=pu.getIdCategoria().getId() %>" ><%=pu.getIdCategoria().getNombre() %></option>
+
+                                  </select>
+                                </div>
+
+                              </div>
+                              <br><br>
+                              <div class="row d-flex text-center">
+                                <div class="col-md-12">
+                                  <label for="exampleDescripcion" class="form-label"
+                                    >Descripción</label
+                                  ><br>
+                                  <textarea
+                                    class="form-control"
+                                    id="exampleInputDescripcion"
+                                    rows="3"
+                                    name="descripcion"
+                                    required
+                                  ><%=pu.getDescripcion()%></textarea>
+                                </div>
+                              </div>
+                              <hr />
+
+                              <br />
+                              <div class="d-flex justify-content-end">
+                              <button class="btn btn-primary" type="submit">
+                                Continuar
+                              </button>
+                                </div>
+                              <br />
+                              <hr />
                     </form>
+                  </div>
                 </div>
-            </div>
-
-            <%
-                PublicacionDAO p = new PublicacionDAO();
-                List<Publicacion> lista = p.read();
-                if (lista.isEmpty()) {%>
-            <div class = "container-fluid" style="display: flex; align-content: center; align-items: center;justify-content: center">
-                <h1 style="color:#ff0000" align="center">En estos momentos no existen publicaciones</h1>
-            </div>
-            <%} else {%>
-            <div class="table-responsive table-style">
-                <table id="example" class="table table-bordered table-striped table-hover">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th class="enc" scope="col">ID</th>
-                            <th class="enc" scope="col">Nombre</th>
-                            <th class="enc" scope="col">Marca</th>
-                            <th class="enc" scope="col">Fecha</th>
-                            <th class="enc" scope="col">Categoria</th>
-                            <th class="enc" scope="col">Tipo</th>
-                            <th class="enc" scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <%  askshop a = new askshop();
-                            for (Publicacion pu : lista) {
-                        %>
-                        <tr>
-                            <th class="enc" name="id" scope="row"><%=pu.getId()%></th>
-                            
-                            <td class="text-center"><%=pu.getNombre()%></td>
-                            <td class="text-center"><%=pu.getMarca()%></td>
-                            <td class="text-center"><%=a.getFecha(pu.getFecha())%></td>
-                            <td class="text-center"><%=pu.getIdCategoria().getNombre()%></td>
-                            <td class="text-center"><%=pu.getIdTipo().getNombre()%></td>
-                            <!-- Acciones: editar y cancelar. -->
-                            <td>
-                                <div class="icons-acciones">
-                                    <div>
-                                        <form action="EditarPublicacion.do">
-                                            <input hidden name="editar" value="<%=pu.getId()%>"/>
-                                            <button class="fas fa-edit" type="submit"></button>
-                                        </form>
-                                    </div>
-                                    <div>
-                                        <form>
-                                            <i class="fas fa-trash-alt" onclick="eliminar('<%=pu.getId()%>')" data-bs-toggle="modal" data-bs-target="#modal3"></i>
-                                        </form>
-                                    </div>      
-                                </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <%
-                            }%>
-                    </tbody>
-                </table>
-            </div>
-            <%}%>
-
+              </div>
         </section>
-
        
 
-        <!-- Modal para el botón eliminar-->
-        <div class="modal fade" id="modal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Eliminar Publicacion</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        ¿Estás seguro de eliminar la publicación? <br>
-                        Al eliminar la publicacion se eliminaran todos los productos que pertenezcan a esta
-                    </div>
-                    <div class="modal-footer">
-                        <form action="<%=basePath%>/EliminarPublicacion.do" name="formuEliminar">
 
-                            <div class="mb-3" >
-
-                                <input type="text" class="form-control " id="publicacion" name="publicId" style="display: none ">
-
-                            </div>
-
-                            <button type="button" class="boton2" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="sumbit" class="boton3">Eliminar</button>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-                        <script>
-                            function eliminar(id){
-                                let campoModal = document.getElementById('publicacion');
-                                campoModal.value = id;
-                            }
-                        </script>
 
         <script src="<%=basePath%>js/menuAdministrador.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -245,6 +240,23 @@
             );
             });
            
+            var modalEditarCliente = document.getElementById('modal2');
+            modalEditarCliente.addEventListener('show.bs.modal', (e) => {
+                var btn = e.relatedTarget.valueOf().parentNode;
+                li = btn.parentNode;
+                li = li.parentNode;
+                li = li.parentNode;
+                datos = li.querySelectorAll("td");
+                console.log(datos);
+                modalBodyInput = modalEditarCliente.querySelector('.modal-body').querySelectorAll('input');
+                modalBodyInput[0].value = datos[0].innerHTML;//nombre
+                modalBodyInput[1].value = datos[1].innerHTML;//cc
+                modalBodyInput[2].value = datos[3].innerHTML;//email
+                modalBodyInput[3].value = datos[2].innerHTML;//celular
+                modalBodyInput[4].value = datos[4].innerHTML;//direccion
+                modalBodyInput[5].value = e.relatedTarget.getAttribute('data-bs-whatever');//clave
+
+            });
         
         </script>
 

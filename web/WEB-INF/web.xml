@@ -38,6 +38,34 @@
         <servlet-class>ControladorVistas.adminUpdateCliente</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
+        <servlet-name>AgregarPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.AgregarPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AgregarProductos</servlet-name>
+        <servlet-class>ControladorVistas.AgregarProductos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CrearPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.CrearPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.EditarPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarProductosPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.EditarProductosPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActualizarPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.ActualizarPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.EliminarPublicacion</servlet-class>
+=======
         <servlet-name>MostrarCategorias</servlet-name>
         <servlet-class>ControladorVistas.MostrarCategorias</servlet-class>
     </servlet>
@@ -64,6 +92,7 @@
     <servlet>
         <servlet-name>FiltrarPublicaciones</servlet-name>
         <servlet-class>ControladorVistas.FiltrarPublicaciones</servlet-class>
+>>>>>>> Test
     </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
@@ -94,6 +123,34 @@
         <url-pattern>/adminUpdateCliente.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
+        <servlet-name>AgregarPublicacion</servlet-name>
+        <url-pattern>/AgregarPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarProductos</servlet-name>
+        <url-pattern>/AgregarProductos.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrearPublicacion</servlet-name>
+        <url-pattern>/CrearPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarPublicacion</servlet-name>
+        <url-pattern>/EditarPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarProductosPublicacion</servlet-name>
+        <url-pattern>/EditarProductosPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarPublicacion</servlet-name>
+        <url-pattern>/ActualizarPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarPublicacion</servlet-name>
+        <url-pattern>/EliminarPublicacion.do</url-pattern>
+=======
         <servlet-name>MostrarCategorias</servlet-name>
         <url-pattern>/MostrarCategorias.do</url-pattern>
     </servlet-mapping>
@@ -120,6 +177,7 @@
     <servlet-mapping>
         <servlet-name>FiltrarPublicaciones</servlet-name>
         <url-pattern>/FiltrarPublicaciones.do</url-pattern>
+>>>>>>> Test
     </servlet-mapping>
     <session-config>
         <session-timeout>
