@@ -14,6 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -53,6 +56,11 @@ public class Categoria implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "estado")
     private String estado;
+    @JoinTable(name = "Categoria_Tipo", joinColumns = {
+        @JoinColumn(name = "idCategoria", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idTipo", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Tipo> tipoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoria")
     private List<Publicacion> publicacionList;
 
@@ -94,6 +102,14 @@ public class Categoria implements Serializable {
     }
 
     @XmlTransient
+    public List<Tipo> getTipoList() {
+        return tipoList;
+    }
+
+    public void setTipoList(List<Tipo> tipoList) {
+        this.tipoList = tipoList;
+    }
+     @XmlTransient
     public List<Publicacion> getPublicacionList() {
         return publicacionList;
     }
@@ -126,5 +142,5 @@ public class Categoria implements Serializable {
     public String toString() {
         return "DTO.Categoria[ id=" + id + " ]";
     }
-
+    
 }

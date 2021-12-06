@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -86,15 +87,14 @@ public class Persona implements Serializable {
     @JoinColumn(name = "idRol", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Rol idRol;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
-    private List<Carrito> carritoList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
+    private Carrito carrito;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private List<Domicilio> domicilioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
-    private List<Calificacion> calificacionList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
+    private Calificacion calificacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private List<Compra> compraList;
-    
 
     public Persona() {
     }
@@ -184,13 +184,13 @@ public class Persona implements Serializable {
     public void setIdRol(Rol idRol) {
         this.idRol = idRol;
     }
-    @XmlTransient
-    public List<Carrito> getCarritoList() {
-        return carritoList;
+
+    public Carrito getCarrito() {
+        return carrito;
     }
 
-    public void setCarritoList(List<Carrito> carritoList) {
-        this.carritoList = carritoList;
+    public void setCarrito(Carrito carrito) {
+        this.carrito = carrito;
     }
 
     @XmlTransient
@@ -202,13 +202,12 @@ public class Persona implements Serializable {
         this.domicilioList = domicilioList;
     }
 
-    @XmlTransient
-    public List<Calificacion> getCalificacionList() {
-        return calificacionList;
+    public Calificacion getCalificacion() {
+        return calificacion;
     }
 
-    public void setCalificacionList(List<Calificacion> calificacionList) {
-        this.calificacionList = calificacionList;
+    public void setCalificacion(Calificacion calificacion) {
+        this.calificacion = calificacion;
     }
 
     @XmlTransient
@@ -244,5 +243,5 @@ public class Persona implements Serializable {
     public String toString() {
         return "DTO.Persona[ cedula=" + cedula + " ]";
     }
-
+    
 }

@@ -13,10 +13,7 @@
             String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                     + request.getServerPort() + path + "/";
             
-                if(request.getSession().getAttribute("listaServiciosIndex")== null){
-                  request.getRequestDispatcher(("MostrarRopaIndex.do")).forward(request, response);
-                
-                }
+               
         %>
         <base href="<%=basePath%>">
     <head>
@@ -31,6 +28,7 @@
     
      <!-- CSS de Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
         
         <!-- CSS restantes -->
@@ -146,7 +144,7 @@
         <div class = "product-imgs">
           <div class = "img-display">
             <div class = "img-showcase">
-              <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              <img src = "<%=basePath%>img/product-03.jpg" alt = "shoe image">
               <img src = "<%=basePath%>img/single_2.jpg" alt = "shoe image">
               <img src = "<%=basePath%>img/single_3.jpg" alt = "shoe image">
               <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
@@ -171,6 +169,36 @@
             <div class = "img-item">
               <a href = "#" data-id = "4">
                 <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "5">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "6">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "4">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "4">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "4">
+                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
+              </a>
+            </div>
+              <div class = "img-item">
+              <a href = "#" data-id = "4">
+                <img src = "<%=basePath%>img/product-03.jpg" alt = "shoe image">
               </a>
             </div>
           </div>

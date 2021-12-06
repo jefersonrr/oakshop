@@ -34,9 +34,11 @@ public class PublicacionesCategoria extends HttpServlet {
       // String id = request.getParameter("id");
        askshop as = new askshop();
        TipoDAO tdao = new TipoDAO();
-       request.getSession().setAttribute("tipo", tdao.readTipo(2).getNombre());
-       request.getSession().setAttribute("selectTalla", as.tallasTipo(2));
-       request.getSession().setAttribute("productos", as.publicacionesTipoCliente(2));
+       int  tipo = Integer.parseInt(request.getParameter("tipo"));
+ 
+       request.getSession().setAttribute("tipo", tdao.readTipo(tipo).getNombre());
+       request.getSession().setAttribute("selectTalla", as.tallasTipo(tipo));
+       request.getSession().setAttribute("productos", as.publicacionesTipoCliente(tipo));
        request.getRequestDispatcher("./jsp/productos.jsp").forward(request, response);
     }
 

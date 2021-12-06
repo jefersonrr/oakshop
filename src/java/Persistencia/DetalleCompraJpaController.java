@@ -10,19 +10,20 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import DTO.Producto;
 import DTO.Compra;
 import DTO.DetalleCompra;
-import DTO.DetalleCompraPK;
-import DTO.Producto;
+import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
 import Persistencia.exceptions.PreexistingEntityException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
 public class DetalleCompraJpaController implements Serializable {
 
@@ -35,38 +36,47 @@ public class DetalleCompraJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(DetalleCompra detalleCompra) throws PreexistingEntityException, Exception {
-        if (detalleCompra.getDetalleCompraPK() == null) {
-            detalleCompra.setDetalleCompraPK(new DetalleCompraPK());
+    public void create(DetalleCompra detalleCompra) throws IllegalOrphanException, PreexistingEntityException, Exception {
+        List<String> illegalOrphanMessages = null;
+        Compra compraOrphanCheck = detalleCompra.getCompra();
+        if (compraOrphanCheck != null) {
+            DetalleCompra oldDetalleCompraOfCompra = compraOrphanCheck.getDetalleCompra();
+            if (oldDetalleCompraOfCompra != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("The Compra " + compraOrphanCheck + " already has an item of type DetalleCompra whose compra column cannot be null. Please make another selection for the compra field.");
+            }
         }
-        detalleCompra.getDetalleCompraPK().setIdProducto(detalleCompra.getProducto().getId());
-        detalleCompra.getDetalleCompraPK().setIdCompra(detalleCompra.getCompra().getId());
+        if (illegalOrphanMessages != null) {
+            throw new IllegalOrphanException(illegalOrphanMessages);
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Producto idProducto = detalleCompra.getIdProducto();
+            if (idProducto != null) {
+                idProducto = em.getReference(idProducto.getClass(), idProducto.getId());
+                detalleCompra.setIdProducto(idProducto);
+            }
             Compra compra = detalleCompra.getCompra();
             if (compra != null) {
                 compra = em.getReference(compra.getClass(), compra.getId());
                 detalleCompra.setCompra(compra);
             }
-            Producto producto = detalleCompra.getProducto();
-            if (producto != null) {
-                producto = em.getReference(producto.getClass(), producto.getId());
-                detalleCompra.setProducto(producto);
-            }
             em.persist(detalleCompra);
-            if (compra != null) {
-                compra.getDetalleCompraList().add(detalleCompra);
-                compra = em.merge(compra);
+            if (idProducto != null) {
+                idProducto.getDetalleCompraList().add(detalleCompra);
+                idProducto = em.merge(idProducto);
             }
-            if (producto != null) {
-                producto.getDetalleCompraList().add(detalleCompra);
-                producto = em.merge(producto);
+            if (compra != null) {
+                compra.setDetalleCompra(detalleCompra);
+                compra = em.merge(compra);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findDetalleCompra(detalleCompra.getDetalleCompraPK()) != null) {
+            if (findDetalleCompra(detalleCompra.getIdCompra()) != null) {
                 throw new PreexistingEntityException("DetalleCompra " + detalleCompra + " already exists.", ex);
             }
             throw ex;
@@ -77,48 +87,59 @@ public class DetalleCompraJpaController implements Serializable {
         }
     }
 
-    public void edit(DetalleCompra detalleCompra) throws NonexistentEntityException, Exception {
-        detalleCompra.getDetalleCompraPK().setIdProducto(detalleCompra.getProducto().getId());
-        detalleCompra.getDetalleCompraPK().setIdCompra(detalleCompra.getCompra().getId());
+    public void edit(DetalleCompra detalleCompra) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            DetalleCompra persistentDetalleCompra = em.find(DetalleCompra.class, detalleCompra.getDetalleCompraPK());
+            DetalleCompra persistentDetalleCompra = em.find(DetalleCompra.class, detalleCompra.getIdCompra());
+            Producto idProductoOld = persistentDetalleCompra.getIdProducto();
+            Producto idProductoNew = detalleCompra.getIdProducto();
             Compra compraOld = persistentDetalleCompra.getCompra();
             Compra compraNew = detalleCompra.getCompra();
-            Producto productoOld = persistentDetalleCompra.getProducto();
-            Producto productoNew = detalleCompra.getProducto();
+            List<String> illegalOrphanMessages = null;
+            if (compraNew != null && !compraNew.equals(compraOld)) {
+                DetalleCompra oldDetalleCompraOfCompra = compraNew.getDetalleCompra();
+                if (oldDetalleCompraOfCompra != null) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("The Compra " + compraNew + " already has an item of type DetalleCompra whose compra column cannot be null. Please make another selection for the compra field.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            if (idProductoNew != null) {
+                idProductoNew = em.getReference(idProductoNew.getClass(), idProductoNew.getId());
+                detalleCompra.setIdProducto(idProductoNew);
+            }
             if (compraNew != null) {
                 compraNew = em.getReference(compraNew.getClass(), compraNew.getId());
                 detalleCompra.setCompra(compraNew);
             }
-            if (productoNew != null) {
-                productoNew = em.getReference(productoNew.getClass(), productoNew.getId());
-                detalleCompra.setProducto(productoNew);
-            }
             detalleCompra = em.merge(detalleCompra);
+            if (idProductoOld != null && !idProductoOld.equals(idProductoNew)) {
+                idProductoOld.getDetalleCompraList().remove(detalleCompra);
+                idProductoOld = em.merge(idProductoOld);
+            }
+            if (idProductoNew != null && !idProductoNew.equals(idProductoOld)) {
+                idProductoNew.getDetalleCompraList().add(detalleCompra);
+                idProductoNew = em.merge(idProductoNew);
+            }
             if (compraOld != null && !compraOld.equals(compraNew)) {
-                compraOld.getDetalleCompraList().remove(detalleCompra);
+                compraOld.setDetalleCompra(null);
                 compraOld = em.merge(compraOld);
             }
             if (compraNew != null && !compraNew.equals(compraOld)) {
-                compraNew.getDetalleCompraList().add(detalleCompra);
+                compraNew.setDetalleCompra(detalleCompra);
                 compraNew = em.merge(compraNew);
-            }
-            if (productoOld != null && !productoOld.equals(productoNew)) {
-                productoOld.getDetalleCompraList().remove(detalleCompra);
-                productoOld = em.merge(productoOld);
-            }
-            if (productoNew != null && !productoNew.equals(productoOld)) {
-                productoNew.getDetalleCompraList().add(detalleCompra);
-                productoNew = em.merge(productoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                DetalleCompraPK id = detalleCompra.getDetalleCompraPK();
+                Integer id = detalleCompra.getIdCompra();
                 if (findDetalleCompra(id) == null) {
                     throw new NonexistentEntityException("The detalleCompra with id " + id + " no longer exists.");
                 }
@@ -131,7 +152,7 @@ public class DetalleCompraJpaController implements Serializable {
         }
     }
 
-    public void destroy(DetalleCompraPK id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -139,19 +160,19 @@ public class DetalleCompraJpaController implements Serializable {
             DetalleCompra detalleCompra;
             try {
                 detalleCompra = em.getReference(DetalleCompra.class, id);
-                detalleCompra.getDetalleCompraPK();
+                detalleCompra.getIdCompra();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The detalleCompra with id " + id + " no longer exists.", enfe);
             }
+            Producto idProducto = detalleCompra.getIdProducto();
+            if (idProducto != null) {
+                idProducto.getDetalleCompraList().remove(detalleCompra);
+                idProducto = em.merge(idProducto);
+            }
             Compra compra = detalleCompra.getCompra();
             if (compra != null) {
-                compra.getDetalleCompraList().remove(detalleCompra);
+                compra.setDetalleCompra(null);
                 compra = em.merge(compra);
-            }
-            Producto producto = detalleCompra.getProducto();
-            if (producto != null) {
-                producto.getDetalleCompraList().remove(detalleCompra);
-                producto = em.merge(producto);
             }
             em.remove(detalleCompra);
             em.getTransaction().commit();
@@ -186,7 +207,7 @@ public class DetalleCompraJpaController implements Serializable {
         }
     }
 
-    public DetalleCompra findDetalleCompra(DetalleCompraPK id) {
+    public DetalleCompra findDetalleCompra(Integer id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(DetalleCompra.class, id);

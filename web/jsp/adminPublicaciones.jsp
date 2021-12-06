@@ -60,9 +60,9 @@
                 <li>
                     <a href="<%=basePath%>CitasAdmin.do">
                         <i class="far fa-calendar-alt"></i>
-                        <span class="links_name">Agendamientos</span>
+                        <span class="links_name">Publicaciones</span>
                     </a>
-                    <span class="tooltip">Agendamientos</span>
+                    <span class="tooltip">Publicaciones</span>
                 </li>
                 <li>
                     <a href="<%=basePath%>./jsp/adminClientes.jsp">
@@ -108,7 +108,9 @@
                 </div>
 
                 <div class="boton">
-                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modal1">Añadir Publicacion</button>
+                    <form action="AgregarPublicacion.do">
+                    <button type="submit" class="btn btn-primary btn-lg" >Añadir Publicacion</button>
+                    </form>
                 </div>
             </div>
 
@@ -139,7 +141,7 @@
                             for (Publicacion pu : lista) {
                         %>
                         <tr>
-                            <th class="enc" scope="row"><%=pu.getId()%></th>
+                            <th class="enc" name="id" scope="row"><%=pu.getId()%></th>
                             
                             <td class="text-center"><%=pu.getNombre()%></td>
                             <td class="text-center"><%=pu.getMarca()%></td>
@@ -150,12 +152,15 @@
                             <td>
                                 <div class="icons-acciones">
                                     <div>
-
-                                        <i class="fas fa-edit" id="e1" data-bs-toggle="modal" data-bs-target="#modal2" data-bs-whatever=""></i>
+                                        <form action="EditarPublicacion.do">
+                                            <input hidden name="editar" value="<%=pu.getId()%>"/>
+                                            <button class="fas fa-edit" type="submit"></button>
+                                        </form>
                                     </div>
                                     <div>
-                                        <i class="fas fa-trash-alt" data-bs-toggle="modal" data-bs-target="#modal3"></i>
-
+                                        <form>
+                                            <i class="fas fa-trash-alt" onclick="eliminar('<%=pu.getId()%>')" data-bs-toggle="modal" data-bs-target="#modal3"></i>
+                                        </form>
                                     </div>      
                                 </div>
                                 </div>
@@ -177,203 +182,37 @@
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Eliminar Servicio</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Eliminar Publicacion</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ¿Estás seguro de eliminar el Servicio?
+                        ¿Estás seguro de eliminar la publicación? <br>
+                        Al eliminar la publicacion se eliminaran todos los productos que pertenezcan a esta
                     </div>
                     <div class="modal-footer">
-                        <form action="<%=basePath%>/EliminarServicio.do" method="POST">
+                        <form action="<%=basePath%>/EliminarPublicacion.do" name="formuEliminar">
 
                             <div class="mb-3" >
 
-                                <input type="text" class="form-control " id="exampleInputNombre" name="id"  style="display: none ">
+                                <input type="text" class="form-control " id="publicacion" name="publicId" style="display: none ">
 
                             </div>
 
                             <button type="button" class="boton2" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="boton3">Eliminar</button>
+                            <button type="sumbit" class="boton3">Eliminar</button>
 
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-                         <!-- ventana modal de editar -->
-        <div class="modal fade" tabindex="-1" role="dialog" id="modal2" aria-labelledby="modal2" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header justify-content-center align-items-center">
 
-                        <h2 class="modal-title">Editar Servicio</h2>
-                        <!--       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                              </button> -->
-                    </div>
-                    <div class="modal-body ">
-
-
-                        <form action="<%=basePath%>ActualizarServicio.do" method="POST">
-                            <div class="row text-center m-3">
-
-                                <div class="col-md-6">
-
-                                    <div class="mb-3" style="display: none">
-                                        <label for="exampleInputNombre" class="form-label">ID</label>
-                                        <input type="text" class="form-control " id="exampleInputNombre" name="id" required>
-
-                                    </div>
-                                    <div class="mb-3 ">
-                                        <label for="exampleInputNombre" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control " id="exampleInputNombre" name="nombre" required>
-
-                                    </div>
-
-
-                                </div>
-
-
-
-                                <div class="col-md-6">
-
-                                    <div class="mb-3">
-                                        <label for="exampleInputDuracion" class="form-label">Duración</label>
-                                        <input type="number" class="form-control" id="exampleInputDuracion"  name="duracion" value="30" required>
-                                    </div>
-
-                                </div>
-
-
-
-                                <div class="mb-3">
-                                    <label for="exampleInputImagenURL" class="form-label">ImagenURL</label>
-                                    <input type="text" class="form-control" id="exampleInputImagenURL" name="img" required>
-                                </div>
-
-
-
-
-
-                                <div class="mb-3">
-                                    <label for="exampleDescripcion" class="form-label">Descripción</label>
-                                    <textarea class="form-control" id="exampleInputDescripcion" rows="3" name="descripcion" required></textarea>
-                                </div>
-
-
-
-
-                            </div>
-
-
-
-
-                            <div class="modal-footer mt-2 " id="foterM">
-                                <button type="button" class="boton2" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="boton3">Guardar</button>
-                            </div>
-
-
-                        </form>
-
-
-                    </div>
-                    <!--  <div class="modal-footer" id="foterM">
-                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                       <a href="#" class="btn" id="boton" type="button">Calificar servicio</a>
-                     </div> -->
-                </div>
-            </div>
-        </div>
-
-
-        <!-- ventana modal de editar -->
-        <div class="modal fade" tabindex="-1" role="dialog" id="modal2" aria-labelledby="modal2example" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header justify-content-center align-items-center">
-
-                        <h2 class="modal-title">Editar Publicacion</h2>
-                        <!--       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                              </button> -->
-                    </div>
-                    <div class="modal-body ">
-                        <form action="<%=basePath%>adminUpdateCliente.do" method="GET">
-                            <div class="row text-center m-3">
-                                <div class="col-md-6">
-
-                                    <div class="mb-3 ">
-                                        <label for="exampleInputNombre" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control " id="recipient-name" name="nombre" required>
-
-                                    </div>
-
-
-                                </div>
-
-
-
-                                <div class="col-md-6">
-
-                                    <div class="mb-3">
-                                        <label for="exampleInputCed" class="form-label">Cédula</label>
-                                        <input type="number" class="form-control" id="exampleInputCed" name="cedula" readonly>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail" class="form-label">Correo electrónico</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail" name="email" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="exampleInputCel" class="form-label">Celular</label>
-                                        <input type="number" class="form-control" id="exampleInputCel" name="celular" required>
-                                    </div>
-                                </div>
-
-
-
-
-                                <div class="col-md-6">
-
-                                    <div class="mb-3">
-                                        <label for="exampleInputDirec" class="form-label">Dirección</label>
-                                        <input type="text" class="form-control" id="exampleInputDirec" name="direccion" required>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-
-                                    <div class="mb-3">
-                                        <label for="exampleInputPass" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="exampleInputPass" name="clave" required>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="modal-footer mt-2 " id="foterM">
-                                <button type="button" class="boton2" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="boton3">Guardar</button>
-                            </div>
-
-                        </form>
-
-
-                    </div>
-                    <!--  <div class="modal-footer" id="foterM">
-                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                       <a href="#" class="btn" id="boton" type="button">Calificar servicio</a>
-                     </div> -->
-                </div>
-            </div>
-        </div>
-
+                        <script>
+                            function eliminar(id){
+                                let campoModal = document.getElementById('publicacion');
+                                campoModal.value = id;
+                            }
+                        </script>
 
         <script src="<%=basePath%>js/menuAdministrador.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -406,23 +245,6 @@
             );
             });
            
-            var modalEditarCliente = document.getElementById('modal2');
-            modalEditarCliente.addEventListener('show.bs.modal', (e) => {
-                var btn = e.relatedTarget.valueOf().parentNode;
-                li = btn.parentNode;
-                li = li.parentNode;
-                li = li.parentNode;
-                datos = li.querySelectorAll("td");
-                console.log(datos);
-                modalBodyInput = modalEditarCliente.querySelector('.modal-body').querySelectorAll('input');
-                modalBodyInput[0].value = datos[0].innerHTML;//nombre
-                modalBodyInput[1].value = datos[1].innerHTML;//cc
-                modalBodyInput[2].value = datos[3].innerHTML;//email
-                modalBodyInput[3].value = datos[2].innerHTML;//celular
-                modalBodyInput[4].value = datos[4].innerHTML;//direccion
-                modalBodyInput[5].value = e.relatedTarget.getAttribute('data-bs-whatever');//clave
-
-            });
         
         </script>
 
