@@ -58,5 +58,16 @@
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/css/productos.css</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/Persistencia/CategoriaJpaController.java</file>
         </group>
+        <group>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/FiltrarPublicaciones.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/productos.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/medioPagoConfirmar.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/PublicacionesCategoria.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/AddCategoria.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/DAO/PublicacionDAO.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/Negocio/askshop.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/index.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/WEB-INF/web.xml</file>
+        </group>
     </open-files>
 </project-private>
