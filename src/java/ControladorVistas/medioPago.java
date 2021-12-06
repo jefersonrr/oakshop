@@ -5,8 +5,6 @@
  */
 package ControladorVistas;
 
-import DAO.PersonaDAO;
-import DAO.RolDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Cristian
+ * @author Luis
  */
-public class Registro extends HttpServlet {
+public class medioPago extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,30 +29,18 @@ public class Registro extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         response.setContentType("text/html;charset=UTF-8");
-
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        String contrasenia = request.getParameter("password");
-        String cedula = request.getParameter("cedula");
-        String correo = request.getParameter("correo");
-        String telef = request.getParameter("telefono");
-        String direccion = request.getParameter("direccion");
-        PersonaDAO p = new PersonaDAO();
-
-        boolean existePersona = p.existePersona(cedula);
-        boolean existeCorreo = p.existeCorreo(correo);
-        String esta = "existe";
-        if (existePersona || existeCorreo) {
-            if(existePersona) esta += " Usuario";
-            if(existeCorreo) esta += " Correo";
-            request.getSession().setAttribute("existe", esta);
-            request.getRequestDispatcher("jsp/registrarse.jsp").forward(request, response);
-        } else {
-            RolDAO r = new RolDAO();
-            p.crearPersona(nombre, apellido, contrasenia, cedula, correo, telef, direccion, r.readRol((short)2));
-            request.getRequestDispatcher("jsp/iniciarsesion.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet medioPago</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet medioPago at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

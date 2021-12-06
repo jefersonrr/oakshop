@@ -309,6 +309,7 @@ public class askshop {
         Galeriaimg img;
         String rta = "";
         for (Publicacion p : publicaciones) {
+            
             pro = pdao.firstReadPublicacion(p.getId());
             img = imgdao.fisrtImg(p.getId());
 
@@ -323,9 +324,9 @@ public class askshop {
                     + "\n"
                     + "                                            <div class=\"block2-btn-addcart w-size1 trans-0-4\">\n"
                     + "						<!-- Button -->\n"
-                    + "						<button class=\"flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4\">\n"
+                    + "						<form action=\"mostrarDetalles.do\" method=\"POST\"><button class=\"flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4\">\n"
                     + "                                                    Detalles\n"
-                    + "						</button>\n"
+                    + "						</button><input name='id_publicacion' type='hidden' value='"+p.getId()+"' /> </form>\n"
                     + "                                            </div>\n"
                     + "					</div>\n"
                     + "                                    </div>\n"
