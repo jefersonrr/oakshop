@@ -150,70 +150,7 @@
       <div class = "card">
         <!-- card left -->
         <div class = "product-imgs">
-<<<<<<< HEAD
-          <div class = "img-display">
-            <div class = "img-showcase">
-              <img src = "<%=basePath%>img/product-03.jpg" alt = "shoe image">
-              <img src = "<%=basePath%>img/single_2.jpg" alt = "shoe image">
-              <img src = "<%=basePath%>img/single_3.jpg" alt = "shoe image">
-              <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-            </div>
-          </div>
-          <div class = "img-select">
-            <div class = "img-item">
-              <a href = "#" data-id = "1">
-                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              </a>
-            </div>
-            <div class = "img-item">
-              <a href = "#" data-id = "2">
-                <img src = "<%=basePath%>img/single_2.jpg" alt = "shoe image">
-              </a>
-            </div>
-            <div class = "img-item">
-              <a href = "#" data-id = "3">
-                <img src = "<%=basePath%>img/single_3.jpg" alt = "shoe image">
-              </a>
-            </div>
-            <div class = "img-item">
-              <a href = "#" data-id = "4">
-                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              </a>
-            </div>
-              <div class = "img-item">
-              <a href = "#" data-id = "5">
-                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              </a>
-            </div>
-              <div class = "img-item">
-              <a href = "#" data-id = "6">
-                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              </a>
-            </div>
-              <div class = "img-item">
-              <a href = "#" data-id = "4">
-                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              </a>
-            </div>
-              <div class = "img-item">
-              <a href = "#" data-id = "4">
-                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              </a>
-            </div>
-              <div class = "img-item">
-              <a href = "#" data-id = "4">
-                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              </a>
-            </div>
-              <div class = "img-item">
-              <a href = "#" data-id = "4">
-                <img src = "<%=basePath%>img/product-03.jpg" alt = "shoe image">
-              </a>
-            </div>
-          </div>
-=======
             <%= request.getSession().getAttribute("imagenes") %>
->>>>>>> 6ffb75314fb763d1e508e58361b1cd46e2241999
         </div>
               
         <!-- card right -->
