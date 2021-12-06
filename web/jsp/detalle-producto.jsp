@@ -158,7 +158,7 @@
               
         <!-- card right -->
         <div class = "product-content">
-          <h2 class = "product-title">Nombre producto</h2>
+            <h2 class = "product-title"><%= request.getSession().getAttribute("publicacion_nombre") %></h2>
           <h3>REF: <span id="nombre_producto"></span></h3>
           
           <hr>
