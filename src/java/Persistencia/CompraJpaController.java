@@ -11,20 +11,20 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import DTO.DetalleCompra;
 import DTO.Persona;
 import DTO.MetodoPago;
-import DTO.DetalleCompra;
-import java.util.ArrayList;
-import java.util.List;
 import DTO.Envio;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
 public class CompraJpaController implements Serializable {
 
@@ -38,9 +38,6 @@ public class CompraJpaController implements Serializable {
     }
 
     public void create(Compra compra) {
-        if (compra.getDetalleCompraList() == null) {
-            compra.setDetalleCompraList(new ArrayList<DetalleCompra>());
-        }
         if (compra.getEnvioList() == null) {
             compra.setEnvioList(new ArrayList<Envio>());
         }
@@ -48,6 +45,11 @@ public class CompraJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            DetalleCompra detalleCompra = compra.getDetalleCompra();
+            if (detalleCompra != null) {
+                detalleCompra = em.getReference(detalleCompra.getClass(), detalleCompra.getIdCompra());
+                compra.setDetalleCompra(detalleCompra);
+            }
             Persona idCliente = compra.getIdCliente();
             if (idCliente != null) {
                 idCliente = em.getReference(idCliente.getClass(), idCliente.getCedula());
@@ -58,12 +60,6 @@ public class CompraJpaController implements Serializable {
                 idMetodoPago = em.getReference(idMetodoPago.getClass(), idMetodoPago.getId());
                 compra.setIdMetodoPago(idMetodoPago);
             }
-            List<DetalleCompra> attachedDetalleCompraList = new ArrayList<DetalleCompra>();
-            for (DetalleCompra detalleCompraListDetalleCompraToAttach : compra.getDetalleCompraList()) {
-                detalleCompraListDetalleCompraToAttach = em.getReference(detalleCompraListDetalleCompraToAttach.getClass(), detalleCompraListDetalleCompraToAttach.getDetalleCompraPK());
-                attachedDetalleCompraList.add(detalleCompraListDetalleCompraToAttach);
-            }
-            compra.setDetalleCompraList(attachedDetalleCompraList);
             List<Envio> attachedEnvioList = new ArrayList<Envio>();
             for (Envio envioListEnvioToAttach : compra.getEnvioList()) {
                 envioListEnvioToAttach = em.getReference(envioListEnvioToAttach.getClass(), envioListEnvioToAttach.getId());
@@ -71,6 +67,15 @@ public class CompraJpaController implements Serializable {
             }
             compra.setEnvioList(attachedEnvioList);
             em.persist(compra);
+            if (detalleCompra != null) {
+                Compra oldCompraOfDetalleCompra = detalleCompra.getCompra();
+                if (oldCompraOfDetalleCompra != null) {
+                    oldCompraOfDetalleCompra.setDetalleCompra(null);
+                    oldCompraOfDetalleCompra = em.merge(oldCompraOfDetalleCompra);
+                }
+                detalleCompra.setCompra(compra);
+                detalleCompra = em.merge(detalleCompra);
+            }
             if (idCliente != null) {
                 idCliente.getCompraList().add(compra);
                 idCliente = em.merge(idCliente);
@@ -78,15 +83,6 @@ public class CompraJpaController implements Serializable {
             if (idMetodoPago != null) {
                 idMetodoPago.getCompraList().add(compra);
                 idMetodoPago = em.merge(idMetodoPago);
-            }
-            for (DetalleCompra detalleCompraListDetalleCompra : compra.getDetalleCompraList()) {
-                Compra oldCompraOfDetalleCompraListDetalleCompra = detalleCompraListDetalleCompra.getCompra();
-                detalleCompraListDetalleCompra.setCompra(compra);
-                detalleCompraListDetalleCompra = em.merge(detalleCompraListDetalleCompra);
-                if (oldCompraOfDetalleCompraListDetalleCompra != null) {
-                    oldCompraOfDetalleCompraListDetalleCompra.getDetalleCompraList().remove(detalleCompraListDetalleCompra);
-                    oldCompraOfDetalleCompraListDetalleCompra = em.merge(oldCompraOfDetalleCompraListDetalleCompra);
-                }
             }
             for (Envio envioListEnvio : compra.getEnvioList()) {
                 Compra oldIdCompraOfEnvioListEnvio = envioListEnvio.getIdCompra();
@@ -111,22 +107,20 @@ public class CompraJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Compra persistentCompra = em.find(Compra.class, compra.getId());
+            DetalleCompra detalleCompraOld = persistentCompra.getDetalleCompra();
+            DetalleCompra detalleCompraNew = compra.getDetalleCompra();
             Persona idClienteOld = persistentCompra.getIdCliente();
             Persona idClienteNew = compra.getIdCliente();
             MetodoPago idMetodoPagoOld = persistentCompra.getIdMetodoPago();
             MetodoPago idMetodoPagoNew = compra.getIdMetodoPago();
-            List<DetalleCompra> detalleCompraListOld = persistentCompra.getDetalleCompraList();
-            List<DetalleCompra> detalleCompraListNew = compra.getDetalleCompraList();
             List<Envio> envioListOld = persistentCompra.getEnvioList();
             List<Envio> envioListNew = compra.getEnvioList();
             List<String> illegalOrphanMessages = null;
-            for (DetalleCompra detalleCompraListOldDetalleCompra : detalleCompraListOld) {
-                if (!detalleCompraListNew.contains(detalleCompraListOldDetalleCompra)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain DetalleCompra " + detalleCompraListOldDetalleCompra + " since its compra field is not nullable.");
+            if (detalleCompraOld != null && !detalleCompraOld.equals(detalleCompraNew)) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
                 }
+                illegalOrphanMessages.add("You must retain DetalleCompra " + detalleCompraOld + " since its compra field is not nullable.");
             }
             for (Envio envioListOldEnvio : envioListOld) {
                 if (!envioListNew.contains(envioListOldEnvio)) {
@@ -139,6 +133,10 @@ public class CompraJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (detalleCompraNew != null) {
+                detalleCompraNew = em.getReference(detalleCompraNew.getClass(), detalleCompraNew.getIdCompra());
+                compra.setDetalleCompra(detalleCompraNew);
+            }
             if (idClienteNew != null) {
                 idClienteNew = em.getReference(idClienteNew.getClass(), idClienteNew.getCedula());
                 compra.setIdCliente(idClienteNew);
@@ -147,13 +145,6 @@ public class CompraJpaController implements Serializable {
                 idMetodoPagoNew = em.getReference(idMetodoPagoNew.getClass(), idMetodoPagoNew.getId());
                 compra.setIdMetodoPago(idMetodoPagoNew);
             }
-            List<DetalleCompra> attachedDetalleCompraListNew = new ArrayList<DetalleCompra>();
-            for (DetalleCompra detalleCompraListNewDetalleCompraToAttach : detalleCompraListNew) {
-                detalleCompraListNewDetalleCompraToAttach = em.getReference(detalleCompraListNewDetalleCompraToAttach.getClass(), detalleCompraListNewDetalleCompraToAttach.getDetalleCompraPK());
-                attachedDetalleCompraListNew.add(detalleCompraListNewDetalleCompraToAttach);
-            }
-            detalleCompraListNew = attachedDetalleCompraListNew;
-            compra.setDetalleCompraList(detalleCompraListNew);
             List<Envio> attachedEnvioListNew = new ArrayList<Envio>();
             for (Envio envioListNewEnvioToAttach : envioListNew) {
                 envioListNewEnvioToAttach = em.getReference(envioListNewEnvioToAttach.getClass(), envioListNewEnvioToAttach.getId());
@@ -162,6 +153,15 @@ public class CompraJpaController implements Serializable {
             envioListNew = attachedEnvioListNew;
             compra.setEnvioList(envioListNew);
             compra = em.merge(compra);
+            if (detalleCompraNew != null && !detalleCompraNew.equals(detalleCompraOld)) {
+                Compra oldCompraOfDetalleCompra = detalleCompraNew.getCompra();
+                if (oldCompraOfDetalleCompra != null) {
+                    oldCompraOfDetalleCompra.setDetalleCompra(null);
+                    oldCompraOfDetalleCompra = em.merge(oldCompraOfDetalleCompra);
+                }
+                detalleCompraNew.setCompra(compra);
+                detalleCompraNew = em.merge(detalleCompraNew);
+            }
             if (idClienteOld != null && !idClienteOld.equals(idClienteNew)) {
                 idClienteOld.getCompraList().remove(compra);
                 idClienteOld = em.merge(idClienteOld);
@@ -177,17 +177,6 @@ public class CompraJpaController implements Serializable {
             if (idMetodoPagoNew != null && !idMetodoPagoNew.equals(idMetodoPagoOld)) {
                 idMetodoPagoNew.getCompraList().add(compra);
                 idMetodoPagoNew = em.merge(idMetodoPagoNew);
-            }
-            for (DetalleCompra detalleCompraListNewDetalleCompra : detalleCompraListNew) {
-                if (!detalleCompraListOld.contains(detalleCompraListNewDetalleCompra)) {
-                    Compra oldCompraOfDetalleCompraListNewDetalleCompra = detalleCompraListNewDetalleCompra.getCompra();
-                    detalleCompraListNewDetalleCompra.setCompra(compra);
-                    detalleCompraListNewDetalleCompra = em.merge(detalleCompraListNewDetalleCompra);
-                    if (oldCompraOfDetalleCompraListNewDetalleCompra != null && !oldCompraOfDetalleCompraListNewDetalleCompra.equals(compra)) {
-                        oldCompraOfDetalleCompraListNewDetalleCompra.getDetalleCompraList().remove(detalleCompraListNewDetalleCompra);
-                        oldCompraOfDetalleCompraListNewDetalleCompra = em.merge(oldCompraOfDetalleCompraListNewDetalleCompra);
-                    }
-                }
             }
             for (Envio envioListNewEnvio : envioListNew) {
                 if (!envioListOld.contains(envioListNewEnvio)) {
@@ -230,12 +219,12 @@ public class CompraJpaController implements Serializable {
                 throw new NonexistentEntityException("The compra with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<DetalleCompra> detalleCompraListOrphanCheck = compra.getDetalleCompraList();
-            for (DetalleCompra detalleCompraListOrphanCheckDetalleCompra : detalleCompraListOrphanCheck) {
+            DetalleCompra detalleCompraOrphanCheck = compra.getDetalleCompra();
+            if (detalleCompraOrphanCheck != null) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Compra (" + compra + ") cannot be destroyed since the DetalleCompra " + detalleCompraListOrphanCheckDetalleCompra + " in its detalleCompraList field has a non-nullable compra field.");
+                illegalOrphanMessages.add("This Compra (" + compra + ") cannot be destroyed since the DetalleCompra " + detalleCompraOrphanCheck + " in its detalleCompra field has a non-nullable compra field.");
             }
             List<Envio> envioListOrphanCheck = compra.getEnvioList();
             for (Envio envioListOrphanCheckEnvio : envioListOrphanCheck) {

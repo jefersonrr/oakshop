@@ -21,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
 public class DepartamentoJpaController implements Serializable {
 

@@ -44,16 +44,62 @@ public class mostrarDetalles extends HttpServlet {
         List <Producto> listPDao = pub.getProductoList();
         List <Galeriaimg> galeria = pub.getGaleriaimgList();
         JSONObject json = new JSONObject();
+        JSONObject out = new JSONObject();
+        String img_display = "<div class = 'img-display'>"
+                + "<div class = 'img-showcase'>";
+        String img_item = "<div class = \"img-select\">";
+        Map<Integer, String> colores = new HashMap<Integer, String>();
+        Map<Integer, String> tallas = new HashMap<Integer, String>();
+        int count = 0;
         for(Producto p : listPDao){
-            Map<String, Map> valores = new HashMap<String, Map>();
-            Map<String, String> valores1 = new HashMap<String, String>();
-            valores1.put("precio_habitual", p.getCosto()+"");
-            valores1.put("precio_descuento", ((p.getCosto()*p.getDescuento())/100)+"");
-            valores.put(p.getIdTalla().getValor(), valores1);
-            json.put(p.getReferencia(), valores);
+            Map<String, String> valores = new HashMap<String, String>();
+            valores.put("precio_habitual", p.getCosto()+"");
+            valores.put("precio_descuento", ((p.getCosto()*p.getDescuento())/100)+"");
+            valores.put("cantidad", p.getCantidad()+"");
+            valores.put("talla", p.getIdTalla().getValor());
+            tallas.put(p.getIdTalla().getId(), p.getIdTalla().getValor());
+            valores.put("talla_id", p.getIdTalla().getId()+"");
+            valores.put("color", p.getIdColor().getNombre());
+            colores.put(p.getIdColor().getId(), p.getIdColor().getNombre());
+            valores.put("color_id", p.getIdColor().getId()+"");
+            valores.put("referencia_producto", p.getReferencia());
+            valores.put("producto_id", p.getId()+"");
+            valores.put("descuento", p.getDescuento()+"");
+            json.put(count, valores);
+            count++;
+            
+        
+        }
+        count = 1;
+        for(Galeriaimg imagen : galeria){
+            img_display +="<img src = '"+imagen.getUrl()+"' alt = 'shoe image' width='300' height='500'> ";
+            img_item+= "<div class = 'img-item'>"
+                        +"<a href = '#' data-id = '"+count+"'>"
+                        +"<img src = '"+imagen.getUrl()+"' alt = 'shoe image' width='120' height='150'>"
+                        +"</a>"
+                        +"</div>";
+            count++;
+        }
+        img_item+= "</div>";
+        img_display += "</div>"
+                +"</div>";
+        out.put("valores", json);
+        request.getSession().setAttribute("descripcion_producto", pub.getDescripcion());
+        out.put("publicacion_nombre", pub.getNombre());
+        String outColores = "";
+        for(Map.Entry<Integer, String> tmp: colores.entrySet()){
+            outColores += "<option value = \""+tmp.getKey()+"\">"+tmp.getValue()+"</option>";
         }
         
-        System.out.println(json);
+        String outTallas = "";
+        for(Map.Entry<Integer, String> tmp: tallas.entrySet()){
+            outTallas += "<option value = \""+tmp.getKey()+"\">"+tmp.getValue()+"</option>";
+        }
+        System.out.println(img_display+img_item);
+        request.getSession().setAttribute("imagenes", img_display+img_item);
+        request.getSession().setAttribute("detalle_producto", out);
+        request.getSession().setAttribute("tallas_disponibles", outTallas);
+        request.getSession().setAttribute("colores_disponibles", outColores);
         request.getRequestDispatcher("jsp/detalle-producto.jsp").forward(request, response);
         
     }

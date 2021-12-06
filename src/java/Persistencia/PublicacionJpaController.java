@@ -19,12 +19,13 @@ import DTO.Galeriaimg;
 import DTO.Publicacion;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
+import Persistencia.exceptions.PreexistingEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
 public class PublicacionJpaController implements Serializable {
 
@@ -37,7 +38,7 @@ public class PublicacionJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Publicacion publicacion) {
+    public void create(Publicacion publicacion) throws PreexistingEntityException, Exception {
         if (publicacion.getProductoList() == null) {
             publicacion.setProductoList(new ArrayList<Producto>());
         }
@@ -98,6 +99,11 @@ public class PublicacionJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findPublicacion(publicacion.getId()) != null) {
+                throw new PreexistingEntityException("Publicacion " + publicacion + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();

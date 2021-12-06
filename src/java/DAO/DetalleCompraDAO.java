@@ -6,7 +6,6 @@
 package DAO;
 
 import DTO.DetalleCompra;
-import DTO.DetalleCompraPK;
 import Persistencia.DetalleCompraJpaController;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
@@ -38,7 +37,7 @@ public class DetalleCompraDAO {
         return cit.findDetalleCompraEntities();
     }
     
-    public DetalleCompra readDetalleCompra(DetalleCompraPK id){
+    public DetalleCompra readDetalleCompra(int id){
         return cit.findDetalleCompra(id);
     }
     
@@ -50,7 +49,7 @@ public class DetalleCompraDAO {
         }
     }
     
-    public void delete(DetalleCompraPK id) throws IllegalOrphanException, NonexistentEntityException{
+    public void delete(int id) throws IllegalOrphanException, NonexistentEntityException{
         
         try {
             cit.destroy(id);

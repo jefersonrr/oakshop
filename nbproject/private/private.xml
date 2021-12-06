@@ -4,41 +4,25 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Proyecto%20AyD/oakshop/web/css/index.css</file>
-            <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/MostrarRopaIndex.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/MostrarCategorias.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/adminClientes.jsp</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/categoriasAdmin.jsp</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/js/formulario.js</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/AddCategoria.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/DTO/Categoria.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/UpdateTipo.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/MostrarRopaIndex.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/js/menuAdministrador.js</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/Negocio/askshop.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/DTO/Tipo.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/WEB-INF/web.xml</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/index.jsp</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/DTO/Calificacion.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/UpdateCategoria.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/AddTipo.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/IniciarSesion.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/conf/persistence.xml</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/nbproject/build-impl.xml</file>
-        </group>
-        <group>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/FiltrarPublicaciones.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/productos.jsp</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/PublicacionesCategoria.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/Negocio/askshop.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/index.jsp</file>
-        </group>
-        <group>
-            <file>file:/D:/Proyecto%20AyD/oakshop/web/css/index.css</file>
             <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/productos.jsp</file>
             <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/detalle-producto.jsp</file>
             <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
             <file>file:/D:/Proyecto%20AyD/oakshop/web/css/productos.css</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/DAO/CalificacionDAO.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/Negocio/askshop.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/adminPublicaciones.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/DAO/DetalleCompraDAO.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/DAO/CarritoDAO.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/adminClientes.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/DAO/PublicacionDAO.java</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/oakshop/src/java/DTO/Producto.java</file>
+            <file>file:/C:/Users/Luis/Documents/NetBeansProjects/oakshop/src/java/ControladorVistas/mostrarDetalles.java</file>
         </group>
     </open-files>
 </project-private>

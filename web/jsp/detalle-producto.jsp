@@ -31,12 +31,15 @@
     
      <!-- CSS de Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
         
         <!-- CSS restantes -->
         <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/detalle-producto.css"/>
-        
+        <script>
+            const datos = <%= request.getSession().getAttribute("detalle_producto")%>;
+        </script>
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
         
@@ -144,49 +147,20 @@
       <div class = "card">
         <!-- card left -->
         <div class = "product-imgs">
-          <div class = "img-display">
-            <div class = "img-showcase">
-              <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              <img src = "<%=basePath%>img/single_2.jpg" alt = "shoe image">
-              <img src = "<%=basePath%>img/single_3.jpg" alt = "shoe image">
-              <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-            </div>
-          </div>
-          <div class = "img-select">
-            <div class = "img-item">
-              <a href = "#" data-id = "1">
-                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              </a>
-            </div>
-            <div class = "img-item">
-              <a href = "#" data-id = "2">
-                <img src = "<%=basePath%>img/single_2.jpg" alt = "shoe image">
-              </a>
-            </div>
-            <div class = "img-item">
-              <a href = "#" data-id = "3">
-                <img src = "<%=basePath%>img/single_3.jpg" alt = "shoe image">
-              </a>
-            </div>
-            <div class = "img-item">
-              <a href = "#" data-id = "4">
-                <img src = "<%=basePath%>img/single_1.jpg" alt = "shoe image">
-              </a>
-            </div>
-          </div>
+            <%= request.getSession().getAttribute("imagenes") %>
         </div>
               
         <!-- card right -->
         <div class = "product-content">
           <h2 class = "product-title">Nombre producto</h2>
-          <h3>REF: <span>5254</span></h3>
+          <h3>REF: <span id="nombre_producto"></span></h3>
           
           <hr>
 
           <div class = "product-price">
-            <p class = "last-price">Precio habitual: <span>$70.000</span></p>
-            <p class = "new-price">Con descuento: <span>$50.000 (5%)</span></p>
-            <p>Disponibles: <span>10</span></p>
+            <p class = "last-price">Precio habitual: <span id="precio_habitual"></span></p>
+            <p class = "new-price">Con descuento: <span id="descuento"></span></p>
+            <p>Disponibles: <span id="disponibles"></span></p>
           </div>
           
   
@@ -195,33 +169,27 @@
                    
                       <h4>Talla:</h4>
                       
-                  <select class="select__1" name="tallas" required>
-			<option>S</option>
-			<option>M</option>
-			<option>L</option>
-                        <option>XL</option>
-                  </select>
+                    <select class="select__1" name="tallas" id="tallas" required onchange="selectActive()">
+                        <%= request.getSession().getAttribute("tallas_disponibles") %>
+                    </select>
                       
                       <h4>Color:</h4>
                   
-                  <select class="select__1" name="color" required>
-			<option>Rojo</option>
-			<option>Verde</option>
-			<option>Azul</option>
-                        <option>Negro</option>
+                      <select class="select__1" name="color" id="color" required onchange="selectActive()">
+			<%= request.getSession().getAttribute("colores_disponibles") %>
                   </select>
                       
                       <h4>Cantidad</h4>
                       
                        <div class = "purchase-info">
-                            <input type = "number" min = "0" value = "1">
+                           <input type = "number" id="cantidad_dato" name="cantidad" min = "0" placeholder="0" onchange="agregarCantidadItem()">
                         </div>
                       
                       <div class="purchase-info2 d-flex justify-content-center">
-                                 <button type = "submit" class = "btn">
+                                 <button type = "submit" class = "btn" id="carrito">
                                  Añadir al carrito <i class = "fas fa-shopping-cart"></i>
                                  </button>
-                               <button type = "submit" class = "btn">Comprar</button>
+                               <button type = "submit" class = "btn" id="submit">Comprar</button>
                       </div>
                       
                   </div>
@@ -230,8 +198,9 @@
           <div class = "product-detail">
               <br>
             <h4>Descripción del producto </h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.</p>
+            <div>
+                <%= request.getSession().getAttribute("descripcion_producto") %>
+            </div>
           
           </div>
 
@@ -245,7 +214,7 @@
         <!-- JS -->      
         <script src="<%=basePath%>js/sesion.js"></script>
         <script src="<%=basePath%>js/detalle-producto.js"></script>
-
+        
         
         
     </body>

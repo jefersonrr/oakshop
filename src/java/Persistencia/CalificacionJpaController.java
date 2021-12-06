@@ -6,7 +6,6 @@
 package Persistencia;
 
 import DTO.Calificacion;
-import DTO.CalificacionPK;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -14,15 +13,17 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import DTO.Persona;
 import DTO.Producto;
+import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
 import Persistencia.exceptions.PreexistingEntityException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
 public class CalificacionJpaController implements Serializable {
 
@@ -35,12 +36,21 @@ public class CalificacionJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Calificacion calificacion) throws PreexistingEntityException, Exception {
-        if (calificacion.getCalificacionPK() == null) {
-            calificacion.setCalificacionPK(new CalificacionPK());
+    public void create(Calificacion calificacion) throws IllegalOrphanException, PreexistingEntityException, Exception {
+        List<String> illegalOrphanMessages = null;
+        Persona personaOrphanCheck = calificacion.getPersona();
+        if (personaOrphanCheck != null) {
+            Calificacion oldCalificacionOfPersona = personaOrphanCheck.getCalificacion();
+            if (oldCalificacionOfPersona != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("The Persona " + personaOrphanCheck + " already has an item of type Calificacion whose persona column cannot be null. Please make another selection for the persona field.");
+            }
         }
-        calificacion.getCalificacionPK().setIdProducto(calificacion.getProducto().getId());
-        calificacion.getCalificacionPK().setIdCliente(calificacion.getPersona().getCedula());
+        if (illegalOrphanMessages != null) {
+            throw new IllegalOrphanException(illegalOrphanMessages);
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -50,23 +60,23 @@ public class CalificacionJpaController implements Serializable {
                 persona = em.getReference(persona.getClass(), persona.getCedula());
                 calificacion.setPersona(persona);
             }
-            Producto producto = calificacion.getProducto();
-            if (producto != null) {
-                producto = em.getReference(producto.getClass(), producto.getId());
-                calificacion.setProducto(producto);
+            Producto idProducto = calificacion.getIdProducto();
+            if (idProducto != null) {
+                idProducto = em.getReference(idProducto.getClass(), idProducto.getId());
+                calificacion.setIdProducto(idProducto);
             }
             em.persist(calificacion);
             if (persona != null) {
-                persona.getCalificacionList().add(calificacion);
+                persona.setCalificacion(calificacion);
                 persona = em.merge(persona);
             }
-            if (producto != null) {
-                producto.getCalificacionList().add(calificacion);
-                producto = em.merge(producto);
+            if (idProducto != null) {
+                idProducto.getCalificacionList().add(calificacion);
+                idProducto = em.merge(idProducto);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findCalificacion(calificacion.getCalificacionPK()) != null) {
+            if (findCalificacion(calificacion.getIdCliente()) != null) {
                 throw new PreexistingEntityException("Calificacion " + calificacion + " already exists.", ex);
             }
             throw ex;
@@ -77,48 +87,59 @@ public class CalificacionJpaController implements Serializable {
         }
     }
 
-    public void edit(Calificacion calificacion) throws NonexistentEntityException, Exception {
-        calificacion.getCalificacionPK().setIdProducto(calificacion.getProducto().getId());
-        calificacion.getCalificacionPK().setIdCliente(calificacion.getPersona().getCedula());
+    public void edit(Calificacion calificacion) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Calificacion persistentCalificacion = em.find(Calificacion.class, calificacion.getCalificacionPK());
+            Calificacion persistentCalificacion = em.find(Calificacion.class, calificacion.getIdCliente());
             Persona personaOld = persistentCalificacion.getPersona();
             Persona personaNew = calificacion.getPersona();
-            Producto productoOld = persistentCalificacion.getProducto();
-            Producto productoNew = calificacion.getProducto();
+            Producto idProductoOld = persistentCalificacion.getIdProducto();
+            Producto idProductoNew = calificacion.getIdProducto();
+            List<String> illegalOrphanMessages = null;
+            if (personaNew != null && !personaNew.equals(personaOld)) {
+                Calificacion oldCalificacionOfPersona = personaNew.getCalificacion();
+                if (oldCalificacionOfPersona != null) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("The Persona " + personaNew + " already has an item of type Calificacion whose persona column cannot be null. Please make another selection for the persona field.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             if (personaNew != null) {
                 personaNew = em.getReference(personaNew.getClass(), personaNew.getCedula());
                 calificacion.setPersona(personaNew);
             }
-            if (productoNew != null) {
-                productoNew = em.getReference(productoNew.getClass(), productoNew.getId());
-                calificacion.setProducto(productoNew);
+            if (idProductoNew != null) {
+                idProductoNew = em.getReference(idProductoNew.getClass(), idProductoNew.getId());
+                calificacion.setIdProducto(idProductoNew);
             }
             calificacion = em.merge(calificacion);
             if (personaOld != null && !personaOld.equals(personaNew)) {
-                personaOld.getCalificacionList().remove(calificacion);
+                personaOld.setCalificacion(null);
                 personaOld = em.merge(personaOld);
             }
             if (personaNew != null && !personaNew.equals(personaOld)) {
-                personaNew.getCalificacionList().add(calificacion);
+                personaNew.setCalificacion(calificacion);
                 personaNew = em.merge(personaNew);
             }
-            if (productoOld != null && !productoOld.equals(productoNew)) {
-                productoOld.getCalificacionList().remove(calificacion);
-                productoOld = em.merge(productoOld);
+            if (idProductoOld != null && !idProductoOld.equals(idProductoNew)) {
+                idProductoOld.getCalificacionList().remove(calificacion);
+                idProductoOld = em.merge(idProductoOld);
             }
-            if (productoNew != null && !productoNew.equals(productoOld)) {
-                productoNew.getCalificacionList().add(calificacion);
-                productoNew = em.merge(productoNew);
+            if (idProductoNew != null && !idProductoNew.equals(idProductoOld)) {
+                idProductoNew.getCalificacionList().add(calificacion);
+                idProductoNew = em.merge(idProductoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                CalificacionPK id = calificacion.getCalificacionPK();
+                String id = calificacion.getIdCliente();
                 if (findCalificacion(id) == null) {
                     throw new NonexistentEntityException("The calificacion with id " + id + " no longer exists.");
                 }
@@ -131,7 +152,7 @@ public class CalificacionJpaController implements Serializable {
         }
     }
 
-    public void destroy(CalificacionPK id) throws NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -139,19 +160,19 @@ public class CalificacionJpaController implements Serializable {
             Calificacion calificacion;
             try {
                 calificacion = em.getReference(Calificacion.class, id);
-                calificacion.getCalificacionPK();
+                calificacion.getIdCliente();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The calificacion with id " + id + " no longer exists.", enfe);
             }
             Persona persona = calificacion.getPersona();
             if (persona != null) {
-                persona.getCalificacionList().remove(calificacion);
+                persona.setCalificacion(null);
                 persona = em.merge(persona);
             }
-            Producto producto = calificacion.getProducto();
-            if (producto != null) {
-                producto.getCalificacionList().remove(calificacion);
-                producto = em.merge(producto);
+            Producto idProducto = calificacion.getIdProducto();
+            if (idProducto != null) {
+                idProducto.getCalificacionList().remove(calificacion);
+                idProducto = em.merge(idProducto);
             }
             em.remove(calificacion);
             em.getTransaction().commit();
@@ -186,7 +207,7 @@ public class CalificacionJpaController implements Serializable {
         }
     }
 
-    public Calificacion findCalificacion(CalificacionPK id) {
+    public Calificacion findCalificacion(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Calificacion.class, id);
