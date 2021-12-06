@@ -64,7 +64,7 @@ function selectActive(){
 function agregarCantidadItem(){
     const cantidad = document.getElementById("cantidad_dato").value;
     const talla_ref = validateAll();
-    if(parseInt(cantidad, 10) > parseInt(talla_ref.cantidad,10)){
-        document.getElementById("cantidad_dato").value = talla_ref.cantidad;
+    if(parseInt(cantidad, 10) >= parseInt(talla_ref.cantidad,10)){
+        document.getElementById("cantidad_dato").max = talla_ref.cantidad;
     }
 }
