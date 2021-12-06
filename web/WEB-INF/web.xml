@@ -64,11 +64,20 @@
     <servlet>
         <servlet-name>EliminarPublicacion</servlet-name>
         <servlet-class>ControladorVistas.EliminarPublicacion</servlet-class>
-
-    </servlet>   
-    
+<<<<<<< HEAD
+    </servlet>
     <servlet>
-
+=======
+<<<<<<< HEAD
+       
+    </servlet>
+    <servlet>
+       
+=======
+    </servlet>
+    <servlet>
+>>>>>>> Test
+>>>>>>> 6ffb75314fb763d1e508e58361b1cd46e2241999
         <servlet-name>MostrarCategorias</servlet-name>
         <servlet-class>ControladorVistas.MostrarCategorias</servlet-class>
     </servlet>
@@ -97,22 +106,26 @@
         <servlet-class>ControladorVistas.FiltrarPublicaciones</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
         <servlet-name>MostrarDetallePublicacion</servlet-name>
         <servlet-class>ControladorVistas.MostrarDetallePublicacion</servlet-class>
     </servlet>
- 
-     <servlet>
-      
-        <servlet-name>medioPago</servlet-name>
-        <servlet-class>ControladorVistas.medioPago</servlet-class>
-    </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>Index</servlet-name>
         <servlet-class>ControladorVistas.Index</servlet-class>
+=======
+<<<<<<< HEAD
+        <servlet-name>MostrarDetallePublicacion</servlet-name>
+        <servlet-class>ControladorVistas.MostrarDetallePublicacion</servlet-class>
+=======
+        <servlet-name>medioPago</servlet-name>
+        <servlet-class>ControladorVistas.medioPago</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>mostrarDetalles</servlet-name>
         <servlet-class>ControladorVistas.mostrarDetalles</servlet-class>
+>>>>>>> Test
+>>>>>>> 6ffb75314fb763d1e508e58361b1cd46e2241999
     </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
@@ -167,8 +180,23 @@
         <url-pattern>/ActualizarPublicacion.do</url-pattern>
     </servlet-mapping>
         <servlet-mapping>
+       
         <servlet-name>MostrarCategorias</servlet-name>
         <url-pattern>/MostrarCategorias.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+<<<<<<< HEAD
+=======
+        <servlet-name>EliminarPublicacion</servlet-name>
+        <url-pattern>/EliminarPublicacion.do</url-pattern>
+<<<<<<< HEAD
+=======
+    </servlet-mapping>
+    <servlet-mapping>
+>>>>>>> 6ffb75314fb763d1e508e58361b1cd46e2241999
+        <servlet-name>MostrarCategorias</servlet-name>
+        <url-pattern>/MostrarCategorias.do</url-pattern>
+>>>>>>> Test
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EliminarPublicacion</servlet-name>
@@ -199,20 +227,26 @@
         <url-pattern>/FiltrarPublicaciones.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>MostrarDetallePublicacion</servlet-name>
         <url-pattern>/MostrarDetallePublicacion.do</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Index</servlet-name>
         <url-pattern>/Index.do</url-pattern>
-    </servlet-mapping>
-        <servlet-mapping>
+=======
+<<<<<<< HEAD
+        <servlet-name>MostrarDetallePublicacion</servlet-name>
+        <url-pattern>/MostrarDetallePublicacion.do</url-pattern>
+=======
         <servlet-name>medioPago</servlet-name>
         <url-pattern>/medioPago.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>mostrarDetalles</servlet-name>
         <url-pattern>/mostrarDetalles.do</url-pattern>
+>>>>>>> Test
+>>>>>>> 6ffb75314fb763d1e508e58361b1cd46e2241999
     </servlet-mapping>
     <session-config>
         <session-timeout>
