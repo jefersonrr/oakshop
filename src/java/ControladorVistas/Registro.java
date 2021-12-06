@@ -54,7 +54,7 @@ public class Registro extends HttpServlet {
         } else {
             RolDAO r = new RolDAO();
             p.crearPersona(nombre, apellido, contrasenia, cedula, correo, telef, direccion, r.readRol((short)2));
-            request.getRequestDispatcher("jsp/iniciosesion.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/iniciarsesion.jsp").forward(request, response);
         }
     }
 
