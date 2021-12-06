@@ -16,14 +16,15 @@
         String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                 + request.getServerPort() + path + "/";
 
-        CategoriaDAO cadao = new CategoriaDAO();
-        List<Categoria> ca = cadao.readActivo();
-        String carrusel = request.getSession().getAttribute("carrusel").toString();
+        
 
-        if (request.getSession().getAttribute("listaServiciosIndex") == null) {
-            request.getRequestDispatcher(("MostrarRopaIndex.do")).forward(request, response);
+        if (request.getSession().getAttribute("carrusel") == null) {
+            request.getRequestDispatcher("/Index.do").forward(request, response);
 
         }
+        String carrusel = request.getSession().getAttribute("carrusel").toString();
+        CategoriaDAO cadao = new CategoriaDAO();
+        List<Categoria> ca = cadao.readActivo();
     %>
     <base href="<%=basePath%>">
     <head>
