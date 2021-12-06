@@ -54,6 +54,7 @@
     <body oncontextmenu='return false' class='snippet-body' onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
 
         <!--menú -->
+        <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
                 <a class="navbar-brand" href="index.jsp">
@@ -91,7 +92,7 @@
                                 <%for (Tipo t : tipos) {%>
 
 
-                                <li><a class="dropdown-item" href="<%=basePath%>/PublicacionesCategoria.do?tipo=<%=ca.get(i).getId() %>"><%=t.getNombre()%> </a></li>
+                                <li><a class="dropdown-item" href="<%=basePath%>/PublicacionesCategoria.do?tipo=<%=t.getId() %>&cate=<%=ca.get(i).getId()%>"><%=t.getNombre()%> </a></li>
 
 
                                 <%};%>

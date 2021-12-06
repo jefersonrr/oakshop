@@ -295,10 +295,10 @@ public class askshop {
         return rta;
     }
 
-    public String publicacionesTipoCliente(int id) {
+    public String publicacionesTipoCliente(int id, int categoria) {
 
         PublicacionDAO pudao = new PublicacionDAO();
-        List<Publicacion> publicaciones = pudao.readTipo(id);
+        List<Publicacion> publicaciones = pudao.readTipo(id,categoria);
         return cardPublicaciones(publicaciones);
     }
 
@@ -367,10 +367,10 @@ public class askshop {
         return rta;
     }
 
-    public String filtrarPublicaciones(String[] color, String talla, String precio, int id) {
+    public String filtrarPublicaciones(String[] color, String talla, String precio, int id,int categoria) {
 
         PublicacionDAO pudao = new PublicacionDAO();
-        List<Publicacion> publicaciones = pudao.readTipo(id);
+        List<Publicacion> publicaciones = pudao.readTipo(id,categoria);
         if (color != null) {
 
             publicaciones = pudao.readColor(publicaciones, color);
@@ -407,10 +407,10 @@ public class askshop {
             int i = tipoBody.size();
 
             if (i > 0) {
-                rta += cardIncial(tipoBody);
+                rta += cardIncial(tipoBody,c);
                 i += -4;
                 if (tipoBody.size() != 4) {
-                    rta += carruselIndex(tipoBody);
+                    rta += carruselIndex(tipoBody, c);
                 }
         
             }
@@ -422,7 +422,7 @@ public class askshop {
         return rta;
     }
 
-    private String seccionIndexCart(Categoria c,int l) {
+    private String seccionIndexCart(Categoria c,int i) {
 
         return "   <section>\n"
                 + "                <div class=\"container\">\n"
@@ -431,15 +431,15 @@ public class askshop {
                 + "                            <h3 class=\"mb-3\">" + c.getNombre() + "</h3>\n"
                 + "                        </div>\n"
                 + "                        <div class=\"col-6 text-right\">\n"
-                + "                            <a class=\"btn btn-primary mb-3 mr-1\" href=\"#carouselExampleIndicators"+l+'"'+" role=\"button\" data-slide=\"prev\">\n"
+                + "                            <a class=\"btn btn-primary mb-3 mr-1\" href=\"#carouselExampleIndicators"+i+'"'+" role=\"button\" data-slide=\"prev\">\n"
                 + "                                <i class=\"fa fa-arrow-left\"></i>\n"
                 + "                            </a>\n"
-                + "                            <a class=\"btn btn-primary mb-3 \" href=\"#carouselExampleIndicators"+l+'"'+"role=\"button\" data-slide=\"next\">\n"
+                + "                            <a class=\"btn btn-primary mb-3 \" href=\"#carouselExampleIndicators"+i+'"'+"role=\"button\" data-slide=\"next\">\n"
                 + "                                <i class=\"fa fa-arrow-right\"></i>\n"
                 + "                            </a>\n"
                 + "                        </div>\n"
                 + "                        <div class=\"col-12\">\n"
-                + "                            <div id=\"carouselExampleIndicators"+l+'"'+" class=\"carousel slide\" data-ride=\"carousel\">\n"
+                + "                            <div id=\"carouselExampleIndicators"+i+'"'+" class=\"carousel slide\" data-ride=\"carousel\">\n"
                 + "\n"
                 + "                                <div class=\"carousel-inner\">\n"
                 + "\n"
@@ -448,7 +448,7 @@ public class askshop {
                 + "                                        <div class=\"row row-cols-3 row-cols-md-4 g-4\">";
     }
 
-    private String cardIncial(List<Tipo> tipoBody) {
+    private String cardIncial(List<Tipo> tipoBody,Categoria ca) {
 
         String rta = "";
         for (int j = 0; j < 4; j++) {
@@ -457,7 +457,7 @@ public class askshop {
                     + "                                                <div class=\"card\">\n"
                     + "                                                    <div class=\"card-body d-flex flex-column\">\n"
                     + "                                                        <img src=" + '"' + tipoBody.get(j).getUrlFoto() + '"' + "class=\"card-img-top\" alt=\"...\" width=\"50\" height=\"270\">\n"
-                    + "                                                        <a  href=\"./PublicacionesCategoria.do?tipo="+tipoBody.get(j).getId()+'"'+ " class=\"btn text-white mt-auto align-self-center\">" + tipoBody.get(j).getNombre() + "</a>                          \n"
+                    + "                                                        <a  href=\"./PublicacionesCategoria.do?tipo="+tipoBody.get(j).getId()+"&cate="+ ca.getId()+'"'+ "class=\"btn  text-white mt-auto align-self-center\">"+tipoBody.get(j).getNombre()+"</a>                          \n"
                     + "                                                    </div>\n"
                     + "                                                </div>\n"
                     + "                                            </div>";
@@ -473,7 +473,7 @@ public class askshop {
         return rta;
     }
 
-    private String carruselIndex(List<Tipo> tipoBody) {
+    private String carruselIndex(List<Tipo> tipoBody,Categoria ca) {
 
         String rta = "  <div class=\"carousel-item\">\n"
                 + "\n"
@@ -486,7 +486,7 @@ public class askshop {
                         + "                                                <div class=\"card \">\n"
                         + "                                                    <div class=\"card-body d-flex flex-column\">\n"
                         + "                                                        <img src="+'"'+tipoBody.get(i).getUrlFoto()+'"'+" class=\"card-img-top\" alt=\"...\">\n"
-                        + "                                                        <a  href=\"./PublicacionesCategoria.do?tipo="+tipoBody.get(i).getId()+'"'+ " class=\"btn  text-white mt-auto align-self-center\">"+tipoBody.get(i).getNombre()+"</a>                          \n"
+                        + "                                                        <a  href=\"./PublicacionesCategoria.do?tipo="+tipoBody.get(i).getId()+"&cate="+ ca.getId()+'"'+ "class=\"btn  text-white mt-auto align-self-center\">"+tipoBody.get(i).getNombre()+"</a>                          \n"
                         + "                                                    </div>\n"
                         + "                                                </div>\n"
                         + "                                            </div>";

@@ -35,6 +35,7 @@ public class FiltrarPublicaciones extends HttpServlet {
         String[] colores = null;
         String talla = "";
         String precio = "";
+        int ca = Integer.parseInt(request.getParameter("cate"));
         if (request.getParameter("color") != null) {
 
             colores = request.getParameterValues("color");
@@ -53,7 +54,7 @@ public class FiltrarPublicaciones extends HttpServlet {
             request.getSession().setAttribute("sPrecio",precio);
         }
         
-        request.getSession().setAttribute("productos", as.filtrarPublicaciones(colores, talla, precio, 2));
+        request.getSession().setAttribute("productos", as.filtrarPublicaciones(colores, talla, precio, 2,ca));
         request.getRequestDispatcher("./jsp/productos.jsp").forward(request, response);
         
         
