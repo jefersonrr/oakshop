@@ -21,6 +21,17 @@
             <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
         </group>
         <group>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/registrarse.jsp</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/medioPagoConfirmar.jsp</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/css/index.css</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/productos.jsp</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/src/java/ControladorVistas/Registro.java</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
+        </group>
+        <group>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/css/index.css</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/detalle-producto.jsp</file>
+            <file>file:/D:/Proyecto%20AyD/oakshop/web/css/detalle-producto.css</file>
             <file>file:/C:/Users/Luis/Documents/NetBeansProjects/oakshop/src/java/DTO/Producto.java</file>
             <file>file:/C:/Users/Luis/Documents/NetBeansProjects/oakshop/src/java/ControladorVistas/mostrarDetalles.java</file>
         </group>

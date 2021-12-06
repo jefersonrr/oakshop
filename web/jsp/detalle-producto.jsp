@@ -25,9 +25,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Oakshop</title>
         
+        <!-- Fuente de google: Open Sans - Regular 400 -->
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        
     <!--Normallize css: proyecto que corrige estilos predeterminados de los diferentes navegadores, para evitar usar el selector universal
     en la hoja de estilos CSS. -->
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    
+        <!-- Iconos -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     
      <!-- CSS de Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -142,7 +148,7 @@
             </div>
         </nav>
         <!--Fin menú -->      
-
+        <main>
         <div class = "card-wrapper">
       <div class = "card">
         <!-- card left -->
@@ -206,6 +212,45 @@
 
         </div>
       </div>
+    </div>
+ </main>
+
+        <div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Categorías</h3>
+                        <ul>
+                            <li><a href="#">Hombres</a></li>
+                            <li><a href="#">Mujer</a></li>
+                            <li><a href="#">Kids</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Acerca de</h3>
+                        <ul>
+                            <li><a href="#">Empresa</a></li>
+                            <li><a href="#">Equipo</a></li>
+                            <li><a href="#">Corporativo</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Oakshop Store</h3>
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="item social">
+                        <a href="#"><i class="icon ion-social-facebook"></i></a>
+                        <a href="#"><i class="icon ion-social-twitter"></i></a>
+                        <a href="#"><i class="icon ion-social-instagram"></i></a>
+                    </div>
+                </div>
+                <p class="copyright">Oakshop Store © 2021</p>
+            </div>
+        </footer>
+    </div>
         
                                         
         <!-- JS de Bootstrap -->      
