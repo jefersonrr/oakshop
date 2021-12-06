@@ -22,9 +22,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Oakshop</title>
         
+        <!-- Fuente de google: Open Sans - Regular 400 -->
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        
     <!--Normallize css: proyecto que corrige estilos predeterminados de los diferentes navegadores, para evitar usar el selector universal
     en la hoja de estilos CSS. -->
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    
+        <!-- Iconos -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     
      <!-- CSS de Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -34,7 +40,9 @@
         <!-- CSS restantes -->
         <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/detalle-producto.css"/>
-        
+        <script>
+            const datos = <%= request.getSession().getAttribute("detalle_producto")%>;
+        </script>
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
         
@@ -137,11 +145,12 @@
             </div>
         </nav>
         <!--Fin menú -->      
-
+        <main>
         <div class = "card-wrapper">
       <div class = "card">
         <!-- card left -->
         <div class = "product-imgs">
+<<<<<<< HEAD
           <div class = "img-display">
             <div class = "img-showcase">
               <img src = "<%=basePath%>img/product-03.jpg" alt = "shoe image">
@@ -202,19 +211,22 @@
               </a>
             </div>
           </div>
+=======
+            <%= request.getSession().getAttribute("imagenes") %>
+>>>>>>> 6ffb75314fb763d1e508e58361b1cd46e2241999
         </div>
               
         <!-- card right -->
         <div class = "product-content">
           <h2 class = "product-title">Nombre producto</h2>
-          <h3>REF: <span>5254</span></h3>
+          <h3>REF: <span id="nombre_producto"></span></h3>
           
           <hr>
 
           <div class = "product-price">
-            <p class = "last-price">Precio habitual: <span>$70.000</span></p>
-            <p class = "new-price">Con descuento: <span>$50.000 (5%)</span></p>
-            <p>Disponibles: <span>10</span></p>
+            <p class = "last-price">Precio habitual: <span id="precio_habitual"></span></p>
+            <p class = "new-price">Con descuento: <span id="descuento"></span></p>
+            <p>Disponibles: <span id="disponibles"></span></p>
           </div>
           
   
@@ -223,33 +235,27 @@
                    
                       <h4>Talla:</h4>
                       
-                  <select class="select__1" name="tallas" required>
-			<option>S</option>
-			<option>M</option>
-			<option>L</option>
-                        <option>XL</option>
-                  </select>
+                    <select class="select__1" name="tallas" id="tallas" required onchange="selectActive()">
+                        <%= request.getSession().getAttribute("tallas_disponibles") %>
+                    </select>
                       
                       <h4>Color:</h4>
                   
-                  <select class="select__1" name="color" required>
-			<option>Rojo</option>
-			<option>Verde</option>
-			<option>Azul</option>
-                        <option>Negro</option>
+                      <select class="select__1" name="color" id="color" required onchange="selectActive()">
+			<%= request.getSession().getAttribute("colores_disponibles") %>
                   </select>
                       
                       <h4>Cantidad</h4>
                       
                        <div class = "purchase-info">
-                            <input type = "number" min = "0" value = "1">
+                           <input type = "number" id="cantidad_dato" name="cantidad" min = "0" placeholder="0" onchange="agregarCantidadItem()">
                         </div>
                       
                       <div class="purchase-info2 d-flex justify-content-center">
-                                 <button type = "submit" class = "btn">
+                                 <button type = "submit" class = "btn" id="carrito">
                                  Añadir al carrito <i class = "fas fa-shopping-cart"></i>
                                  </button>
-                               <button type = "submit" class = "btn">Comprar</button>
+                               <button type = "submit" class = "btn" id="submit">Comprar</button>
                       </div>
                       
                   </div>
@@ -258,13 +264,53 @@
           <div class = "product-detail">
               <br>
             <h4>Descripción del producto </h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.</p>
+            <div>
+                <%= request.getSession().getAttribute("descripcion_producto") %>
+            </div>
           
           </div>
 
         </div>
       </div>
+    </div>
+ </main>
+
+        <div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Categorías</h3>
+                        <ul>
+                            <li><a href="#">Hombres</a></li>
+                            <li><a href="#">Mujer</a></li>
+                            <li><a href="#">Kids</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Acerca de</h3>
+                        <ul>
+                            <li><a href="#">Empresa</a></li>
+                            <li><a href="#">Equipo</a></li>
+                            <li><a href="#">Corporativo</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Oakshop Store</h3>
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="item social">
+                        <a href="#"><i class="icon ion-social-facebook"></i></a>
+                        <a href="#"><i class="icon ion-social-twitter"></i></a>
+                        <a href="#"><i class="icon ion-social-instagram"></i></a>
+                    </div>
+                </div>
+                <p class="copyright">Oakshop Store © 2021</p>
+            </div>
+        </footer>
+    </div>
         
                                         
         <!-- JS de Bootstrap -->      
@@ -273,7 +319,7 @@
         <!-- JS -->      
         <script src="<%=basePath%>js/sesion.js"></script>
         <script src="<%=basePath%>js/detalle-producto.js"></script>
-
+        
         
         
     </body>

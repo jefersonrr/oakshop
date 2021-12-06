@@ -1,8 +1,9 @@
 <%-- 
-    Document   : medioPago
-    Created on : 5/12/2021, 02:15:52 AM
-    Author     : Luis
+    Document   : carrito
+    Created on : 5/12/2021, 7:49:39 p. m.
+    Author     : Acer
 --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,6 +11,8 @@
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                 + request.getServerPort() + path + "/";
+
+
     %>
     <base href="<%=basePath%>">
     <head>
@@ -17,15 +20,22 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Oakshop</title>
+
+        <!--Normallize css: proyecto que corrige estilos predeterminados de los diferentes navegadores, para evitar usar el selector universal
+        en la hoja de estilos CSS. -->
         <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
         <!-- Iconos -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+        <!-- Fuente de google: Open Sans - Regular 400 -->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- CSS de Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <!-- CSS restantes -->
         <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
-        <link rel="stylesheet" href="<%=basePath%>css/productos.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/styles.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/footer.css"/>
+
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
         
@@ -116,13 +126,12 @@
             </div>
         </nav>
                                     
-        <!-- CONTENIDO -->
-        
-        <form action="" method="post">
+<form action="" method="post">
+    <div class="container-fluid cont-padre">
         <div class="row">
             <div class="col start-title">
                 <div class="text-center start-text p-2">
-                    Nombre de tienda
+                    Oakshop Store
                 </div>
             </div>
         </div>
@@ -132,88 +141,68 @@
                     <div>
                         <img src="img/carrito.png" width="50" height="50"/>    
                     </div>
-                    <div class="titulo-contenido mt-2 ms-5 d-flex">
-                        ¿ Como Quieres Pagar ?
+                    <div class="titulo-contenido bold mt-2 ms-5 d-flex">
+                        Carrito de compras
                     </div>
                 </div>
             </div>
+            
             <div class="contenedor-inicial mt-5">
                 <div class="contenedor">
-                    <div class="w-100">
-                        <ul class="nav rounded elemento-data texto-contenido">
-                            <li class="w-100">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="d-flex justify-content-center my-3">
-                                            <img src="img/card.png" width="30" height="30"/>    
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="col-7">
-                                        <div class="my-3 bold">
-                                            Tarjeta de Crédito    
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="col-3 align-items-center">
-                                        <button type="button" class="btn-content btn-size btn align-items-center">Modificar</button>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="row">
                         
-                        <div class="container">
-                            <div class="titulo-contenido my-5">
-                                Ingresa los datos de tu tarjeta
-                            </div>
-                            <div class="container border p-5">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Número de tarjeta" aria-label="default input example">         
-                                    </div>
-                                </div>
-                                <div class="row my-2">
-                                    <div class="col-8">
-                                        <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Nombre y Apellido" aria-label="default input example">
-                                    </div>
-                                </div>
-                                
-                                <div class="row my-2">
-                                    <div class="col-4">
-                                        <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Fecha de Expiración" aria-label="default input example">
-                                    </div>
-                                    <div class="col-4">
-                                        <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Codigo de Seguridad" aria-label="default input example">
-                                    </div>
-                                </div>
-                               <div class="row mt-2 mb-5">
-                                    <div class="col-4">
-                                        <label class="texto-contenido bold">Tipo</label>
-                                        <select class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
-                                            <option selected>CC</option>
-                                            <option value="1">TI</option>
-                                            <option value="2">---</option>
-                                            <option value="3">---</option>
-                                          </select>
-                                    </div>
-                                    <div class="col-4">
-                                        <label></label>
-                                        <input class="form-control form-control-lg border-bottom w-100" type="number" placeholder="Número" aria-label="default input example">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="table-responsive">                       
+<table class="table table-borderless table-hover align-middle">
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Foto</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Descuento</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td class="foto-producto"><img src="<%=basePath%>img/product-01.jpg" class="img-fluid" alt="FOTO PRODUCTO"></td>
+      <td>Nombre producto</td>  
+      <td>Lorem ipsum holacomoestas loremipsum</td>
+      <td>$70.000</td>
+      <td>%10</td>
+      <td class="inp-cantidad"><input type = "number" min = "0" value = "1"></td>
+      <td><button type="button" class="btn-eliminar btn text-white">X</button></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">2</th>
+      <td class="foto-producto"><img src="<%=basePath%>img/product-02.jpg" class="img-fluid" alt="FOTO PRODUCTO"></td>
+      <td>Nombre producto</td>  
+      <td>Lorem ipsum holacomoestas loremipsum</td>
+      <td>$70.000</td>
+      <td>%10</td>
+      <td class="inp-cantidad"><input type = "number" min = "0" value = "1"></td>
+      <td><button type="button" class="btn-eliminar btn text-white">X</button></td>
+    </tr>
+
+  </tbody>
+</table>
+</div>                        
                     </div>
                 </div> 
                 
                 <div class="row mt-4 mod-pos btn-2">
                     <div class="col">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn-continue-size btn btn-info text-white">Continuar</button>
+                            
                         </div>
                     </div>
                 </div>
             </div>
+            
             <div class="contenedor-confirmar">
                     <div class="mt-5">
                         <div class="titulo-compra rounded mt-4">
@@ -224,37 +213,36 @@
                         <div class="border">
                             <div class="mx-3 mt-4">
                                 <label class="bold my-1">Subtotal:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">    
+                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example" disabled>    
                             </div>
                             <div class="mx-3">
                                 <label class="bold my-1">Precio envio:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">
+                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example" disabled>
                             </div>
                             <div class="mx-3">
                                 <label class="bold my-1">Descuento:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">
+                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example" disabled>
                             </div>
                             <div class="mx-3 mb-4">
                                 <label class="bold my-1">Total a pagar:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">
+                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example" disabled> 
+                            </div>
+                            
+                            <div class="d-flex justify-content-center">
+                                 <button type="button" class="btn-continue-size btn btn-info text-white">Continuar</button>
                             </div>
                         </div>
                     </div>
-                <div class="row mt-4 mod-pos btn-1">
-                    <div class="col">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn-continue-size btn btn-info  text-white">Continuar</button>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             
         </div>
+        
+    </div>
         </form>
                                     
-                                    
-                <div class="footer-dark">
+         <div class="footer-dark">
         <footer>
             <div class="container">
                 <div class="row">
@@ -289,11 +277,11 @@
                 <p class="copyright">Oakshop Store © 2021</p>
             </div>
         </footer>
-    </div>
+    </div>                                                       
+
         
         <!-- JS de Bootstrap -->      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="./js/sesion.js"></script>
     </body>
 </html>
-

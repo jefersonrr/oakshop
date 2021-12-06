@@ -38,7 +38,14 @@
 
         <!-- Fuente de google: Open Sans - Regular 400 -->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<<<<<<< HEAD
 
+=======
+        
+        <!-- Iconos -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+   
+>>>>>>> 6ffb75314fb763d1e508e58361b1cd46e2241999
         <!-- CSS de Bootstrap -->
         <link href='https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css' rel='stylesheet'>
 
@@ -47,8 +54,14 @@
               <!-- CSS restantes -->
               <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/index.css"/>
+<<<<<<< HEAD
 
 
+=======
+        <link rel="stylesheet" href="<%=basePath%>css/footer.css"/>
+        
+        
+>>>>>>> 6ffb75314fb763d1e508e58361b1cd46e2241999
     </head>
     <body oncontextmenu='return false' class='snippet-body' onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
 
@@ -157,8 +170,145 @@
 
           <%=carrusel%>
 
+<<<<<<< HEAD
         </main>
 
+=======
+                    <div class="carousel-inner">
+                        
+                        <div class="carousel-item active">
+                            
+                            <div class="row row-cols-3 row-cols-md-4 g-4">
+
+                                <div class="col">
+                                    <div class="card" style="background: #FFD2F3;">
+                                        <div class="card-body d-flex flex-column">
+                                            <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                            <button type="button" class="btn btn-light mt-auto align-self-center">Blusas</button>                          
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col">
+                                    <div class="card" style="background: #FFD2F3;">
+                                        <div class="card-body d-flex flex-column">
+                                            <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                            <button type="button" class="btn btn-light mt-auto align-self-center">Vestidos</button>                          
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col">
+                                    <div class="card" style="background: #FFD2F3;">
+                                        <div class="card-body d-flex flex-column">
+                                            <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                            <button type="button" class="btn btn-light mt-auto align-self-center">Jeans</button>                          
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col">
+                                    <div class="card" style="background: #FFD2F3;">
+                                        <div class="card-body d-flex flex-column">
+                                            <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                            <button type="button" class="btn btn-light mt-auto align-self-center">Calzado</button>                          
+                                        </div>
+                                    </div>
+                                </div>
+                                                        
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            
+                            <div class="row row-cols-3 row-cols-md-4 g-4">
+
+                                <div class="col">
+                                    <div class="card" style="background: #FFD2F3;">
+                                        <div class="card-body d-flex flex-column">
+                                            <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                            <button type="button" class="btn btn-light mt-auto align-self-center">Otro 1</button>                          
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col">
+                                    <div class="card" style="background: #FFD2F3;">
+                                        <div class="card-body d-flex flex-column">
+                                            <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                            <button type="button" class="btn btn-light mt-auto align-self-center">Otro 2</button>                          
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col">
+                                    <div class="card" style="background: #FFD2F3;">
+                                        <div class="card-body d-flex flex-column">
+                                            <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                            <button type="button" class="btn btn-light mt-auto align-self-center">Otro 3</button>                          
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col">
+                                    <div class="card" style="background: #FFD2F3;">
+                                        <div class="card-body d-flex flex-column">
+                                            <img src="img/polo-hombre.png" class="card-img-top" alt="...">
+                                            <button type="button" class="btn btn-light mt-auto align-self-center">Otro 4</button>                          
+                                        </div>
+                                    </div>
+                                </div>
+                                                        
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+                   
+        </main>
+        
+        <div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Categorías</h3>
+                        <ul>
+                            <li><a href="#">Hombres</a></li>
+                            <li><a href="#">Mujer</a></li>
+                            <li><a href="#">Kids</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Acerca de</h3>
+                        <ul>
+                            <li><a href="#">Empresa</a></li>
+                            <li><a href="#">Equipo</a></li>
+                            <li><a href="#">Corporativo</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Oakshop Store</h3>
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="item social">
+                        <a href="#"><i class="icon ion-social-facebook"></i></a>
+                        <a href="#"><i class="icon ion-social-twitter"></i></a>
+                        <a href="#"><i class="icon ion-social-instagram"></i></a>
+                    </div>
+                </div>
+                <p class="copyright">Oakshop Store © 2021</p>
+            </div>
+        </footer>
+    </div>
+        
+>>>>>>> 6ffb75314fb763d1e508e58361b1cd46e2241999
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>   
 
         <!-- JS de Bootstrap -->      
