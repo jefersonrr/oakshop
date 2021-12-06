@@ -5,7 +5,6 @@
  */
 package ControladorVistas;
 
-import DAO.TipoDAO;
 import Negocio.askshop;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jefersonrr
  */
-public class PublicacionesCategoria extends HttpServlet {
+public class Index extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,15 +30,9 @@ public class PublicacionesCategoria extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      // String id = request.getParameter("id");
-       askshop as = new askshop();
-       TipoDAO tdao = new TipoDAO();
-       int  tipo = Integer.parseInt(request.getParameter("tipo"));
- 
-       request.getSession().setAttribute("tipo", tdao.readTipo(tipo).getNombre());
-       request.getSession().setAttribute("selectTalla", as.tallasTipo(tipo));
-       request.getSession().setAttribute("productos", as.publicacionesTipoCliente(tipo));
-       request.getRequestDispatcher("./jsp/productos.jsp").forward(request, response);
+        askshop a = new askshop();
+        request.getSession().setAttribute("carrusel", a.indexCategorias());
+        request.getRequestDispatcher("./index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

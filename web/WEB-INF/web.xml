@@ -38,7 +38,6 @@
         <servlet-class>ControladorVistas.adminUpdateCliente</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< HEAD
         <servlet-name>AgregarPublicacion</servlet-name>
         <servlet-class>ControladorVistas.AgregarPublicacion</servlet-class>
     </servlet>
@@ -65,7 +64,8 @@
     <servlet>
         <servlet-name>EliminarPublicacion</servlet-name>
         <servlet-class>ControladorVistas.EliminarPublicacion</servlet-class>
-=======
+    </servlet>
+    <servlet>
         <servlet-name>MostrarCategorias</servlet-name>
         <servlet-class>ControladorVistas.MostrarCategorias</servlet-class>
     </servlet>
@@ -92,11 +92,14 @@
     <servlet>
         <servlet-name>FiltrarPublicaciones</servlet-name>
         <servlet-class>ControladorVistas.FiltrarPublicaciones</servlet-class>
->>>>>>> Test
     </servlet>
     <servlet>
         <servlet-name>MostrarDetallePublicacion</servlet-name>
         <servlet-class>ControladorVistas.MostrarDetallePublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>ControladorVistas.Index</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
@@ -127,7 +130,6 @@
         <url-pattern>/adminUpdateCliente.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< HEAD
         <servlet-name>AgregarPublicacion</servlet-name>
         <url-pattern>/AgregarPublicacion.do</url-pattern>
     </servlet-mapping>
@@ -152,11 +154,12 @@
         <url-pattern>/ActualizarPublicacion.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EliminarPublicacion</servlet-name>
-        <url-pattern>/EliminarPublicacion.do</url-pattern>
-=======
         <servlet-name>MostrarCategorias</servlet-name>
         <url-pattern>/MostrarCategorias.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarPublicacion</servlet-name>
+        <url-pattern>/EliminarPublicacion.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateTipo</servlet-name>
@@ -181,11 +184,14 @@
     <servlet-mapping>
         <servlet-name>FiltrarPublicaciones</servlet-name>
         <url-pattern>/FiltrarPublicaciones.do</url-pattern>
->>>>>>> Test
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MostrarDetallePublicacion</servlet-name>
         <url-pattern>/MostrarDetallePublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/Index.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

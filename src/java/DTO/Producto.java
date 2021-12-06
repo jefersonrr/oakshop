@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Producto")
@@ -75,12 +75,12 @@ public class Producto implements Serializable {
     private List<DetalleCompra> detalleCompraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<Carrito> carritoList;
-    @JoinColumn(name = "idColor", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Color idColor;
     @JoinColumn(name = "idPublicacion", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Publicacion idPublicacion;
+    @JoinColumn(name = "idColor", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Color idColor;
     @JoinColumn(name = "idTalla", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Talla idTalla;
@@ -169,20 +169,20 @@ public class Producto implements Serializable {
         this.carritoList = carritoList;
     }
 
-    public Color getIdColor() {
-        return idColor;
-    }
-
-    public void setIdColor(Color idColor) {
-        this.idColor = idColor;
-    }
-
     public Publicacion getIdPublicacion() {
         return idPublicacion;
     }
 
     public void setIdPublicacion(Publicacion idPublicacion) {
         this.idPublicacion = idPublicacion;
+    }
+
+    public Color getIdColor() {
+        return idColor;
+    }
+
+    public void setIdColor(Color idColor) {
+        this.idColor = idColor;
     }
 
     public Talla getIdTalla() {
