@@ -85,7 +85,7 @@ public class mostrarDetalles extends HttpServlet {
                 +"</div>";
         out.put("valores", json);
         request.getSession().setAttribute("descripcion_producto", pub.getDescripcion());
-        out.put("publicacion_nombre", pub.getNombre());
+        
         String outColores = "";
         for(Map.Entry<Integer, String> tmp: colores.entrySet()){
             outColores += "<option value = \""+tmp.getKey()+"\">"+tmp.getValue()+"</option>";
@@ -95,6 +95,7 @@ public class mostrarDetalles extends HttpServlet {
         for(Map.Entry<Integer, String> tmp: tallas.entrySet()){
             outTallas += "<option value = \""+tmp.getKey()+"\">"+tmp.getValue()+"</option>";
         }
+        request.getSession().setAttribute("publicacion_nombre", pub.getNombre());
         request.getSession().setAttribute("imagenes", img_display+img_item);
         request.getSession().setAttribute("detalle_producto", out);
         request.getSession().setAttribute("tallas_disponibles", outTallas);
