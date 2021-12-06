@@ -95,7 +95,6 @@ public class mostrarDetalles extends HttpServlet {
         for(Map.Entry<Integer, String> tmp: tallas.entrySet()){
             outTallas += "<option value = \""+tmp.getKey()+"\">"+tmp.getValue()+"</option>";
         }
-        System.out.println(img_display+img_item);
         request.getSession().setAttribute("imagenes", img_display+img_item);
         request.getSession().setAttribute("detalle_producto", out);
         request.getSession().setAttribute("tallas_disponibles", outTallas);
