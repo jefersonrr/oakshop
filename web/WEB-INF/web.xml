@@ -65,6 +65,14 @@
         <servlet-name>FiltrarPublicaciones</servlet-name>
         <servlet-class>ControladorVistas.FiltrarPublicaciones</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>medioPago</servlet-name>
+        <servlet-class>ControladorVistas.medioPago</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>mostrarDetalles</servlet-name>
+        <servlet-class>ControladorVistas.mostrarDetalles</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
         <url-pattern>/cerrarSesion.do</url-pattern>
@@ -120,6 +128,14 @@
     <servlet-mapping>
         <servlet-name>FiltrarPublicaciones</servlet-name>
         <url-pattern>/FiltrarPublicaciones.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>medioPago</servlet-name>
+        <url-pattern>/medioPago.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>mostrarDetalles</servlet-name>
+        <url-pattern>/mostrarDetalles.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

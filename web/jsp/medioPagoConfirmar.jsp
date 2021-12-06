@@ -117,7 +117,7 @@
         <div class="row">
             <div class="col start-title">
                 <div class="text-center start-text p-2">
-                    Nombre de tienda
+                    OakShop
                 </div>
             </div>
         </div>
