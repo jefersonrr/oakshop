@@ -64,11 +64,9 @@
     <servlet>
         <servlet-name>EliminarPublicacion</servlet-name>
         <servlet-class>ControladorVistas.EliminarPublicacion</servlet-class>
-    </servlet>
-    <servlet>
 
-       
-    </servlet>
+    </servlet>   
+    
     <servlet>
 
         <servlet-name>MostrarCategorias</servlet-name>
@@ -99,22 +97,22 @@
         <servlet-class>ControladorVistas.FiltrarPublicaciones</servlet-class>
     </servlet>
     <servlet>
-
         <servlet-name>MostrarDetallePublicacion</servlet-name>
         <servlet-class>ControladorVistas.MostrarDetallePublicacion</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>Index</servlet-name>
-        <servlet-class>ControladorVistas.Index</servlet-class>
-
-
+ 
+     <servlet>
+      
         <servlet-name>medioPago</servlet-name>
         <servlet-class>ControladorVistas.medioPago</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>ControladorVistas.Index</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>mostrarDetalles</servlet-name>
         <servlet-class>ControladorVistas.mostrarDetalles</servlet-class>
-
     </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
@@ -169,12 +167,8 @@
         <url-pattern>/ActualizarPublicacion.do</url-pattern>
     </servlet-mapping>
         <servlet-mapping>
-       
         <servlet-name>MostrarCategorias</servlet-name>
         <url-pattern>/MostrarCategorias.do</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EliminarPublicacion</servlet-name>
@@ -205,7 +199,20 @@
         <url-pattern>/FiltrarPublicaciones.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-
+        <servlet-name>MostrarDetallePublicacion</servlet-name>
+        <url-pattern>/MostrarDetallePublicacion.do</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/Index.do</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>medioPago</servlet-name>
+        <url-pattern>/medioPago.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>mostrarDetalles</servlet-name>
+        <url-pattern>/mostrarDetalles.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -36,6 +36,7 @@ public class FiltrarPublicaciones extends HttpServlet {
         String talla = "";
         String precio = "";
         int ca = Integer.parseInt(request.getParameter("cate"));
+        request.getSession().setAttribute("cate", ca);
         if (request.getParameter("color") != null) {
 
             colores = request.getParameterValues("color");

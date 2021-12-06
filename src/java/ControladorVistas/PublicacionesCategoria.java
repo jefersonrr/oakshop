@@ -37,6 +37,7 @@ public class PublicacionesCategoria extends HttpServlet {
         int tipo = Integer.parseInt(request.getParameter("tipo"));
         int ca = Integer.parseInt(request.getParameter("cate"));
         request.getSession().setAttribute("cate",ca);
+        request.getSession().setAttribute("tipoF",tipo);
 
         request.getSession().setAttribute("tipo", tdao.readTipo(tipo).getNombre());
         request.getSession().setAttribute("selectTalla", as.tallasTipo(tipo));

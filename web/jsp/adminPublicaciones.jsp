@@ -37,7 +37,7 @@
     </head>
     <body onload="validarSesion('<%=request.getSession().getAttribute("msg")%>')">
 
-        <div class="sidebar">
+         <div class="sidebar">
             <div class="logo-details">
                 <i class="fas fa-tire icon"></i> 
                 <!-- Espacio entre mensaje Bienvenido-->
@@ -49,7 +49,7 @@
                 <li>
                     <div class="image-admin">
                         <div class="container-img">
-                            <img src="https://i.postimg.cc/50xpzL3N/user-admin.png" alt="Administrador">
+                            <img src="<%=basePath%>img/user-admin.png" alt="Administrador">
                         </div>
                         <div class="container-name">
                             <p><span class="links_name"><%=request.getSession().getAttribute("nameUser")%></span></p>
@@ -58,7 +58,7 @@
                 </li>
 
                 <li>
-                    <a href="<%=basePath%>CitasAdmin.do">
+                    <a href="<%=basePath%>jsp/adminPublicaciones.jsp">
                         <i class="far fa-calendar-alt"></i>
                         <span class="links_name">Publicaciones</span>
                     </a>
@@ -72,14 +72,21 @@
                     <span class="tooltip">Clientes</span>
                 </li>
                 <li>
-                    <a href="<%=basePath%>MostrarServiciosAdmin.do">
+                    <a href="<%=basePath%>MostrarCategorias.do">
                         <i class="fas fa-user-cog"></i>
-                        <span class="links_name">Servicios</span>
+                        <span class="links_name">Categorias</span>
                     </a>
-                    <span class="tooltip">Servicios</span>
+                    <span class="tooltip">Categorias</span>
+                </li>
+                   <li>
+                    <a href="#">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="links_name">Pedidos</span>
+                    </a>
+                    <span class="tooltip">Pedidos</span>
                 </li>
                 <li>
-                    <a href="<%=basePath%>MostrarProductosAdmin.do">
+                    <a href="#">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="links_name">Productos</span>
                     </a>
@@ -100,7 +107,6 @@
                 </li>
             </ul>
         </div>
-
         <section class="home-section">
             <div class="title">            
                 <div class="titulo">

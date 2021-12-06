@@ -238,7 +238,7 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col">
-                                <button type="button" class="btn-size btn btn-info text-white">Confirmar compra</button>
+                                <a href="index.jsp" type="button" class="btn-size btn btn-info text-white">Confirmar compra</a>
                             </div>
                         </div>
                     </div>
