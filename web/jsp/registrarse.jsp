@@ -27,11 +27,14 @@
         <!--Normallize css: proyecto que corrige estilos predeterminados de los diferentes navegadores, para evitar usar el selector universal
         en la hoja de estilos CSS. -->
         <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+        <!-- Iconos -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <!--Importar CSS -->
         <link href="<%=basePath%>css/menu.css" rel="stylesheet" type="text/css"/>
         <link href="<%=basePath%>css/registro.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="<%=basePath%>css/footer.css"/>
     </head>
-    <body onload="exist()" >
+    <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>'">
         
         <!--menú -->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
@@ -121,7 +124,7 @@
                 <br>
             </div>
             
-            <form action="Registro.do" class="formulario" id="formulario">
+            <form action="Registro.do" method="post" class="formulario" id="formulario">
             <!--Grupo: Nombre -->
 			<div class="formulario__grupo" id="grupo__nombre">
 				<label for="nombre" class="formulario__label">Nombres</label>
@@ -182,7 +185,7 @@
 					<p class="formulario__input-error">El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.</p>
 			</div>
                         <% String valor = request.getSession().getAttribute("existe")==null?"no existe":request.getSession().getAttribute("existe").toString();
-                          
+                           
                         %>
             <!-- Grupo: Teléfono -->
 			<div class="formulario__grupo" id="grupo__telefono">
@@ -230,7 +233,7 @@
          <script src="<%=basePath%>js/formulario.js" type="text/javascript"></script>
          <script>
     
-            function exist(){            
+            document.body.onload = function exist(){            
                 let existe = '<%=valor%>';
                             if(existe==="existe Usuario"){
                                 alert('El usuario ya existe!');
@@ -239,10 +242,49 @@
                             }
                         }
             </script>
+            
+<div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Categorías</h3>
+                        <ul>
+                            <li><a href="#">Hombres</a></li>
+                            <li><a href="#">Mujer</a></li>
+                            <li><a href="#">Kids</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Acerca de</h3>
+                        <ul>
+                            <li><a href="#">Empresa</a></li>
+                            <li><a href="#">Equipo</a></li>
+                            <li><a href="#">Corporativo</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Oakshop Store</h3>
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="item social">
+                        <a href="#"><i class="icon ion-social-facebook"></i></a>
+                        <a href="#"><i class="icon ion-social-twitter"></i></a>
+                        <a href="#"><i class="icon ion-social-instagram"></i></a>
+                    </div>
+                </div>
+                <p class="copyright">Oakshop Store © 2021</p>
+            </div>
+        </footer>
+    </div>
         <!-- JS de Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <!-- Enlace a los iconos que se trabajan. -->
 	<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+        
+        <script src="<%=basePath%>js/sesion.js"></script>
         
     </body>
 </html>

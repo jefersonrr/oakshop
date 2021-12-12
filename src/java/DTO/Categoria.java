@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Categoria")
@@ -109,8 +109,7 @@ public class Categoria implements Serializable {
     public void setTipoList(List<Tipo> tipoList) {
         this.tipoList = tipoList;
     }
-
-    @XmlTransient
+     @XmlTransient
     public List<Publicacion> getPublicacionList() {
         return publicacionList;
     }
