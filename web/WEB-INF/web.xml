@@ -166,7 +166,7 @@
         <servlet-name>ActualizarPublicacion</servlet-name>
         <url-pattern>/ActualizarPublicacion.do</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+        <servlet-mapping>
         <servlet-name>MostrarCategorias</servlet-name>
         <url-pattern>/MostrarCategorias.do</url-pattern>
     </servlet-mapping>
@@ -206,7 +206,7 @@
         <servlet-name>Index</servlet-name>
         <url-pattern>/Index.do</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+        <servlet-mapping>
         <servlet-name>medioPago</servlet-name>
         <url-pattern>/medioPago.do</url-pattern>
     </servlet-mapping>
