@@ -322,240 +322,78 @@
                 <br />
                 <hr />
             </div>
+      </form>
+              <br />
+              <hr />
+          </div>
+          
+    </section>
+    <script>
+      function arreglos(){
+          
+          let referencias = document.getElementsByName('referencia');
+          let costos = document.getElementsByName('costo');
+          let descuentos = document.getElementsByName('descuento');
+          let colores = document.getElementsByName('color');
+          let tallas = document.getElementsByName('talla');
+          let img = document.getElementsByName('imgUrl');
+          let cantidades = document.getElementsByName('cantidad');
+          
+          let referenciasF = document.getElementById('referencias');
+          let costosF = document.getElementById('costos');
+          let descuentosF = document.getElementById('descuentos');
+          let coloresF = document.getElementById('colores');
+          let tallasF = document.getElementById('tallas');
+          let imgUrlF = document.getElementById('imgUrls');
+          let cantidadesF = document.getElementById('cantidades');
+          
+          for (var i = 0; i < referencias.length; i++) {
+    
+            referenciasF.value+=referencias[i].value+',';
+            costosF.value+=costos[i].value+',';
+            descuentosF.value+=descuentos[i].value+',';
+            coloresF.value+=colores[i].value+',';
+            tallasF.value+=tallas[i].value+',';
+            imgUrlF.value+=img[i].value+',';
+            cantidadesF.value+=cantidades[i].value+',';
+         }
+         document.formulario.submit();
+      }
+        
+      function agregarProducto() {
+        let padre = document.getElementById("productosCont");
+        let temp = document.getElementById("tempProduct").content;
+        let modelo = temp.querySelector('#modelo');
+        let clone = modelo.cloneNode(true);
+        let boton = clone.querySelector('#eli');
+    
+        boton.setAttribute('id', 'eli'+(padre.children.length));
+        padre.appendChild(clone);
+      }
 
-        </section>
-        <script>
-            function arreglos() {
+      function eliminarProducto() {
+           
+            let id = window.event.target.id;
+            let product = document.getElementById(id);
+            let padre = document.getElementById("productosCont");
+            padre.removeChild(product.parentNode.parentNode.parentNode);
 
-                let referencias = document.getElementsByName('referencia');
-                let costos = document.getElementsByName('costo');
-                let descuentos = document.getElementsByName('descuento');
-                let colores = document.getElementsByName('color');
-                let tallas = document.getElementsByName('talla');
-                let img = document.getElementsByName('imgUrl');
-                let cantidades = document.getElementsByName('cantidad');
+      }
+    </script>
 
-                let referenciasF = document.getElementById('referencias');
-                let costosF = document.getElementById('costos');
-                let descuentosF = document.getElementById('descuentos');
-                let coloresF = document.getElementById('colores');
-                let tallasF = document.getElementById('tallas');
-                let imgUrlF = document.getElementById('imgUrls');
-                let cantidadesF = document.getElementById('cantidades');
+   
 
-                for (var i = 0; i < referencias.length; i++) {
+    <script src="../js/menuAdministrador.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
 
-                    referenciasF.value += referencias[i].value + ',';
-                    costosF.value += costos[i].value + ',';
-                    descuentosF.value += descuentos[i].value + ',';
-                    coloresF.value += colores[i].value + ',';
-                    tallasF.value += tallas[i].value + ',';
-                    imgUrlF.value += img[i].value + ',';
-                    cantidadesF.value += cantidades[i].value + ',';
-                }
-                document.formulario.submit();
-            }
-
-            function agregarProducto() {
-                let padre = document.getElementById("productosCont");
-                let temp = document.getElementById("tempProduct").content;
-                let modelo = temp.querySelector('#modelo');
-                let clone = modelo.cloneNode(true);
-                let boton = clone.querySelector('#eli');
-
-                boton.setAttribute('id', 'eli' + (padre.children.length));
-                padre.appendChild(clone);
-            }
-
-            function eliminarProducto() {
-
-                let id = window.event.target.id;
-                let product = document.getElementById(id);
-                let padre = document.getElementById("productosCont");
-                padre.removeChild(product.parentNode.parentNode.parentNode);
-
-            }
-        </script>
-
-        <!-- ventana modal de editar -->
-
-        <!-- ventana modal de editar -->
-        <div
-            class="modal fade"
-            tabindex="-1"
-            role="dialog"
-            id="modal2"
-            aria-labelledby="modal2example"
-            aria-hidden="true"
-            >
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header justify-content-center align-items-center">
-                        <h2 class="modal-title">Editar Publicacion</h2>
-                        <!--       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                          </button> -->
-                    </div>
-                    <div class="modal-body">
-                        <form action="adminUpdateCliente.do" method="GET">
-                            <div class="row text-center m-3">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="exampleInputNombre" class="form-label"
-                                               >Nombre</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="recipient-name"
-                                            name="nombre"
-                                            required
-                                            />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="exampleInputCed" class="form-label"
-                                               >Cédula</label
-                                        >
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="exampleInputCed"
-                                            name="cedula"
-                                            readonly
-                                            />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail" class="form-label"
-                                               >Correo electrónico</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="exampleInputEmail"
-                                            name="email"
-                                            required
-                                            />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="exampleInputCel" class="form-label"
-                                               >Celular</label
-                                        >
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="exampleInputCel"
-                                            name="celular"
-                                            required
-                                            />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="exampleInputDirec" class="form-label"
-                                               >Dirección</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="exampleInputDirec"
-                                            name="direccion"
-                                            required
-                                            />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="exampleInputPass" class="form-label"
-                                               >Contraseña</label
-                                        >
-                                        <input
-                                            type="password"
-                                            class="form-control"
-                                            id="exampleInputPass"
-                                            name="clave"
-                                            required
-                                            />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer mt-2" id="foterM">
-                                <button type="button" class="boton2" data-bs-dismiss="modal">
-                                    Cancelar
-                                </button>
-                                <button type="submit" class="boton3">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!--  <div class="modal-footer" id="foterM">
-                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                 <a href="#" class="btn" id="boton" type="button">Calificar servicio</a>
-                               </div> -->
-                </div>
-            </div>
-        </div>
-
-        <script src="../js/menuAdministrador.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"
-        ></script>
-
-        <script>
-            $(document).ready(function () {
-                $("#example").DataTable({
-                    language: {
-                        lengthMenu: "Mostrar_MENU_registros",
-                        zeroRecords: "No se encontraron resultados",
-                        info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        infoEmpty:
-                                "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        infoFiltered: "(Filtrado de un total de _MAX_ registros)",
-                        sSearch: "Buscar:",
-                        oPaginate: {
-                            sFirst: "Primero",
-                            sLast: "Último",
-                            sNext: "Siguiente",
-                            sPrevious: "Anterior",
-                        },
-                        sProcessing: "Procesando...",
-                    },
-                });
-            });
-
-            var modalEditarCliente = document.getElementById("modal2");
-            modalEditarCliente.addEventListener("show.bs.modal", (e) => {
-                var btn = e.relatedTarget.valueOf().parentNode;
-                li = btn.parentNode;
-                li = li.parentNode;
-                li = li.parentNode;
-                datos = li.querySelectorAll("td");
-                console.log(datos);
-                modalBodyInput = modalEditarCliente
-                        .querySelector(".modal-body")
-                        .querySelectorAll("input");
-                modalBodyInput[0].value = datos[0].innerHTML; //nombre
-                modalBodyInput[1].value = datos[1].innerHTML; //cc
-                modalBodyInput[2].value = datos[3].innerHTML; //email
-                modalBodyInput[3].value = datos[2].innerHTML; //celular
-                modalBodyInput[4].value = datos[4].innerHTML; //direccion
-                modalBodyInput[5].value =
-                        e.relatedTarget.getAttribute("data-bs-whatever"); //clave
-            });
-        </script>
-    </body>
+    
+  </body>
 </html>
 

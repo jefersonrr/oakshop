@@ -4,11 +4,6 @@
         <filter-name>validarSesion.do</filter-name>
         <filter-class>ControladorVistas.validarSesion</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>validarSesion.do</filter-name>
-        <url-pattern>/jsp/index.jsp</url-pattern>
-        <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
-    </filter-mapping>
     <servlet>
         <servlet-name>IniciarSesion</servlet-name>
         <servlet-class>ControladorVistas.IniciarSesion</servlet-class>
@@ -64,11 +59,8 @@
     <servlet>
         <servlet-name>EliminarPublicacion</servlet-name>
         <servlet-class>ControladorVistas.EliminarPublicacion</servlet-class>
-
-    </servlet>   
-    
+    </servlet>
     <servlet>
-
         <servlet-name>MostrarCategorias</servlet-name>
         <servlet-class>ControladorVistas.MostrarCategorias</servlet-class>
     </servlet>
@@ -97,6 +89,14 @@
         <servlet-class>ControladorVistas.FiltrarPublicaciones</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ActualizarProductoPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.ActualizarProductoPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DesactivarProducto</servlet-name>
+        <servlet-class>ControladorVistas.DesactivarProducto</servlet-class>
+         </servlet>
+            <servlet>
         <servlet-name>MostrarDetallePublicacion</servlet-name>
         <servlet-class>ControladorVistas.MostrarDetallePublicacion</servlet-class>
     </servlet>
@@ -175,6 +175,10 @@
         <url-pattern>/EliminarPublicacion.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>MostrarCategorias</servlet-name>
+        <url-pattern>/MostrarCategorias.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>UpdateTipo</servlet-name>
         <url-pattern>/UpdateTipo.do</url-pattern>
     </servlet-mapping>
@@ -199,6 +203,14 @@
         <url-pattern>/FiltrarPublicaciones.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ActualizarProductoPublicacion</servlet-name>
+        <url-pattern>/ActualizarProductoPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DesactivarProducto</servlet-name>
+        <url-pattern>/DesactivarProducto.do</url-pattern>
+        </servlet-mapping>
+         <servlet-mapping>
         <servlet-name>MostrarDetallePublicacion</servlet-name>
         <url-pattern>/MostrarDetallePublicacion.do</url-pattern>
     </servlet-mapping>
