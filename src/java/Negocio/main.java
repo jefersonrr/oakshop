@@ -23,7 +23,7 @@ public class main {
     public static void main(String[] args) {
 //        Date fecha = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         PublicacionDAO pu = new PublicacionDAO();
-        askshop a = new askshop();
+       askshop a = new askshop();
         
         Publicacion p = pu.readPublicacion(2112042024);
         p.setDescripcion("hoalalalalala");
