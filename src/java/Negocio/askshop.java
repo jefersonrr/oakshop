@@ -66,8 +66,8 @@ public class askshop {
 
         return "<h1>Carga index</h1>";
     }
-    
-    
+
+   
     public String getFecha(Date fecha){
             SimpleDateFormat formateador = new SimpleDateFormat(
                  "dd '/' MM '/' yyyy", new Locale("es_ES"));
@@ -131,7 +131,7 @@ public class askshop {
             PublicacionDAO p = new PublicacionDAO();
             Date fecha = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
             int id = hashPublicacion(fecha);
-            Publicacion pu = new Publicacion(id, marca, nombre, fecha, descripcion);
+            Publicacion pu = new Publicacion(id, marca, nombre, fecha, descripcion,null);
             
             CategoriaDAO ca = new CategoriaDAO();
             TipoDAO ti = new TipoDAO();
@@ -147,8 +147,8 @@ public class askshop {
             
             for (int i = 0; i < referencias.length; i++) {
                 
-                 Producto producto = new Producto(0, referencias[i],"", 
-                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]));
+                 Producto producto = new Producto(0, referencias[i], 
+                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]),null);
                  producto.setIdColor(c.readColor(Integer.parseInt(colores[i])));
                  producto.setIdPublicacion(p.readPublicacion(id));
                  producto.setIdTalla(t.readTalla(Integer.parseInt(tallas[i])));
@@ -201,8 +201,8 @@ public class askshop {
                      pro.update(producto);
                  }
                  else{
-                    Producto producto = new Producto(0, referencias[i],"", 
-                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]));
+                    Producto producto = new Producto(0, referencias[i], 
+                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]),null);
                     producto.setIdColor(c.readColor(Integer.parseInt(colores[i])));
                     producto.setIdPublicacion(pinsertada);
                     producto.setIdTalla(t.readTalla(Integer.parseInt(tallas[i])));
@@ -299,10 +299,10 @@ public class askshop {
         return rta;
     }
 
-    public String publicacionesTipoCliente(int id) {
+    public String publicacionesTipoCliente(int id, int categoria) {
 
         PublicacionDAO pudao = new PublicacionDAO();
-        List<Publicacion> publicaciones = pudao.readTipo(id);
+        List<Publicacion> publicaciones = pudao.readTipo(id,categoria);
         return cardPublicaciones(publicaciones);
     }
 
@@ -349,13 +349,12 @@ public class askshop {
 
         }
 
-        if(rta.equals("")){
-        return "<h3>No Se Encontraron Resultados</h3>";
+        if (rta.equals("")) {
+            return "<h3>No Se Encontraron Resultados</h3>";
         }
         return rta;
 
     }
-
     public String tallasTipo(int id) {
 
         TipoDAO tado = new TipoDAO();
@@ -371,31 +370,195 @@ public class askshop {
         return rta;
     }
 
-    public String filtrarPublicaciones(String [] color, String talla, String precio, int id) {
-        
-       PublicacionDAO pudao = new PublicacionDAO();
-       List<Publicacion> publicaciones = pudao.readTipo(id);
-        if(color!=null){
-        
-        publicaciones= pudao.readColor(publicaciones, color);
-        
+    public String filtrarPublicaciones(String[] color, String talla, String precio, int id,int categoria) {
+
+        PublicacionDAO pudao = new PublicacionDAO();
+        List<Publicacion> publicaciones = pudao.readTipo(id,categoria);
+        if (color != null) {
+
+            publicaciones = pudao.readColor(publicaciones, color);
+
         }
-        
-        if(!talla.equals("")){
-            
-            publicaciones = pudao.readTalla(publicaciones,talla);
-        
+
+        if (!talla.equals("")) {
+
+            publicaciones = pudao.readTalla(publicaciones, talla);
+
         }
-        
-        if(!precio.equals("")){
-        publicaciones = pudao.readPrecio(publicaciones,precio);
-        
+
+        if (!precio.equals("")) {
+            publicaciones = pudao.readPrecio(publicaciones, precio);
+
         }
-        
+
         return cardPublicaciones(publicaciones);
-        
 
     }
+
+    public String indexCategorias() {
+
+        String rta = "";
+        CategoriaDAO cadao = new CategoriaDAO();
+        List<Categoria> ca = cadao.readActivo();
+                int l =0;
+        for (Categoria c : ca) {
+            
+
+            rta += seccionIndexCart(c,l);
+            l++;
+            List<Tipo> tipoBody = c.getTipoList();
+            int i = tipoBody.size();
+
+            if (i > 0) {
+                rta += cardIncial(tipoBody,c);
+                i += -4;
+                if (tipoBody.size() != 4) {
+                    rta += carruselIndex(tipoBody, c);
+                }
+        
+            }
+            rta+= " </div>\n" +
+"                </div>\n" +
+"            </section>";
+        }
+        
+        return rta;
+    }
+
+    private String seccionIndexCart(Categoria c,int i) {
+
+        return "   <section>\n"
+                + "                <div class=\"container\">\n"
+                + "                    <div class=\"row\">\n"
+                + "                        <div class=\"col-6\">\n"
+                + "                            <h3 class=\"mb-3\">" + c.getNombre() + "</h3>\n"
+                + "                        </div>\n"
+                + "                        <div class=\"col-6 text-right\">\n"
+                + "                            <a class=\"btn btn-primary mb-3 mr-1\" href=\"#carouselExampleIndicators"+i+'"'+" role=\"button\" data-slide=\"prev\">\n"
+                + "                                <i class=\"fa fa-arrow-left\"></i>\n"
+                + "                            </a>\n"
+                + "                            <a class=\"btn btn-primary mb-3 \" href=\"#carouselExampleIndicators"+i+'"'+"role=\"button\" data-slide=\"next\">\n"
+                + "                                <i class=\"fa fa-arrow-right\"></i>\n"
+                + "                            </a>\n"
+                + "                        </div>\n"
+                + "                        <div class=\"col-12\">\n"
+                + "                            <div id=\"carouselExampleIndicators"+i+'"'+" class=\"carousel slide\" data-ride=\"carousel\">\n"
+                + "\n"
+                + "                                <div class=\"carousel-inner\">\n"
+                + "\n"
+                + "                                    <div class=\"carousel-item active\">\n"
+                + "\n"
+                + "                                        <div class=\"row row-cols-3 row-cols-md-4 g-4\">";
+    }
+
+    private String cardIncial(List<Tipo> tipoBody,Categoria ca) {
+
+        String rta = "";
+        for (int j = 0; j < 4; j++) {
+
+            rta += "<div class=\"col \">\n"
+                    + "                                                <div class=\"card\">\n"
+                    + "                                                    <div class=\"card-body d-flex flex-column\">\n"
+                    + "                                                        <img src=" + '"' + tipoBody.get(j).getUrlFoto() + '"' + "class=\"card-img-top\" alt=\"...\" width=\"50\" height=\"270\">\n"
+                    + "                                                        <a  href=\"./PublicacionesCategoria.do?tipo="+tipoBody.get(j).getId()+"&cate="+ ca.getId()+'"'+ "class=\"btn  text-white mt-auto align-self-center\">"+tipoBody.get(j).getNombre()+"</a>                          \n"
+                    + "                                                    </div>\n"
+                    + "                                                </div>\n"
+                    + "                                            </div>";
+
+            if (j + 1 == tipoBody.size()) {
+                rta += " </div>\n"
+                        + "                                    </div>";
+                break;
+            }
+        }
+        rta += " </div>\n"
+                + "                                    </div>";
+        return rta;
+    }
+
+    private String carruselIndex(List<Tipo> tipoBody,Categoria ca) {
+
+        String rta = "  <div class=\"carousel-item\">\n"
+                + "\n"
+                + "                                        <div class=\"row row-cols-3 row-cols-md-4 g-4\">";
+        int i = 4;
+        while (i < tipoBody.size()) {
+
+            for (int k = 0; k < 4; k++) {
+                rta += " <div class=\"col\">\n"
+                        + "                                                <div class=\"card \">\n"
+                        + "                                                    <div class=\"card-body d-flex flex-column\">\n"
+                        + "                                                        <img src="+'"'+tipoBody.get(i).getUrlFoto()+'"'+" class=\"card-img-top\" alt=\"...\">\n"
+                        + "                                                        <a  href=\"./PublicacionesCategoria.do?tipo="+tipoBody.get(i).getId()+"&cate="+ ca.getId()+'"'+ "class=\"btn  text-white mt-auto align-self-center\">"+tipoBody.get(i).getNombre()+"</a>                          \n"
+                        + "                                                    </div>\n"
+                        + "                                                </div>\n"
+                        + "                                            </div>";
+                
+                if (i + 1 == tipoBody.size()) {
+                    rta += " </div>\n"
+                            + "                                    </div>";
+                    i++;
+                    break;
+                }
+                i++;
+            }
+
+        }
+
+        rta += " </div>\n"
+                + "                                    </div>\n"
+                + "";
+        return rta;
+    }
+    public void actualizarProductoPublicacion(String idProducto, String referencia, String costo, String descuento, String color, String talla, String cantidad) {
+
+        ProductoDAO p = new ProductoDAO();
+        Producto pro = p.readProducto(Integer.parseInt(idProducto));
+        pro.setReferencia(referencia);
+        pro.setCosto(Double.parseDouble(costo));
+        pro.setDescuento(Integer.parseInt(descuento));
+        ColorDAO c = new ColorDAO();
+        TallaDAO t = new TallaDAO();
+        
+        pro.setIdColor(c.readColor(Integer.parseInt(color)));
+        pro.setIdTalla(t.readTalla(Integer.parseInt(talla)));
+        pro.setCantidad(Integer.parseInt(cantidad));
+        
+        p.update(pro);
+
+    }
+
+    public void agregarProductosPublicacion(String[] referencias, String[] costos, String[] descuentos, String[] tallas, String[] imgs, String[] colores, String[] cantidades, String pub) {
+
+            PublicacionDAO p = new PublicacionDAO();
+            Publicacion pu = p.readPublicacion(Integer.parseInt(pub));
+            
+            ColorDAO c = new ColorDAO();
+            TallaDAO t = new TallaDAO();
+            ProductoDAO pro = new ProductoDAO();
+            GaleriaimgDAO ga = new GaleriaimgDAO();   
+            for (int i = 0; i < referencias.length; i++) {
+                
+                    Producto producto = new Producto(0, referencias[i],
+                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]),null);
+                    producto.setIdColor(c.readColor(Integer.parseInt(colores[i])));
+                    producto.setIdPublicacion(pu);
+                    producto.setIdTalla(t.readTalla(Integer.parseInt(tallas[i])));
+                    Galeriaimg g = new Galeriaimg(0, imgs[i]);
+                    g.setIdPublicacion(pu);
+                    ga.create(g);
+                    pro.create(producto);
+                 
+            }
+    }
+
+    public void desactivarProducto(int idp) {
+        
+        ProductoDAO p = new ProductoDAO();
+        Producto po = p.readProducto(idp);
+        po.setEstado("INACTIVO");
+        p.update(po);
+        
+    }
     
-   
 }

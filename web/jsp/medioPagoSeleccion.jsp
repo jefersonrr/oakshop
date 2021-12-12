@@ -28,13 +28,13 @@
         <link rel="stylesheet" href="<%=basePath%>css/footer.css"/>
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
-        
+
         <!-- MENÚ DE NAVEGACIÓN-->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.jsp">
-                   <!-- <img src="#" alt="" width="140px" height="120px" /> -->
-                   Oakshop
+                    <!-- <img src="#" alt="" width="140px" height="120px" /> -->
+                    Oakshop
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -53,7 +53,7 @@
                                 <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,7 +64,7 @@
                                 <li><a class="dropdown-item" href="#">VESTIDOS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,7 +75,7 @@
                                 <li><a class="dropdown-item" href="#">BERMUDAS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
@@ -92,7 +92,7 @@
                         </ul>
                     </template>
                     <!-- USUARIO LOGUEADO -->
-                     <template id="SiSesion">
+                    <template id="SiSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item dropdown" style="list-style-type: none;">
                                 <a  class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -115,99 +115,99 @@
                 </div>
             </div>
         </nav>
-                                    
+
         <!-- CONTENIDO -->
-        
+
         <form action="" method="post">
-        <div class="row">
-            <div class="col start-title">
-                <div class="text-center start-text p-2">
-                    Nombre de tienda
-                </div>
-            </div>
-        </div>
-        <div class="row m-10 mt-3">
-            <div class="row my-2">
-                <div class="col d-flex">
-                    <div>
-                        <img src="img/carrito.png" width="50" height="50"/>    
-                    </div>
-                    <div class="titulo-contenido mt-2 ms-5 d-flex">
-                        ¿ Como Quieres Pagar ?
+            <div class="row">
+                <div class="col start-title">
+                    <div class="text-center start-text p-2">
+                        Nombre de tienda
                     </div>
                 </div>
             </div>
-            <div class="contenedor-inicial mt-5 p-3 me-1">
-                <div class="contenedor">
-                    <div class="w-100">
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header " id="headingOne">
-                                  <button class="accordion-button collapsed elemento-data texto-contenido" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    Tarjeta Credito
-                                  </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body elemento-data">
+            <div class="row m-10 mt-3">
+                <div class="row my-2">
+                    <div class="col d-flex">
+                        <div>
+                            <img src="img/carrito.png" width="50" height="50"/>    
+                        </div>
+                        <div class="titulo-contenido mt-2 ms-5 d-flex">
+                            ¿ Como Quieres Pagar ?
+                        </div>
+                    </div>
+                </div>
+                <div class="contenedor-inicial mt-5 p-3 me-1">
+                    <div class="contenedor">
+                        <div class="w-100">
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header " id="headingOne">
+                                        <button class="accordion-button collapsed elemento-data texto-contenido" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                            Tarjeta Credito
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body elemento-data">
 
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                              Nueva Tarjeta
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                            <label class="form-check-label" for="flexRadioDefault2">
-                                              Tarjeta  ****8546
-                                            </label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    Nueva Tarjeta
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    Tarjeta  ****8546
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header " id="headingTwo">
-                                  <button class="accordion-button collapsed elemento-data texto-contenido" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Tarjeta Debito
-                                  </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body elemento-data">
 
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                              Nueva Tarjeta
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                            <label class="form-check-label" for="flexRadioDefault2">
-                                              Tarjeta  ****8546
-                                            </label>
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header " id="headingTwo">
+                                        <button class="accordion-button collapsed elemento-data texto-contenido" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Tarjeta Debito
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body elemento-data">
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    Nueva Tarjeta
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    Tarjeta  ****8546
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                        
-                    </div>
-                </div> 
-                
-                <div class="row mt-4 mod-pos btn-2">
-                    <div class="col">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn-continue-size btn btn-info text-white">Continuar</button>
+                    </div> 
+
+                    <div class="row mt-4 mod-pos btn-2">
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                <a href="<%=basePath%>./jsp/medioPagoData.jsp" type="button" class="btn-continue-size btn btn-info text-white">Continuar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="contenedor-confirmar">
-                
+
+                <div class="contenedor-confirmar">
+
                     <div class="mt-5">
                         <div class="titulo-compra mt-4">
                             <div class="text-center">
@@ -233,56 +233,56 @@
                             </div>
                         </div>
                     </div>
-                <div class="row mt-4 mod-pos btn-1">
-                    <div class="col">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn-continue-size btn btn-info text-white">Continuar</button>
+                    <div class="row mt-4 mod-pos btn-1">
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                <a href="<%=basePath%>./jsp/medioPagoData.jsp" type="button" class="btn-continue-size btn btn-info text-white">Continuar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            
-        </div>
-        </form>
-                                    
-                <div class="footer-dark">
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 item">
-                        <h3>Categorías</h3>
-                        <ul>
-                            <li><a href="#">Hombres</a></li>
-                            <li><a href="#">Mujer</a></li>
-                            <li><a href="#">Kids</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-3 item">
-                        <h3>Acerca de</h3>
-                        <ul>
-                            <li><a href="#">Empresa</a></li>
-                            <li><a href="#">Equipo</a></li>
-                            <li><a href="#">Corporativo</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 item text">
-                        <h3>Oakshop Store</h3>
-                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="item social">
-                        <a href="#"><i class="icon ion-social-facebook"></i></a>
-                        <a href="#"><i class="icon ion-social-twitter"></i></a>
-                        <a href="#"><i class="icon ion-social-instagram"></i></a>
-                    </div>
-                </div>
-                <p class="copyright">Oakshop Store © 2021</p>
+
             </div>
-        </footer>
-    </div>
-        
+        </form>
+
+        <div class="footer-dark">
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 item">
+                            <h3>Categorías</h3>
+                            <ul>
+                                <li><a href="#">Hombres</a></li>
+                                <li><a href="#">Mujer</a></li>
+                                <li><a href="#">Kids</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-3 item">
+                            <h3>Acerca de</h3>
+                            <ul>
+                                <li><a href="#">Empresa</a></li>
+                                <li><a href="#">Equipo</a></li>
+                                <li><a href="#">Corporativo</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 item text">
+                            <h3>Oakshop Store</h3>
+                            <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="item social">
+                            <a href="#"><i class="icon ion-social-facebook"></i></a>
+                            <a href="#"><i class="icon ion-social-twitter"></i></a>
+                            <a href="#"><i class="icon ion-social-instagram"></i></a>
+                        </div>
+                    </div>
+                    <p class="copyright">Oakshop Store © 2021</p>
+                </div>
+            </footer>
+        </div>
+
         <!-- JS de Bootstrap -->      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="./js/sesion.js"></script>

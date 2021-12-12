@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -53,7 +55,15 @@ public class Tipo implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "estado")
     private String estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "urlFoto")
+    private String urlFoto;
+    @ManyToMany(mappedBy = "tipoList")
+    private List<Categoria> categoriaList;
+     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
     private List<Publicacion> publicacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
     private List<TipoTalla> tipoTallaList;
@@ -65,10 +75,11 @@ public class Tipo implements Serializable {
         this.id = id;
     }
 
-    public Tipo(Integer id, String nombre, String estado) {
+    public Tipo(Integer id, String nombre, String estado, String urlFoto) {
         this.id = id;
         this.nombre = nombre;
         this.estado = estado;
+        this.urlFoto = urlFoto;
     }
 
     public Integer getId() {
@@ -94,8 +105,32 @@ public class Tipo implements Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
+
+    @XmlTransient
+    public List<Categoria> getCategoriaList() {
+        return categoriaList;
+    }
+
+    public void setCategoriaList(List<Categoria> categoriaList) {
+        this.categoriaList = categoriaList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
     
-     @XmlTransient
+    @XmlTransient
     public List<Publicacion> getPublicacionList() {
         return publicacionList;
     }
@@ -111,13 +146,6 @@ public class Tipo implements Serializable {
 
     public void setTipoTallaList(List<TipoTalla> tipoTallaList) {
         this.tipoTallaList = tipoTallaList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
     }
 
     @Override
@@ -137,5 +165,5 @@ public class Tipo implements Serializable {
     public String toString() {
         return "DTO.Tipo[ id=" + id + " ]";
     }
-
+    
 }

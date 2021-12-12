@@ -33,7 +33,7 @@ public class ActualizarPublicacion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        askshop a = new askshop();
+       askshop a = new askshop();
         //productos
         String referencias[] = request.getParameter("referencias").split(",");
         String costos[] = request.getParameter("costos").split(",");
