@@ -5,8 +5,6 @@
  */
 package ControladorVistas;
 
-import DAO.PublicacionDAO;
-import Negocio.askshop;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
-public class EditarProductosPublicacion extends HttpServlet {
+public class MostrarDetallePublicacion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,28 +29,8 @@ public class EditarProductosPublicacion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        askshop a = new askshop();
+        String idPublicacion = request.getParameter("idPublicacion");
         
-        String nombre = request.getParameter("nombre");
-        
-        int editar = Integer.parseInt(request.getSession().getAttribute("editar").toString());//editar es el id de la publi
-        PublicacionDAO p = new PublicacionDAO();
-        String marca = request.getParameter("marca");
-        int tipo = p.readPublicacion(editar).getIdTipo().getId();
-        String descripcion = request.getParameter("descripcion");
-        
-        String colores = a.getColores();
-        String tallas = a.tipo_talla(tipo);
-        //para obtenerlos al agregar la publicacion
-        request.getSession().setAttribute("nombre", nombre);
-        request.getSession().setAttribute("marca",marca);
-        request.getSession().setAttribute("descripcion", descripcion);
-        //para el desplegable
-        request.getSession().setAttribute("colores", colores);
-        request.getSession().setAttribute("tallas",tallas);
-        
-        request.getRequestDispatcher("jsp/editarProductoPublicacion.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -31,13 +31,18 @@ public class PublicacionesCategoria extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      // String id = request.getParameter("id");
-       askshop as = new askshop();
-       TipoDAO tdao = new TipoDAO();
-       request.getSession().setAttribute("tipo", tdao.readTipo(2).getNombre());
-       request.getSession().setAttribute("selectTalla", as.tallasTipo(2));
-       request.getSession().setAttribute("productos", as.publicacionesTipoCliente(2));
-       request.getRequestDispatcher("./jsp/productos.jsp").forward(request, response);
+        // String id = request.getParameter("id");
+        askshop as = new askshop();
+        TipoDAO tdao = new TipoDAO();
+        int tipo = Integer.parseInt(request.getParameter("tipo"));
+        int ca = Integer.parseInt(request.getParameter("cate"));
+        request.getSession().setAttribute("cate",ca);
+        request.getSession().setAttribute("tipoF",tipo);
+
+        request.getSession().setAttribute("tipo", tdao.readTipo(tipo).getNombre());
+        request.getSession().setAttribute("selectTalla", as.tallasTipo(tipo));
+        request.getSession().setAttribute("productos", as.publicacionesTipoCliente(tipo,ca));
+        request.getRequestDispatcher("./jsp/productos.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

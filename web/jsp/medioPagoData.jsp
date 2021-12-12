@@ -18,20 +18,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Oakshop</title>
         <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+        <!-- Iconos -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/productos.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/styles.css"/>
+        <link rel="stylesheet" href="<%=basePath%>css/footer.css"/>
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
-        
+
         <!-- MENÚ DE NAVEGACIÓN-->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.jsp">
-                   <!-- <img src="#" alt="" width="140px" height="120px" /> -->
-                   Oakshop
+                    <!-- <img src="#" alt="" width="140px" height="120px" /> -->
+                    Oakshop
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -50,7 +53,7 @@
                                 <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,7 +64,7 @@
                                 <li><a class="dropdown-item" href="#">VESTIDOS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -72,7 +75,7 @@
                                 <li><a class="dropdown-item" href="#">BERMUDAS</a></li>
                                 <li><a class="dropdown-item" href="#">JEANS</a></li>
                                 <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
@@ -89,7 +92,7 @@
                         </ul>
                     </template>
                     <!-- USUARIO LOGUEADO -->
-                     <template id="SiSesion">
+                    <template id="SiSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item dropdown" style="list-style-type: none;">
                                 <a  class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -112,106 +115,106 @@
                 </div>
             </div>
         </nav>
-                                    
+
         <!-- CONTENIDO -->
-        
+
         <form action="" method="post">
-        <div class="row">
-            <div class="col start-title">
-                <div class="text-center start-text p-2">
-                    Nombre de tienda
-                </div>
-            </div>
-        </div>
-        <div class="row m-10 mt-3">
-            <div class="row my-2">
-                <div class="col d-flex">
-                    <div>
-                        <img src="img/carrito.png" width="50" height="50"/>    
-                    </div>
-                    <div class="titulo-contenido mt-2 ms-5 d-flex">
-                        ¿ Como Quieres Pagar ?
+            <div class="row">
+                <div class="col start-title">
+                    <div class="text-center start-text p-2">
+                        Nombre de tienda
                     </div>
                 </div>
             </div>
-            <div class="contenedor-inicial mt-5">
-                <div class="contenedor">
-                    <div class="w-100">
-                        <ul class="nav rounded elemento-data texto-contenido">
-                            <li class="w-100">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="d-flex justify-content-center my-3">
-                                            <img src="img/card.png" width="30" height="30"/>    
+            <div class="row m-10 mt-3">
+                <div class="row my-2">
+                    <div class="col d-flex">
+                        <div>
+                            <img src="img/carrito.png" width="50" height="50"/>    
+                        </div>
+                        <div class="titulo-contenido mt-2 ms-5 d-flex">
+                            ¿ Como Quieres Pagar ?
+                        </div>
+                    </div>
+                </div>
+                <div class="contenedor-inicial mt-5">
+                    <div class="contenedor">
+                        <div class="w-100">
+                            <ul class="nav rounded elemento-data texto-contenido">
+                                <li class="w-100">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <div class="d-flex justify-content-center my-3">
+                                                <img src="img/card.png" width="30" height="30"/>    
+                                            </div>
+
                                         </div>
-                                        
-                                    </div>
-                                    <div class="col-7">
-                                        <div class="my-3 bold">
-                                            Tarjeta de Crédito    
+                                        <div class="col-7">
+                                            <div class="my-3 bold">
+                                                Tarjeta de Crédito    
+                                            </div>
+
                                         </div>
-                                        
+                                        <div class="col-3 align-items-center">
+                                            <button type="button" class="btn-content btn-size btn align-items-center">Modificar</button>
+                                        </div>
                                     </div>
-                                    <div class="col-3 align-items-center">
-                                        <button type="button" class="btn-content btn-size btn align-items-center">Modificar</button>
-                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="container">
+                                <div class="titulo-contenido my-5">
+                                    Ingresa los datos de tu tarjeta
                                 </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="container">
-                            <div class="titulo-contenido my-5">
-                                Ingresa los datos de tu tarjeta
-                            </div>
-                            <div class="container border p-5">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Número de tarjeta" aria-label="default input example">         
+                                <div class="container border p-5">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Número de tarjeta" aria-label="default input example">         
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row my-2">
-                                    <div class="col-8">
-                                        <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Nombre y Apellido" aria-label="default input example">
+                                    <div class="row my-2">
+                                        <div class="col-8">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Nombre y Apellido" aria-label="default input example">
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="row my-2">
-                                    <div class="col-4">
-                                        <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Fecha de Expiración" aria-label="default input example">
+
+                                    <div class="row my-2">
+                                        <div class="col-4">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Fecha de Expiración" aria-label="default input example">
+                                        </div>
+                                        <div class="col-4">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Codigo de Seguridad" aria-label="default input example">
+                                        </div>
                                     </div>
-                                    <div class="col-4">
-                                        <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Codigo de Seguridad" aria-label="default input example">
-                                    </div>
-                                </div>
-                               <div class="row mt-2 mb-5">
-                                    <div class="col-4">
-                                        <label class="texto-contenido bold">Tipo</label>
-                                        <select class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
-                                            <option selected>CC</option>
-                                            <option value="1">TI</option>
-                                            <option value="2">---</option>
-                                            <option value="3">---</option>
-                                          </select>
-                                    </div>
-                                    <div class="col-4">
-                                        <label></label>
-                                        <input class="form-control form-control-lg border-bottom w-100" type="number" placeholder="Número" aria-label="default input example">
+                                    <div class="row mt-2 mb-5">
+                                        <div class="col-4">
+                                            <label class="texto-contenido bold">Tipo</label>
+                                            <select class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
+                                                <option selected>CC</option>
+                                                <option value="1">TI</option>
+                                                <option value="2">---</option>
+                                                <option value="3">---</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-4">
+                                            <label></label>
+                                            <input class="form-control form-control-lg border-bottom w-100" type="number" placeholder="Número" aria-label="default input example">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div> 
-                
-                <div class="row mt-4 mod-pos btn-2">
-                    <div class="col">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn-continue-size btn btn-info text-white">Continuar</button>
+                    </div> 
+
+                    <div class="row mt-4 mod-pos btn-2">
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                <a href="<%=basePath%>./jsp/medioPagoConfirmar.jsp"type="button" class="btn-continue-size btn btn-info  text-white">Continuar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="contenedor-confirmar">
+                <div class="contenedor-confirmar">
                     <div class="mt-5">
                         <div class="titulo-compra rounded mt-4">
                             <div class="text-center">
@@ -237,59 +240,57 @@
                             </div>
                         </div>
                     </div>
-                <div class="row mt-4 mod-pos btn-1">
-                    <div class="col">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn-continue-size btn btn-info  text-white">Continuar</button>
+                    <div class="row mt-4 mod-pos btn-1">
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                <a href="<%=basePath%>./jsp/medioPagoConfirmar.jsp"type="button" class="btn-continue-size btn btn-info  text-white">Continuar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            
-        </div>
+
+            </div>
         </form>
-                                    
-                                    
-        <!-- FOOTER -->
-        <footer>
-            <div class="social-footer-container">
-                <div class="d-flex justify-content-center">
-                    
-                    <div class="m-2 img-w-15">
-                        <a href="#">
-                            <img src="img/redes/facebook.png" class="general-img" />    
-                        </a>
+
+
+        <div class="footer-dark">
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 item">
+                            <h3>Categorías</h3>
+                            <ul>
+                                <li><a href="#">Hombres</a></li>
+                                <li><a href="#">Mujer</a></li>
+                                <li><a href="#">Kids</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-3 item">
+                            <h3>Acerca de</h3>
+                            <ul>
+                                <li><a href="#">Empresa</a></li>
+                                <li><a href="#">Equipo</a></li>
+                                <li><a href="#">Corporativo</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 item text">
+                            <h3>Oakshop Store</h3>
+                            <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                        </div>
                     </div>
-                    <div class="m-2 img-w-30">
-                        <a href="#">
-                            <img src="img/redes/instagram.png" class="general-img" />
-                        </a>
+                    <div class="row">
+                        <div class="item social">
+                            <a href="#"><i class="icon ion-social-facebook"></i></a>
+                            <a href="#"><i class="icon ion-social-twitter"></i></a>
+                            <a href="#"><i class="icon ion-social-instagram"></i></a>
+                        </div>
                     </div>
-                    <div class="m-2 img-w-30">
-                        <a href="#">
-                            <img src="img/redes/pinterest.png" class="general-img" />
-                        </a>
-                    </div>
-                    <div class="m-2 img-w-30">
-                        <a href="#">
-                            <img src="img/redes/snapchat.png" class="general-img" />
-                        </a>
-                    </div>
-                    <div class="m-2 img-w-30">
-                        <a href="#">
-                            <img src="img/redes/youtube.png" class="general-img" />
-                        </a>
-                    </div>
-                    
-                    
+                    <p class="copyright">Oakshop Store © 2021</p>
                 </div>
-            </div>
-            
-            <div class="end-foo">
-            </div>
-         
-        </footer>
+            </footer>
+        </div>
+
         <!-- JS de Bootstrap -->      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="./js/sesion.js"></script>

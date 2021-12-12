@@ -34,7 +34,7 @@ public class AddTipo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
       TipoDAO tdao   = new TipoDAO();
      
-              tdao.create(new Tipo(null,request.getParameter("nombre"),"ACTIVO",null));
+              tdao.create(new Tipo(null,request.getParameter("nombre"),"ACTIVO","https://i.pinimg.com/550x/be/da/50/beda508863ca52e261ff85179769d7d2.jpg"));
               request.getRequestDispatcher("./MostrarCategorias.do").forward(request, response);
     }
 
