@@ -3,29 +3,38 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/FiltrarPublicaciones.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/productos.jsp</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/PublicacionesCategoria.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/Negocio/askshop.java</file>
-            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/index.jsp</file>
-        </group>
-        <group>
-            <file>file:/D:/Proyecto%20AyD/oakshop/web/css/index.css</file>
-            <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/productos.jsp</file>
-            <file>file:/D:/Proyecto%20AyD/oakshop/web/jsp/detalle-producto.jsp</file>
-            <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
-            <file>file:/D:/Proyecto%20AyD/oakshop/web/css/productos.css</file>
-        </group>
-        <group>
-            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/DAO/CalificacionDAO.java</file>
-            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/Negocio/askshop.java</file>
-            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/adminPublicaciones.jsp</file>
-            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/DAO/DetalleCompraDAO.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/categoriasAdmin.jsp</file>
             <file>file:/C:/Users/mcris/Desktop/oakshop/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/DAO/CarritoDAO.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/productos.jsp</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/registrarse.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/categoriasAdmin.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/Negocio/askshop.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/Registro.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/productos.jsp</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/adminPublicaciones.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/ActualizarPublicacion.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/agregarPublicacion.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/EditarPublicacion.java</file>
             <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/adminClientes.jsp</file>
-            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/DAO/PublicacionDAO.java</file>
-            <file>file:/D:/Proyecto%20AyD/oakshop/web/index.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/CrearPublicacion.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/AddTipo.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/productos.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/Negocio/askshop.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/editarPub.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/EditarProductosPublicacion.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/AgregarProductos.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/EditarPublicacion.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/agregarProducto.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/ActualizarProductoPublicacion.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/detalle-producto.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/DesactivarProducto.java</file>
         </group>
     </open-files>
 </project-private>

@@ -131,7 +131,7 @@ public class askshop {
             PublicacionDAO p = new PublicacionDAO();
             Date fecha = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
             int id = hashPublicacion(fecha);
-            Publicacion pu = new Publicacion(id, marca, nombre, fecha, descripcion);
+            Publicacion pu = new Publicacion(id, marca, nombre, fecha, descripcion,null);
             
             CategoriaDAO ca = new CategoriaDAO();
             TipoDAO ti = new TipoDAO();
@@ -147,8 +147,8 @@ public class askshop {
             
             for (int i = 0; i < referencias.length; i++) {
                 
-                 Producto producto = new Producto(0, referencias[i],"", 
-                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]));
+                 Producto producto = new Producto(0, referencias[i], 
+                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]),null);
                  producto.setIdColor(c.readColor(Integer.parseInt(colores[i])));
                  producto.setIdPublicacion(p.readPublicacion(id));
                  producto.setIdTalla(t.readTalla(Integer.parseInt(tallas[i])));
@@ -201,8 +201,8 @@ public class askshop {
                      pro.update(producto);
                  }
                  else{
-                    Producto producto = new Producto(0, referencias[i],"", 
-                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]));
+                    Producto producto = new Producto(0, referencias[i], 
+                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]),null);
                     producto.setIdColor(c.readColor(Integer.parseInt(colores[i])));
                     producto.setIdPublicacion(pinsertada);
                     producto.setIdTalla(t.readTalla(Integer.parseInt(tallas[i])));
@@ -394,6 +394,57 @@ public class askshop {
         return cardPublicaciones(publicaciones);
         
 
+    }
+
+    public void actualizarProductoPublicacion(String idProducto, String referencia, String costo, String descuento, String color, String talla, String cantidad) {
+
+        ProductoDAO p = new ProductoDAO();
+        Producto pro = p.readProducto(Integer.parseInt(idProducto));
+        pro.setReferencia(referencia);
+        pro.setCosto(Double.parseDouble(costo));
+        pro.setDescuento(Integer.parseInt(descuento));
+        ColorDAO c = new ColorDAO();
+        TallaDAO t = new TallaDAO();
+        
+        pro.setIdColor(c.readColor(Integer.parseInt(color)));
+        pro.setIdTalla(t.readTalla(Integer.parseInt(talla)));
+        pro.setCantidad(Integer.parseInt(cantidad));
+        
+        p.update(pro);
+
+    }
+
+    public void agregarProductosPublicacion(String[] referencias, String[] costos, String[] descuentos, String[] tallas, String[] imgs, String[] colores, String[] cantidades, String pub) {
+
+            PublicacionDAO p = new PublicacionDAO();
+            Publicacion pu = p.readPublicacion(Integer.parseInt(pub));
+            
+            ColorDAO c = new ColorDAO();
+            TallaDAO t = new TallaDAO();
+            ProductoDAO pro = new ProductoDAO();
+            GaleriaimgDAO ga = new GaleriaimgDAO();   
+            for (int i = 0; i < referencias.length; i++) {
+                
+                    Producto producto = new Producto(0, referencias[i],
+                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]),null);
+                    producto.setIdColor(c.readColor(Integer.parseInt(colores[i])));
+                    producto.setIdPublicacion(pu);
+                    producto.setIdTalla(t.readTalla(Integer.parseInt(tallas[i])));
+                    Galeriaimg g = new Galeriaimg(0, imgs[i]);
+                    g.setIdPublicacion(pu);
+                    ga.create(g);
+                    pro.create(producto);
+                 
+            }
+    }
+
+    public void desactivarProducto(int idp) {
+        
+        ProductoDAO p = new ProductoDAO();
+        Producto po = p.readProducto(idp);
+        po.setEstado("INACTIVO");
+        p.update(po);
+        
     }
     
    

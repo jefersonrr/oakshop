@@ -139,6 +139,7 @@
                     <tbody>
                         <%  askshop a = new askshop();
                             for (Publicacion pu : lista) {
+                              if(pu.getEstado().equals("ACTIVO")){
                         %>
                         <tr>
                             <th class="enc" name="id" scope="row"><%=pu.getId()%></th>
@@ -167,7 +168,7 @@
                             </td>
                         </tr>
                         <%
-                            }%>
+                            }}%>
                     </tbody>
                 </table>
             </div>

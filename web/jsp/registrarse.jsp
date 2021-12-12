@@ -31,7 +31,7 @@
         <link href="<%=basePath%>css/menu.css" rel="stylesheet" type="text/css"/>
         <link href="<%=basePath%>css/registro.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>'">
+    <body onload="exist()" >
         
         <!--menú -->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
@@ -182,7 +182,7 @@
 					<p class="formulario__input-error">El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.</p>
 			</div>
                         <% String valor = request.getSession().getAttribute("existe")==null?"no existe":request.getSession().getAttribute("existe").toString();
-                           
+                          
                         %>
             <!-- Grupo: Teléfono -->
 			<div class="formulario__grupo" id="grupo__telefono">
@@ -230,7 +230,7 @@
          <script src="<%=basePath%>js/formulario.js" type="text/javascript"></script>
          <script>
     
-            document.body.onload = function exist(){            
+            function exist(){            
                 let existe = '<%=valor%>';
                             if(existe==="existe Usuario"){
                                 alert('El usuario ya existe!');

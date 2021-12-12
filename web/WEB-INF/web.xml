@@ -4,11 +4,6 @@
         <filter-name>validarSesion.do</filter-name>
         <filter-class>ControladorVistas.validarSesion</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>validarSesion.do</filter-name>
-        <url-pattern>/jsp/index.jsp</url-pattern>
-        <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
-    </filter-mapping>
     <servlet>
         <servlet-name>IniciarSesion</servlet-name>
         <servlet-class>ControladorVistas.IniciarSesion</servlet-class>
@@ -38,7 +33,6 @@
         <servlet-class>ControladorVistas.adminUpdateCliente</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< HEAD
         <servlet-name>AgregarPublicacion</servlet-name>
         <servlet-class>ControladorVistas.AgregarPublicacion</servlet-class>
     </servlet>
@@ -65,7 +59,8 @@
     <servlet>
         <servlet-name>EliminarPublicacion</servlet-name>
         <servlet-class>ControladorVistas.EliminarPublicacion</servlet-class>
-=======
+    </servlet>
+    <servlet>
         <servlet-name>MostrarCategorias</servlet-name>
         <servlet-class>ControladorVistas.MostrarCategorias</servlet-class>
     </servlet>
@@ -92,7 +87,14 @@
     <servlet>
         <servlet-name>FiltrarPublicaciones</servlet-name>
         <servlet-class>ControladorVistas.FiltrarPublicaciones</servlet-class>
->>>>>>> Test
+    </servlet>
+    <servlet>
+        <servlet-name>ActualizarProductoPublicacion</servlet-name>
+        <servlet-class>ControladorVistas.ActualizarProductoPublicacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DesactivarProducto</servlet-name>
+        <servlet-class>ControladorVistas.DesactivarProducto</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
@@ -123,7 +125,6 @@
         <url-pattern>/adminUpdateCliente.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< HEAD
         <servlet-name>AgregarPublicacion</servlet-name>
         <url-pattern>/AgregarPublicacion.do</url-pattern>
     </servlet-mapping>
@@ -150,7 +151,8 @@
     <servlet-mapping>
         <servlet-name>EliminarPublicacion</servlet-name>
         <url-pattern>/EliminarPublicacion.do</url-pattern>
-=======
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>MostrarCategorias</servlet-name>
         <url-pattern>/MostrarCategorias.do</url-pattern>
     </servlet-mapping>
@@ -177,7 +179,14 @@
     <servlet-mapping>
         <servlet-name>FiltrarPublicaciones</servlet-name>
         <url-pattern>/FiltrarPublicaciones.do</url-pattern>
->>>>>>> Test
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarProductoPublicacion</servlet-name>
+        <url-pattern>/ActualizarProductoPublicacion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DesactivarProducto</servlet-name>
+        <url-pattern>/DesactivarProducto.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
