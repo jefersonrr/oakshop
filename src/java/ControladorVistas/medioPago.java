@@ -5,7 +5,6 @@
  */
 package ControladorVistas;
 
-import Negocio.askshop;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Jefersonrr
+ * @author Luis
  */
-public class FiltrarPublicaciones extends HttpServlet {
+public class medioPago extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,35 +29,19 @@ public class FiltrarPublicaciones extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        askshop as = new askshop();
-        String[] colores = null;
-        String talla = "";
-        String precio = "";
-        int ca = Integer.parseInt(request.getParameter("cate"));
-        request.getSession().setAttribute("cate", ca);
-        if (request.getParameter("color") != null) {
-
-            colores = request.getParameterValues("color");
-            request.getSession().setAttribute("colores",colores );
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet medioPago</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet medioPago at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
-        if (request.getParameter("talla") != null) {
-
-            talla = request.getParameter("talla");
-             request.getSession().setAttribute("sTalla",talla );
-        }
-
-        if (request.getParameter("precio") != null) {
-
-            precio = request.getParameter("precio");
-            request.getSession().setAttribute("sPrecio",precio);
-        }
-        
-        request.getSession().setAttribute("productos", as.filtrarPublicaciones(colores, talla, precio, 2,ca));
-        request.getRequestDispatcher("./jsp/productos.jsp").forward(request, response);
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

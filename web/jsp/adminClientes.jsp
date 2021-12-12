@@ -77,14 +77,14 @@
                     <span class="tooltip">Categorias</span>
                 </li>
                    <li>
-                    <a href="<%=basePath%>MostrarProductosAdmin.do">
+                    <a href="#">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="links_name">Pedidos</span>
                     </a>
                     <span class="tooltip">Pedidos</span>
                 </li>
                 <li>
-                    <a href="<%=basePath%>MostrarProductosAdmin.do">
+                    <a href="#">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="links_name">Productos</span>
                     </a>

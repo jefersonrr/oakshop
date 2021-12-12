@@ -9,6 +9,7 @@ import DTO.Categoria;
 import Persistencia.CategoriaJpaController;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,5 +58,22 @@ public class CategoriaDAO {
             Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    
+    public List<Categoria> readActivo(){
+        
+        List<Categoria> categorias = read();
+        List<Categoria> rta = new ArrayList<Categoria>();
+        
+        for(Categoria c: categorias){
+        
+        if(c.getEstado().equals("ACTIVO")){
+            
+        rta.add(c);
+        
+        }
+        }
+        
+        return  rta;
     }
 }
