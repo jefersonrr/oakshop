@@ -6,8 +6,12 @@
 package Negocio;
 
 import DAO.CategoriaDAO;
+import DAO.ColorDAO;
+import DAO.ProductoDAO;
 import DAO.PublicacionDAO;
+import DAO.TallaDAO;
 import DAO.TipoDAO;
+import DTO.Producto;
 import DTO.Publicacion;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -22,13 +26,20 @@ import java.util.Date;
 public class main {
     public static void main(String[] args) {
 //        Date fecha = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-        PublicacionDAO pu = new PublicacionDAO();
-       askshop a = new askshop();
-        
-        Publicacion p = pu.readPublicacion(2112042024);
-        p.setDescripcion("hoalalalalala");
-        p.setNombre("camisita");
-        pu.update(p);
+//        PublicacionDAO pu = new PublicacionDAO();
+//       askshop a = new askshop();
+//        ColorDAO c = new ColorDAO();
+//        TallaDAO t = new TallaDAO();
+//////        Publicacion p = pu.readPublicacion(2112042024);
+//////        p.setDescripcion("hoalalalalala");
+//////        p.setNombre("camisita");
+//////        pu.update(p);
+//          Producto p = new Producto(0, "CRTI", 20000, 0, 2, "");
+//          p.setIdColor(c.readColor(3));
+//          p.setIdTalla(t.readTalla(2));
+//          ProductoDAO pro = new ProductoDAO();
+//          p.setIdPublicacion(pu.readPublicacion(2112041610));
+//          pro.create(p);
 //        Calendar calendar = Calendar.getInstance();
 //        calendar.setTime(fecha);
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHss");

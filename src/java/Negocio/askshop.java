@@ -540,7 +540,7 @@ public class askshop {
             for (int i = 0; i < referencias.length; i++) {
                 
                     Producto producto = new Producto(0, referencias[i],
-                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]),null);
+                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]),"ACTIVO");
                     producto.setIdColor(c.readColor(Integer.parseInt(colores[i])));
                     producto.setIdPublicacion(pu);
                     producto.setIdTalla(t.readTalla(Integer.parseInt(tallas[i])));
