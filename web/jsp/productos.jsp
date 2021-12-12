@@ -4,10 +4,6 @@
     Author     : Acer
 --%>
 
-<%@page import="DTO.Tipo"%>
-<%@page import="DTO.Categoria"%>
-<%@page import="java.util.List"%>
-<%@page import="DAO.CategoriaDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,8 +11,7 @@
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                 + request.getServerPort() + path + "/";
-        CategoriaDAO cadao = new CategoriaDAO();
-        List<Categoria> ca = cadao.readActivo();
+
 
     %>
     <base href="<%=basePath%>">
@@ -32,19 +27,15 @@
 
         <!-- Fuente de google: Open Sans - Regular 400 -->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-        <!-- Iconos -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-
         <!-- CSS de Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <!-- CSS restantes -->
         <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/productos.css"/>
-        <link rel="stylesheet" href="<%=basePath%>css/footer.css"/>
 
     </head>
-    <body oncontextmenu='return false' class='snippet-body' onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
-         <!--menú -->
+    <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
+        <!--menú -->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
@@ -63,33 +54,43 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">INICIO</a>
                         </li>
-                        <% int k;
-                            if (ca.size() > 5) {
-                                k = 5;
 
-                            } else {
-                                k = ca.size();
-                            }
-                            for (int i = 0; i < k; i++) {%>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <%=ca.get(i).getNombre()%>
+                                HOMBRE
                             </a>
-                            <%List<Tipo> tipos = ca.get(i).getTipoList();%>
-
-                            
-                            
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <%for (Tipo t : tipos) {%>
-
-
-                                <li><a class="dropdown-item" href="<%=basePath%>/PublicacionesCategoria.do?tipo=<%=t.getId() %>&cate=<%=ca.get(i).getId()%>"><%=t.getNombre()%> </a></li>
-
-
-                                <%};%>
+                                <li><a class="dropdown-item" href="#">POLOS</a></li>
+                                <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
+                                <li><a class="dropdown-item" href="#">JEANS</a></li>
+                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
                             </ul>
                         </li>
-                        <%};%>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                MUJERES
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">BLUSAS</a></li>
+                                <li><a class="dropdown-item" href="#">VESTIDOS</a></li>
+                                <li><a class="dropdown-item" href="#">JEANS</a></li>
+                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                KIDS
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
+                                <li><a class="dropdown-item" href="#">BERMUDAS</a></li>
+                                <li><a class="dropdown-item" href="#">JEANS</a></li>
+                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
+                            </ul>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
                         </li>
@@ -98,7 +99,7 @@
                     <template id="NoSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" href="<%=basePath%>iniciarSesion.do">INICIAR SESIÓN</a>
+                                <a class="nav-link" href="<%=basePath%>IniciarSesion.do">INICIAR SESIÓN</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
@@ -106,7 +107,7 @@
                         </ul>
                     </template>
                     <!-- Usuario logueado-->
-                     <template id="SiSesion">
+                    <template id="SiSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item dropdown" style="list-style-type: none;">
                                 <a  class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -132,14 +133,17 @@
                 </div>
             </div>
         </nav>
-        <!--Fin menú --> 
-
+        <!--Fin menú -->
         <%
             String productos = request.getSession().getAttribute("productos").toString();
             String tipoName = request.getSession().getAttribute("tipo").toString();
             String tallas = request.getSession().getAttribute("selectTalla").toString();
+            String[] colores = null;
             String sTalla = "";
             String sPrecio = "";
+            if (request.getSession().getAttribute("colores") != null) {
+                colores = (String[]) request.getSession().getAttribute("colores");
+            }
             if (request.getSession().getAttribute("sTalla") != null) {
                 sTalla = request.getSession().getAttribute("sTalla").toString();
                 request.getSession().removeAttribute("sTalla");
@@ -149,7 +153,6 @@
                 sPrecio = request.getSession().getAttribute("sPrecio").toString();
                 request.getSession().removeAttribute("sPrecio");
             }
-            
 
 
         %>
@@ -209,14 +212,11 @@
 
 
                             <form action="<%=basePath%>PublicacionesCategoria.do" method="POST"> 
-                                <input type="hidden" name="tipo" value="<%=request.getSession().getAttribute("tipoF")%>" />
-                                <input type="hidden" name="cate" value="<%=request.getSession().getAttribute("cate")%>" />
                                 <div class="row">
                                     <h4 class="m-text14 p-b-32 col-4">
                                         Filtrar 
                                     </h4>
                                     <div class="filter-color  p-b-32  col-8" >
-                                        <input type="hidden" name="cate" value="<%=request.getSession().getAttribute("cate")%>" />
                                         <button type="submit" class="btn btn-primary align-self-center">TODO</button>
                                     </div>  
                                 </div>
@@ -225,7 +225,6 @@
 
                             <form action="<%=basePath%>/FiltrarPublicaciones.do" method="GET">  
 
-                                <input type="hidden" name="cate" value="<%=request.getSession().getAttribute("cate")%>" />
                                 <div class="filter-color p-t-22 p-b-50 bo3">
                                     <div class="m-text15 p-b-12">
                                         Talla
@@ -396,46 +395,11 @@
 
         };
 
-    </script>
 
-    <div class="footer-dark">
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 item">
-                        <h3>Categorías</h3>
-                        <ul>
-                            <li><a href="#">Hombres</a></li>
-                            <li><a href="#">Mujer</a></li>
-                            <li><a href="#">Kids</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-3 item">
-                        <h3>Acerca de</h3>
-                        <ul>
-                            <li><a href="#">Empresa</a></li>
-                            <li><a href="#">Equipo</a></li>
-                            <li><a href="#">Corporativo</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 item text">
-                        <h3>Oakshop Store</h3>
-                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="item social">
-                        <a href="#"><i class="icon ion-social-facebook"></i></a>
-                        <a href="#"><i class="icon ion-social-twitter"></i></a>
-                        <a href="#"><i class="icon ion-social-instagram"></i></a>
-                    </div>
-                </div>
-                <p class="copyright">Oakshop Store © 2021</p>
-            </div>
-        </footer>
-    </div>
+
+    </script>
     <!-- JS de Bootstrap -->      
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <script src="<%=basePath%>js/sesion.js"></script>
+    <script src="<%=basePath%>js/sesion.js"></script>
 </body>
 </html>

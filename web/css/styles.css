@@ -10,9 +10,26 @@ and open the template in the editor.
 a{
     text-decoration: none !important;
 }
-
-.border{
-    padding: 10px
+*{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: initial;   
+}
+footer{
+    
+    margin-top: 60px;
+    position:relative;
+    
+}
+.social-footer-container{
+    width: 100%;
+    background-color: #F0F0F0;
+}
+.end-foo{
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background: gray;
 }
 
 .img-w-15{
@@ -32,6 +49,7 @@ a{
 }
 .titulo-contenido{
     font-size:22px;
+    
     color: #000000;
 }
 .contenedor{
@@ -48,7 +66,7 @@ a{
     color: #FFFFFF;
     height: 50px;
     font-size: 22px;
-    padding: 8px;
+    padding: 3px;
 }
 .start-title{
     background: #E8E8E8;
@@ -68,9 +86,6 @@ a{
 .contenedor-inicial{
     width: 100%;
 }
-.btn-eliminar{
-    background: red;
-}
 .btn-size{
     width: 100% !important;
     height: 100% !important;
@@ -80,9 +95,7 @@ a{
 }
 .btn-continue-size{
     width: 100% !important;
-    height: 40px;
     padding: 0 !important;
-    margin: 10px;
 }
 .m-10{
     margin-left: 5%;
@@ -143,44 +156,9 @@ a{
 .mod-pos{
     margin-top: 700px;
 }
-.form-control[type=number]::-webkit-inner-spin-button,
-.form-control[type=number]::-webkit-outer-spin-button {
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
     }
-.form-control[type=number] { -moz-appearance:textfield; }
-
-.table{
-    text-align: center;
-}
-.thead{
-    background: #001357;
-    color: #fff;
-}
-
-.foto-producto{
-    width: 100px;
-    height: 120px;
-}
-
-.foto-producto img{
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-}
-
-
-.inp-cantidad input{
-    width: 80px;
-    border-radius: 5px;
-    text-align: center;
-    padding: 0.45rem 0.8rem;
-    outline: 0;
-    border: 1px solid #505050;
-}
-
-.cont-padre{
-    margin-bottom: 50px;
-}
-
-
+input[type=number] { -moz-appearance:textfield; }

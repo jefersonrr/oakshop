@@ -48,14 +48,6 @@
                 <i class='bx bx-menu' id="btn" ></i>
             </div>
 
-             <div class="sidebar">
-            <div class="logo-details">
-                <i class="fas fa-tire icon"></i> 
-                <!-- Espacio entre mensaje Bienvenido-->
-                <div class="logo_name">Bienvenido</div>
-                <i class='bx bx-menu' id="btn" ></i>
-            </div>
-
             <ul class="nav-list">
                 <li>
                     <div class="image-admin">
@@ -69,7 +61,7 @@
                 </li>
 
                 <li>
-                    <a href="<%=basePath%>jsp/adminPublicaciones.jsp">
+                    <a href="<%=basePath%>CitasAdmin.do">
                         <i class="far fa-calendar-alt"></i>
                         <span class="links_name">Publicaciones</span>
                     </a>
@@ -89,15 +81,15 @@
                     </a>
                     <span class="tooltip">Categorias</span>
                 </li>
-                   <li>
-                    <a href="#">
+                <li>
+                    <a href="<%=basePath%>MostrarProductosAdmin.do">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="links_name">Pedidos</span>
                     </a>
                     <span class="tooltip">Pedidos</span>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="<%=basePath%>MostrarProductosAdmin.do">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="links_name">Productos</span>
                     </a>
@@ -117,7 +109,6 @@
                     </a>
                 </li>
             </ul>
-        </div>
         </div>
         <div class="container-fluid">
             <div class="row  ">
@@ -349,7 +340,7 @@
                               </button> -->
                     </div>
                     <div class="modal-body ">
-                        <form action="<%=basePath%>Update.do" method="POST">
+                        <form action="<%=basePath%>UpdateTipo.do" method="POST">
                             <div class="row text-center m-3">
                                 <div class="col-md-6">
                                     <input  style="display: none" type="text" name ="idTipo" class="form-control " id="recipient-namategoriae" name="nombre"  required>
