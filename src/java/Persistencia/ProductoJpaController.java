@@ -10,8 +10,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import DTO.Publicacion;
 import DTO.Color;
+import DTO.Publicacion;
 import DTO.Talla;
 import DTO.DetalleCompra;
 import java.util.ArrayList;
@@ -53,15 +53,15 @@ public class ProductoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Publicacion idPublicacion = producto.getIdPublicacion();
-            if (idPublicacion != null) {
-                idPublicacion = em.getReference(idPublicacion.getClass(), idPublicacion.getId());
-                producto.setIdPublicacion(idPublicacion);
-            }
             Color idColor = producto.getIdColor();
             if (idColor != null) {
                 idColor = em.getReference(idColor.getClass(), idColor.getId());
                 producto.setIdColor(idColor);
+            }
+            Publicacion idPublicacion = producto.getIdPublicacion();
+            if (idPublicacion != null) {
+                idPublicacion = em.getReference(idPublicacion.getClass(), idPublicacion.getId());
+                producto.setIdPublicacion(idPublicacion);
             }
             Talla idTalla = producto.getIdTalla();
             if (idTalla != null) {
@@ -87,13 +87,13 @@ public class ProductoJpaController implements Serializable {
             }
             producto.setCalificacionList(attachedCalificacionList);
             em.persist(producto);
-            if (idPublicacion != null) {
-                idPublicacion.getProductoList().add(producto);
-                idPublicacion = em.merge(idPublicacion);
-            }
             if (idColor != null) {
                 idColor.getProductoList().add(producto);
                 idColor = em.merge(idColor);
+            }
+            if (idPublicacion != null) {
+                idPublicacion.getProductoList().add(producto);
+                idPublicacion = em.merge(idPublicacion);
             }
             if (idTalla != null) {
                 idTalla.getProductoList().add(producto);
@@ -140,10 +140,10 @@ public class ProductoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Producto persistentProducto = em.find(Producto.class, producto.getId());
-            Publicacion idPublicacionOld = persistentProducto.getIdPublicacion();
-            Publicacion idPublicacionNew = producto.getIdPublicacion();
             Color idColorOld = persistentProducto.getIdColor();
             Color idColorNew = producto.getIdColor();
+            Publicacion idPublicacionOld = persistentProducto.getIdPublicacion();
+            Publicacion idPublicacionNew = producto.getIdPublicacion();
             Talla idTallaOld = persistentProducto.getIdTalla();
             Talla idTallaNew = producto.getIdTalla();
             List<DetalleCompra> detalleCompraListOld = persistentProducto.getDetalleCompraList();
@@ -180,13 +180,13 @@ public class ProductoJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (idPublicacionNew != null) {
-                idPublicacionNew = em.getReference(idPublicacionNew.getClass(), idPublicacionNew.getId());
-                producto.setIdPublicacion(idPublicacionNew);
-            }
             if (idColorNew != null) {
                 idColorNew = em.getReference(idColorNew.getClass(), idColorNew.getId());
                 producto.setIdColor(idColorNew);
+            }
+            if (idPublicacionNew != null) {
+                idPublicacionNew = em.getReference(idPublicacionNew.getClass(), idPublicacionNew.getId());
+                producto.setIdPublicacion(idPublicacionNew);
             }
             if (idTallaNew != null) {
                 idTallaNew = em.getReference(idTallaNew.getClass(), idTallaNew.getId());
@@ -214,14 +214,6 @@ public class ProductoJpaController implements Serializable {
             calificacionListNew = attachedCalificacionListNew;
             producto.setCalificacionList(calificacionListNew);
             producto = em.merge(producto);
-            if (idPublicacionOld != null && !idPublicacionOld.equals(idPublicacionNew)) {
-                idPublicacionOld.getProductoList().remove(producto);
-                idPublicacionOld = em.merge(idPublicacionOld);
-            }
-            if (idPublicacionNew != null && !idPublicacionNew.equals(idPublicacionOld)) {
-                idPublicacionNew.getProductoList().add(producto);
-                idPublicacionNew = em.merge(idPublicacionNew);
-            }
             if (idColorOld != null && !idColorOld.equals(idColorNew)) {
                 idColorOld.getProductoList().remove(producto);
                 idColorOld = em.merge(idColorOld);
@@ -229,6 +221,14 @@ public class ProductoJpaController implements Serializable {
             if (idColorNew != null && !idColorNew.equals(idColorOld)) {
                 idColorNew.getProductoList().add(producto);
                 idColorNew = em.merge(idColorNew);
+            }
+            if (idPublicacionOld != null && !idPublicacionOld.equals(idPublicacionNew)) {
+                idPublicacionOld.getProductoList().remove(producto);
+                idPublicacionOld = em.merge(idPublicacionOld);
+            }
+            if (idPublicacionNew != null && !idPublicacionNew.equals(idPublicacionOld)) {
+                idPublicacionNew.getProductoList().add(producto);
+                idPublicacionNew = em.merge(idPublicacionNew);
             }
             if (idTallaOld != null && !idTallaOld.equals(idTallaNew)) {
                 idTallaOld.getProductoList().remove(producto);
@@ -325,15 +325,15 @@ public class ProductoJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Publicacion idPublicacion = producto.getIdPublicacion();
-            if (idPublicacion != null) {
-                idPublicacion.getProductoList().remove(producto);
-                idPublicacion = em.merge(idPublicacion);
-            }
             Color idColor = producto.getIdColor();
             if (idColor != null) {
                 idColor.getProductoList().remove(producto);
                 idColor = em.merge(idColor);
+            }
+            Publicacion idPublicacion = producto.getIdPublicacion();
+            if (idPublicacion != null) {
+                idPublicacion.getProductoList().remove(producto);
+                idPublicacion = em.merge(idPublicacion);
             }
             Talla idTalla = producto.getIdTalla();
             if (idTalla != null) {

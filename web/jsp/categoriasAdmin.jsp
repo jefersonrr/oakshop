@@ -349,7 +349,7 @@
                               </button> -->
                     </div>
                     <div class="modal-body ">
-                        <form action="<%=basePath%>UpdateTipo.do" method="POST">
+                        <form action="<%=basePath%>Update.do" method="POST">
                             <div class="row text-center m-3">
                                 <div class="col-md-6">
                                     <input  style="display: none" type="text" name ="idTipo" class="form-control " id="recipient-namategoriae" name="nombre"  required>

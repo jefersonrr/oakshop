@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Tipo")
@@ -63,7 +63,7 @@ public class Tipo implements Serializable {
     private String urlFoto;
     @ManyToMany(mappedBy = "tipoList")
     private List<Categoria> categoriaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
+     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
     private List<Publicacion> publicacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
     private List<TipoTalla> tipoTallaList;
@@ -123,6 +123,13 @@ public class Tipo implements Serializable {
         this.categoriaList = categoriaList;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+    
     @XmlTransient
     public List<Publicacion> getPublicacionList() {
         return publicacionList;
