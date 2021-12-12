@@ -52,8 +52,7 @@ public class EditarProductosPublicacion extends HttpServlet {
         request.getSession().setAttribute("colores", colores);
         request.getSession().setAttribute("tallas",tallas);
         
-//        request.getRequestDispatcher("jsp/editarProductoPublicacion.jsp").forward(request, response);
-            request.getRequestDispatcher("jsp/editarPub.jsp").forward(request, response);
+        request.getRequestDispatcher("jsp/editarProductoPublicacion.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -11,18 +11,17 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import DTO.Tipo;
-import java.util.ArrayList;
-import java.util.List;
 import DTO.Publicacion;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 public class CategoriaJpaController implements Serializable {
 
@@ -36,9 +35,6 @@ public class CategoriaJpaController implements Serializable {
     }
 
     public void create(Categoria categoria) {
-        if (categoria.getTipoList() == null) {
-            categoria.setTipoList(new ArrayList<Tipo>());
-        }
         if (categoria.getPublicacionList() == null) {
             categoria.setPublicacionList(new ArrayList<Publicacion>());
         }
@@ -46,12 +42,6 @@ public class CategoriaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Tipo> attachedTipoList = new ArrayList<Tipo>();
-            for (Tipo tipoListTipoToAttach : categoria.getTipoList()) {
-                tipoListTipoToAttach = em.getReference(tipoListTipoToAttach.getClass(), tipoListTipoToAttach.getId());
-                attachedTipoList.add(tipoListTipoToAttach);
-            }
-            categoria.setTipoList(attachedTipoList);
             List<Publicacion> attachedPublicacionList = new ArrayList<Publicacion>();
             for (Publicacion publicacionListPublicacionToAttach : categoria.getPublicacionList()) {
                 publicacionListPublicacionToAttach = em.getReference(publicacionListPublicacionToAttach.getClass(), publicacionListPublicacionToAttach.getId());
@@ -59,10 +49,6 @@ public class CategoriaJpaController implements Serializable {
             }
             categoria.setPublicacionList(attachedPublicacionList);
             em.persist(categoria);
-            for (Tipo tipoListTipo : categoria.getTipoList()) {
-                tipoListTipo.getCategoriaList().add(categoria);
-                tipoListTipo = em.merge(tipoListTipo);
-            }
             for (Publicacion publicacionListPublicacion : categoria.getPublicacionList()) {
                 Categoria oldIdCategoriaOfPublicacionListPublicacion = publicacionListPublicacion.getIdCategoria();
                 publicacionListPublicacion.setIdCategoria(categoria);
@@ -86,8 +72,6 @@ public class CategoriaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Categoria persistentCategoria = em.find(Categoria.class, categoria.getId());
-            List<Tipo> tipoListOld = persistentCategoria.getTipoList();
-            List<Tipo> tipoListNew = categoria.getTipoList();
             List<Publicacion> publicacionListOld = persistentCategoria.getPublicacionList();
             List<Publicacion> publicacionListNew = categoria.getPublicacionList();
             List<String> illegalOrphanMessages = null;
@@ -102,13 +86,6 @@ public class CategoriaJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Tipo> attachedTipoListNew = new ArrayList<Tipo>();
-            for (Tipo tipoListNewTipoToAttach : tipoListNew) {
-                tipoListNewTipoToAttach = em.getReference(tipoListNewTipoToAttach.getClass(), tipoListNewTipoToAttach.getId());
-                attachedTipoListNew.add(tipoListNewTipoToAttach);
-            }
-            tipoListNew = attachedTipoListNew;
-            categoria.setTipoList(tipoListNew);
             List<Publicacion> attachedPublicacionListNew = new ArrayList<Publicacion>();
             for (Publicacion publicacionListNewPublicacionToAttach : publicacionListNew) {
                 publicacionListNewPublicacionToAttach = em.getReference(publicacionListNewPublicacionToAttach.getClass(), publicacionListNewPublicacionToAttach.getId());
@@ -117,18 +94,6 @@ public class CategoriaJpaController implements Serializable {
             publicacionListNew = attachedPublicacionListNew;
             categoria.setPublicacionList(publicacionListNew);
             categoria = em.merge(categoria);
-            for (Tipo tipoListOldTipo : tipoListOld) {
-                if (!tipoListNew.contains(tipoListOldTipo)) {
-                    tipoListOldTipo.getCategoriaList().remove(categoria);
-                    tipoListOldTipo = em.merge(tipoListOldTipo);
-                }
-            }
-            for (Tipo tipoListNewTipo : tipoListNew) {
-                if (!tipoListOld.contains(tipoListNewTipo)) {
-                    tipoListNewTipo.getCategoriaList().add(categoria);
-                    tipoListNewTipo = em.merge(tipoListNewTipo);
-                }
-            }
             for (Publicacion publicacionListNewPublicacion : publicacionListNew) {
                 if (!publicacionListOld.contains(publicacionListNewPublicacion)) {
                     Categoria oldIdCategoriaOfPublicacionListNewPublicacion = publicacionListNewPublicacion.getIdCategoria();
@@ -179,11 +144,6 @@ public class CategoriaJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            List<Tipo> tipoList = categoria.getTipoList();
-            for (Tipo tipoListTipo : tipoList) {
-                tipoListTipo.getCategoriaList().remove(categoria);
-                tipoListTipo = em.merge(tipoListTipo);
             }
             em.remove(categoria);
             em.getTransaction().commit();

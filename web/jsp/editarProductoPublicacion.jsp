@@ -1,9 +1,15 @@
 <%-- 
-    Document   : agregarProducto
+    Document   : editarProductoPublicacion
     Created on : 4/12/2021, 10:55:47 AM
     Author     : Cristian
 --%>
 
+<%@page import="DTO.Galeriaimg"%>
+<%@page import="DAO.GaleriaimgDAO"%>
+<%@page import="DTO.Producto"%>
+<%@page import="java.util.List"%>
+<%@page import="DTO.Publicacion"%>
+<%@page import="DAO.PublicacionDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +56,7 @@
         <link rel="stylesheet" href="<%=basePath%>css/admClientes.css" />
         <link rel="stylesheet" href="<%=basePath%>css/menuAdministrador.css" />
     </head>
-    <body onload="agregarProducto()">
+    <body>
         <div class="sidebar">
             <div class="logo-details">
                 <i class="fas fa-tire icon"></i>
@@ -59,7 +65,7 @@
                 <i class="bx bx-menu" id="btn"></i>
             </div>
 
-            <div class="sidebar">
+              <div class="sidebar">
             <div class="logo-details">
                 <i class="fas fa-tire icon"></i> 
                 <!-- Espacio entre mensaje Bienvenido-->
@@ -128,69 +134,134 @@
                     </a>
                 </li>
             </ul>
-        </div>  <ul class="nav-list">
-                <li>
-                    <div class="image-admin">
-                        <div class="container-img">
-                            <img
-                                src="https://i.postimg.cc/50xpzL3N/user-admin.png"
-                                alt="Administrador"
-                                />
-                        </div>
-                        <div class="container-name">
-                            <p><span class="links_name">n</span></p>
-                        </div>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="CitasAdmin.do">
-                        <i class="far fa-calendar-alt"></i>
-                        <span class="links_name">Publicaciones</span>
-                    </a>
-                    <span class="tooltip">Publicaciones</span>
-                </li>
-                <li>
-                    <a href="/jsp/adminClientes.jsp">
-                        <i class="icon fas fa-user"></i>
-                        <span class="links_name">Clientes</span>
-                    </a>
-                    <span class="tooltip">Clientes</span>
-                </li>
-                <li>
-                    <a href="MostrarServiciosAdmin.do">
-                        <i class="fas fa-user-cog"></i>
-                        <span class="links_name">Servicios</span>
-                    </a>
-                    <span class="tooltip">Servicios</span>
-                </li>
-                <li>
-                    <a href="MostrarProductosAdmin.do">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="links_name">Productos</span>
-                    </a>
-                    <span class="tooltip">Productos</span>
-                </li>
-                <!-- <li>
-                          <a href="#">
-                            <i class="fas fa-chart-pie"></i>
-                            <span class="links_name">Reportes</span>
-                          </a>
-                          <span class="tooltip">Reportes</span>
-                        </li> -->
-                <li class="profile">
-                    <a href="cerrarSesion.do">
-                        <i class="bx bx-log-out"></i>
-                        <span class="links_name">Salir</span>
-                    </a>
-                </li>
-            </ul>
+        </div>
         </div>
 
         <section class="home-section">
             <div class="col-md-10 container" role="document">
-                <form action="CrearPublicacion.do" name="formulario">
+                <form action="ActualizarPublicacion.do" name="formulario">
+
                     <div id="productosCont" class="p-5">
+
+                        <%PublicacionDAO p = new PublicacionDAO();
+                            Publicacion pu = p.readPublicacion(Integer.parseInt(request.getSession().getAttribute("editar").toString()));
+                            List<Producto> productos = pu.getProductoList();
+                            List<Galeriaimg> ima = pu.getGaleriaimgList();
+                            int i = 0;
+                            for (Producto pro : productos) {
+
+                        %>
+                        <div id="modelo" class="p-2">
+                            <div class="row d-flex p-2">
+                                <div class="col-md-6"><h2>Producto</h2></div><div class="col-md-6 d-flex justify-content-end"><button class="btn btn-primary" id="eli<%=i%>" onclick="eliminarProducto()">Eliminar   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                        </svg></button></div></div>
+                            <div class="row card p-4">
+                                <div class="row d-flex text-center">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputNombre" class="form-label"
+                                               >Referencia</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="exampleInputNombre"
+                                            name="referencia"
+                                            value="<%=pro.getReferencia()%>"
+                                            required
+                                            />
+                                        <input hidden value="<%=pro.getId()%>" name="idProduct"/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputNombre" class="form-label"
+                                               >Costo</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="exampleInputNombre" min="0.0"
+                                            name="costo"
+                                            value="<%=pro.getCosto()%>"
+                                            required
+                                            />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputNombre" class="form-label"
+                                               >Descuento</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="exampleInputNombre"
+                                            name="descuento" min="0.0"
+                                            value="<%=pro.getDescuento()%>"
+                                            required
+                                            />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row d-flex text-center">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputDuracion" class="form-label"
+                                               >Color</label
+                                        ><br />
+                                        <select
+                                            class="custom-select"
+                                            style="height: 40px; width: 150px"
+                                            name="color"
+                                            >
+                                            <option selected value="<%=pro.getIdColor().getId()%>"><%=pro.getIdColor().getNombre()%></option>
+                                            <%=request.getSession().getAttribute("colores").toString()%>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="exampleInputDuracion" class="form-label"
+                                               >Talla</label><br/>
+                                        <select
+                                            class="custom-select"
+                                            style="height: 40px; width: 150px"
+                                            name="talla"
+                                            >
+                                            <option selected value="<%=pro.getIdTalla().getId()%>" ><%=pro.getIdTalla().getValor()%></option>
+                                            <%=request.getSession().getAttribute("tallas").toString()%>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputDuracion" class="form-label"
+                                               >Cantidad</label
+                                        ><br />
+                                        <input name="cantidad" value="<%=pro.getCantidad()%>" type="number" min="0.0" class="form-control"/>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-md-12 d-flex text-center justify-content-center">
+                                    <div class="col-md-6">
+                                        <label for="exampleDescripcion" class="form-label"
+                                               >Url Imagen</label
+                                        >
+                                        <input value="<%=ima.get(i).getId()%>" hidden name="idImg"
+                                               />
+                                        <input
+                                            class="form-control"
+                                            id="exampleInputDescripcion"
+                                            type="text"
+                                            name="imgUrl"
+                                            value="<%=ima.get(i).getUrl()%>"
+                                            required
+                                            />
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                            <hr>
+                        </div>
+                        <%i++;
+                                      }%>
+                        <!--ddddddddddddddddddd-->
                         <template id="tempProduct">
                             <div id="modelo" class="p-2">
                                 <div class="row d-flex p-2">
@@ -317,6 +388,8 @@
                         <input name="tallas" value="" id="tallas" hidden />
                         <input name="imgUrls" value="" id="imgUrls" hidden />
                         <input name="cantidades" value="" id="cantidades" hidden />
+                        <input name="idProductos" value="" id="productos" hidden />
+                        <input name="idImagenes" value="" id="Imgs" hidden />
                     </div>
                 </form>
                 <br />
@@ -334,6 +407,8 @@
                 let tallas = document.getElementsByName('talla');
                 let img = document.getElementsByName('imgUrl');
                 let cantidades = document.getElementsByName('cantidad');
+                let idProductos = document.getElementsByName('idProduct');
+                let idImg = document.getElementsByName('idImg');
 
                 let referenciasF = document.getElementById('referencias');
                 let costosF = document.getElementById('costos');
@@ -342,6 +417,8 @@
                 let tallasF = document.getElementById('tallas');
                 let imgUrlF = document.getElementById('imgUrls');
                 let cantidadesF = document.getElementById('cantidades');
+                let idProductosF = document.getElementById('productos');
+                let idImgsF = document.getElementById('Imgs');
 
                 for (var i = 0; i < referencias.length; i++) {
 
@@ -352,6 +429,10 @@
                     tallasF.value += tallas[i].value + ',';
                     imgUrlF.value += img[i].value + ',';
                     cantidadesF.value += cantidades[i].value + ',';
+                }
+                for (var j = 0; j < idProductos.length; j++) {
+                    idProductosF.value += idProductos[j].value + ',';
+                    idImgsF.value += idImg[j].value + ',';
                 }
                 document.formulario.submit();
             }

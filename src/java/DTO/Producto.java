@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,8 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Producto.findByReferencia", query = "SELECT p FROM Producto p WHERE p.referencia = :referencia")
     , @NamedQuery(name = "Producto.findByCosto", query = "SELECT p FROM Producto p WHERE p.costo = :costo")
     , @NamedQuery(name = "Producto.findByDescuento", query = "SELECT p FROM Producto p WHERE p.descuento = :descuento")
-    , @NamedQuery(name = "Producto.findByCantidad", query = "SELECT p FROM Producto p WHERE p.cantidad = :cantidad")
-    , @NamedQuery(name = "Producto.findByEstado", query = "SELECT p FROM Producto p WHERE p.estado = :estado")})
+    , @NamedQuery(name = "Producto.findByCantidad", query = "SELECT p FROM Producto p WHERE p.cantidad = :cantidad")})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,6 +55,12 @@ public class Producto implements Serializable {
     private String referencia;
     @Basic(optional = false)
     @NotNull
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "descripcion")
+    private String descripcion;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "costo")
     private double costo;
     @Basic(optional = false)
@@ -65,11 +71,6 @@ public class Producto implements Serializable {
     @NotNull
     @Column(name = "cantidad")
     private int cantidad;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "estado")
-    private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<DetalleCompra> detalleCompraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
@@ -93,13 +94,13 @@ public class Producto implements Serializable {
         this.id = id;
     }
 
-    public Producto(Integer id, String referencia, double costo, int descuento, int cantidad, String estado) {
+    public Producto(Integer id, String referencia, String descripcion, double costo, int descuento, int cantidad) {
         this.id = id;
         this.referencia = referencia;
+        this.descripcion = descripcion;
         this.costo = costo;
         this.descuento = descuento;
         this.cantidad = cantidad;
-        this.estado = estado;
     }
 
     public Integer getId() {
@@ -116,6 +117,14 @@ public class Producto implements Serializable {
 
     public void setReferencia(String referencia) {
         this.referencia = referencia;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public double getCosto() {
@@ -140,14 +149,6 @@ public class Producto implements Serializable {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     @XmlTransient
