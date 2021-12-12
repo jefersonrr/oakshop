@@ -170,6 +170,7 @@ public class askshop {
     public void actualizarPublicacion(int idP, String nombre, String marca, int categoria, int tipo, String descripcion, String[] referencias, String[] costos, String[] descuentos, String[] tallas, String[] imgs, String[] colores, String[] cantidades, String[] idProductos, String[] idImgs) {
 
         PublicacionDAO p = new PublicacionDAO();
+        
         Publicacion pu = p.readPublicacion(idP);
         pu.setNombre(nombre);
         pu.setMarca(marca);
