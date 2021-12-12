@@ -62,14 +62,14 @@ public class PublicacionDAO {
 
     }
 
-    public List<Publicacion> readTipo(int id, int categoria) {
+    public List<Publicacion> readTipo(int id) {
 
         List<Publicacion> todas = read();
         List<Publicacion> rta = new ArrayList<Publicacion>();
 
         for (Publicacion p : todas) {
 
-            if (p.getIdTipo().getId().equals(id) && p.getIdCategoria().getId().equals(categoria)) {
+            if (p.getIdTipo().getId().equals(id)) {
                 rta.add(p);
 
             }

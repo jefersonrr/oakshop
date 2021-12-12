@@ -8,16 +8,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <%
-        String path = request.getContextPath();
-        String basePath = request.getScheme() + "://" + request.getServerName() + ":" +     
-        request.getServerPort() + path + "/";
-%>
-<base href="<%=basePath%>">
+        <%
+            String path = request.getContextPath();
+            String basePath = request.getScheme() + "://" + request.getServerName() + ":"
+                    + request.getServerPort() + path + "/";
+        %>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Oakshop</title>
+        <title>OakShop</title>
 
         <!-- Fuente de google: Open Sans - Regular 400 -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
@@ -28,19 +27,17 @@
         <!--Normallize css: proyecto que corrige estilos predeterminados de los diferentes navegadores, para evitar usar el selector universal
     en la hoja de estilos CSS. -->
         <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-        
-        <!-- Iconos -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
         <!--Importar CSS -->
         <link href="<%=basePath%>css/menu.css" rel="stylesheet" type="text/css"/>
         <!--Importar CSS -->
-        <link rel="stylesheet" href="<%=basePath%>css/iniciarsesion.css"/>
-        <link rel="stylesheet" href="<%=basePath%>css/footer.css"/>
+        <link href="<%=basePath%>/css/iniciarsesion.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-        
 
     </head>
-    <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
+    <body>
+
+
         <!--menú -->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
@@ -213,43 +210,7 @@
                 }
             }
         </script>
-        
-                <div class="footer-dark">
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 item">
-                        <h3>Categorías</h3>
-                        <ul>
-                            <li><a href="#">Hombres</a></li>
-                            <li><a href="#">Mujer</a></li>
-                            <li><a href="#">Kids</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-3 item">
-                        <h3>Acerca de</h3>
-                        <ul>
-                            <li><a href="#">Empresa</a></li>
-                            <li><a href="#">Equipo</a></li>
-                            <li><a href="#">Corporativo</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 item text">
-                        <h3>Oakshop Store</h3>
-                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="item social">
-                        <a href="#"><i class="icon ion-social-facebook"></i></a>
-                        <a href="#"><i class="icon ion-social-twitter"></i></a>
-                        <a href="#"><i class="icon ion-social-instagram"></i></a>
-                    </div>
-                </div>
-                <p class="copyright">Oakshop Store © 2021</p>
-            </div>
-        </footer>
-    </div>
+
 
 
         <!-- Bootstrap JS -->

@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Jefersonrr
+ * @author Cristian
  */
-public class Index extends HttpServlet {
+public class ActualizarProductoPublicacion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,9 +30,20 @@ public class Index extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        
         askshop a = new askshop();
-        request.getSession().setAttribute("carrusel", a.indexCategorias());
-        request.getRequestDispatcher("./index.jsp").forward(request, response);
+        
+        String referencia = request.getParameter("referencia");
+        String costo = request.getParameter("costo");
+        String descuento = request.getParameter("descuento");
+        String color = request.getParameter("color");
+        String talla = request.getParameter("talla");
+        String cantidad = request.getParameter("cantidad");
+        String idProducto = request.getParameter("idProducto");
+        
+        a.actualizarProductoPublicacion(idProducto,referencia,costo,descuento,color,talla,cantidad);
+        request.getRequestDispatcher("jsp/editarPub.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
