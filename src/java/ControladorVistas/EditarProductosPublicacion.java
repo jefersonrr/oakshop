@@ -32,7 +32,7 @@ public class EditarProductosPublicacion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        askshop a = new askshop();
+       askshop a = new askshop();
         
         String nombre = request.getParameter("nombre");
         
@@ -52,7 +52,8 @@ public class EditarProductosPublicacion extends HttpServlet {
         request.getSession().setAttribute("colores", colores);
         request.getSession().setAttribute("tallas",tallas);
         
-        request.getRequestDispatcher("jsp/editarProductoPublicacion.jsp").forward(request, response);
+//        request.getRequestDispatcher("jsp/editarProductoPublicacion.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/editarPub.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

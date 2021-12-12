@@ -32,7 +32,7 @@ public class EliminarPublicacion extends HttpServlet {
             throws ServletException, IOException {
         
         int idP = Integer.parseInt(request.getParameter("publicId"));
-        askshop a = new askshop();
+       askshop a = new askshop();
         a.eliminarPublicacion(idP);
         request.getRequestDispatcher("jsp/adminPublicaciones.jsp").forward(request, response);
 

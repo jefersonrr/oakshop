@@ -32,7 +32,7 @@ public class AgregarPublicacion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        askshop a = new askshop();
+       askshop a = new askshop();
         
         String tipos = a.getTipos();
         String Categoria = a.getCategorias();
