@@ -11,7 +11,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <html>
         <%
             String path = request.getContextPath();
             String basePath = request.getScheme() + "://" + request.getServerName() + ":"
