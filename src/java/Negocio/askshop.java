@@ -5,17 +5,22 @@
  */
 package Negocio;
 
+import DAO.CarritoDAO;
 import DAO.CategoriaDAO;
 import DAO.ColorDAO;
 import DAO.GaleriaimgDAO;
+import DAO.PersonaDAO;
 import DAO.ProductoDAO;
 import DAO.PublicacionDAO;
 import DAO.TallaDAO;
 import DAO.TipoDAO;
 import DAO.TipoTallaDAO;
+import DTO.Carrito;
+import DTO.CarritoPK;
 import DTO.Categoria;
 import DTO.Color;
 import DTO.Galeriaimg;
+import DTO.Persona;
 import DTO.Producto;
 import DTO.Publicacion;
 import DTO.Tipo;
@@ -560,5 +565,216 @@ public class askshop {
         p.update(po);
         
     }
+
+    public String anadirAcarrito(String idPerson, int tallaId, int colorId, int cantidad, int idP) {
+        
+        PublicacionDAO pu = new PublicacionDAO();
+        Publicacion p = pu.readPublicacion(idP);
+        List<Producto> productos = p.getProductoList();
+        CarritoDAO c = new CarritoDAO();
+        PersonaDAO personadao = new PersonaDAO();
+        Persona per = personadao.readPersona(idPerson);
+        List<Carrito> carP = per.getCarritoList();
+        
+        for (Producto producto : productos) {
+            
+            if(producto.getIdColor().getId()==colorId && producto.getIdTalla().getId()==tallaId){ 
+                //bucar si l producto esta en el carro
+                boolean existe = false;
+                for (Carrito car : carP) {
+                     if(car.getProducto().getId()==producto.getId()){
+                        int cant = car.getCantidad();
+                        car.setCantidad(cant+cantidad);
+                        existe=true;
+                        c.update(car);
+                     }
+                    }
+                
+                if(!existe){
+                    Carrito carri = new Carrito(idPerson,producto.getId());
+                    carri.setPersona(per);
+                    carri.setProducto(producto);
+                    carri.setCantidad(cantidad);
+                    carri.setCarritoPK(new CarritoPK(idPerson, producto.getId()));
+                    c.create(carri);
+                }
+                break;
+            }
+        }
+        return generarCarro(per.getCedula());
+    }
     
+    public String generarCarro(String pers){
+        PersonaDAO personadao = new PersonaDAO();
+        Persona per = personadao.readPersona(pers);
+        CarritoDAO ca = new CarritoDAO();
+        List<Carrito> carritos = per.getCarritoList();
+        double subtotal=0;
+        double total = 0;
+        String rta = " <div class=\"row m-10 mt-3\">\n" +
+                    "            <div class=\"row my-2\">\n" +
+                    "                <div class=\"col d-flex\">\n" +
+                    "                    <div>\n" +
+                    "                        <img src=\"img/carrito.png\" width=\"50\" height=\"50\"/>    \n" +
+                    "                    </div>\n" +
+                    "                    <div class=\"titulo-contenido bold mt-2 ms-5 d-flex\">\n" +
+                    "                        Carrito de compras\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "            \n" +
+                    "            <div class=\"contenedor-inicial mt-5\">\n" +
+                    "                <div class=\"contenedor\">\n" +
+                    "                    <div class=\"row\">\n" +
+                    "                        \n" +
+                    "<div class=\"table-responsive\">                       \n" +
+                    "<table id=\"tabla\" class=\"table table-borderless table-hover align-middle\">\n" +
+                    "  <thead class=\"thead\">\n" +
+                    "    <tr>\n" +
+                    "      <th scope=\"col\">ID</th>\n" +
+                    "      <th scope=\"col\">Referencia</th>\n" +
+                    "      <th scope=\"col\">Descripción</th>\n" +
+                    "      <th scope=\"col\">Precio</th>\n" +
+                    "      <th scope=\"col\">Descuento</th>\n" +
+                    "      <th scope=\"col\">Cantidad</th>\n" +
+                    "      <th scope=\"col\">Acciones</th>\n" +
+                    "    </tr>\n" +
+                    "  </thead>\n" +
+                    "  <tbody>\n";
+                for(Carrito carro: carritos){
+                        Producto p = carro.getProducto();
+                            rta+="    <tr>\n" +
+                            "      <th scope=\"row\">"+p.getId()+"</th>\n" +
+                            "      <td>"+p.getReferencia()+"</td>  \n" +
+                            "      <td>"+p.getIdPublicacion().getDescripcion()+"</td>\n" +
+                            "      <td>"+p.getCosto()+"</td>\n" +
+                            "      <td>"+p.getDescuento()+"%</td>\n" +
+                            "      <td class=\"inp-cantidad\"><input type = \"number\" min = \"1\" value = \""+carro.getCantidad()+"\"></td>\n" +
+                            "      <td>"
+                                    + "<form action=\"eliminarProductoCarrito.do\">"
+                                    + "<input hidden value=\""+p.getId()+"\" name=\"eliminarP\"/>"
+                                    + "<button type=\"submit\" class=\"btn-eliminar btn\" id=\""+p.getId()+"\" text-white\">X</button></form></td>\n" +
+                            "    </tr>\n" +
+                            "    \n";
+                            subtotal+=p.getCosto()*carro.getCantidad();
+                            
+                    
+        }total=subtotal+15000;
+                    rta+="\n" +
+                    "  </tbody>\n" +
+                    "</table>\n" +
+                     "<form name=\"carritoTablaForm\" action=\"GuardarCarrito.do\">"
+                                    + "<input hidden id=\"idProducts\" name=\"idProductos\" value=\"\">"
+                                    + "<input hidden id=\"cantidadesP\" name=\"cantidades\" value=\"\">"
+
+                                    + "<button class=\"guardar-carrito text-white\" onclick=\"enviarDatos()\">Guardar Carrito</button>\n" 
+                            + "</form>"+
+                    "</div>                        \n" +
+                            "                    </div>\n" +
+                            "                </div> \n" +
+                            "                \n" +
+                            "                <div class=\"row mt-4 mod-pos btn-2\">\n" +
+                            "                    <div class=\"col\">\n" +
+                            "                        <div class=\"d-flex justify-content-end\">\n" +
+                            "                            \n" +
+                            "                        </div>\n" +
+                            "                    </div>\n" +
+                            "                </div>\n" +
+                            "            </div>\n" +
+                            "            \n" +
+                            "            <div class=\"contenedor-confirmar\">\n"
+                            + "<form action=\"MostrarMetodoPago.do\">" +
+                            "                    <div class=\"mt-5\">\n" +
+                            "                        <div class=\"titulo-compra rounded mt-4\">\n" +
+                            "                            <div class=\"text-center\">\n" +
+                            "                                Resumen Compra\n" +
+                            "                            </div>\n" +
+                            "                        </div>\n" +
+                            "                        <div class=\"border\">\n" +
+                            "                            <div class=\"mx-3 mt-4\">\n" +
+                            "                                <label class=\"bold my-1\">Subtotal:</label>\n" +
+                            "                                <input class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\""+subtotal+"\" aria-label=\"default input example\" disabled>    \n"
+                            + "                             <input hidden name=\"subtotal\" class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\""+subtotal+"\" aria-label=\"default input example\">" +
+                            "                            </div>\n" +
+                            "                            <div class=\"mx-3\">\n" +
+                            "                                <label class=\"bold my-1\">Precio envio:</label>\n" +
+                            "                                <input class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"15000\" aria-label=\"default input example\" disabled>\n"
+                            + "                              <input hidden name=\"envio\" class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"15000\" aria-label=\"default input example\">\n" +
+                            "                            </div>\n" +
+                            "                            <div class=\"mx-3 mb-4\">\n" +
+                            "                                <label class=\"bold my-1\">Total a pagar:</label>\n" +
+                            "                                <input class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\""+total+"\" aria-label=\"default input example\" disabled> \n"
+                            + "                               <input hidden name=\"total\" class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\""+total+"\" aria-label=\"default input example\"> \n" +
+                            "                            </div>\n" +
+                            "                            \n" +
+                            "                            <div class=\"d-flex justify-content-center\">\n" +
+                            "                                <button type=\"submit\" class=\"btn-continue-size btn btn-info text-white\">Continuar</button>\n" +
+                            "                            </div>\n"
+                            + "" +
+                            "                        </div>\n"
+                            + "</form>" +
+                            "                    </div>\n" +
+                            "\n" +
+                            "            </div>\n" +
+                            "\n" +
+                            "            \n" +
+                            "        </div>";
+                    return rta;
+    }
+
+    public void guardarCarrito(String id_person, String[] idProductos, String[] cantidades) {
+
+            CarritoDAO c = new CarritoDAO();
+            PersonaDAO pers = new PersonaDAO();
+            Persona per = pers.readPersona(id_person);
+            List<Carrito> carrito = per.getCarritoList();
+            ProductoDAO product = new ProductoDAO();
+            
+            boolean existe=false;
+            for (Carrito carro: carrito) {
+                
+                for (int i = 0; i < idProductos.length; i++) {
+                        int id = Integer.parseInt(idProductos[i]);
+                        if(carro.getPersona().getCedula().equals(id_person) && carro.getProducto().getId()==id){
+                            existe =true;
+                            carro.setCantidad(Integer.parseInt(cantidades[i]));
+                            c.update(carro);
+                        }
+                        if(!existe && i==idProductos.length-1){
+
+                        Carrito carri = new Carrito(id_person,Integer.parseInt(idProductos[i]));
+                        carri.setPersona(per);
+                        carri.setProducto(product.readProducto(Integer.parseInt(idProductos[i])));
+                        carri.setCantidad(Integer.parseInt(cantidades[i]));
+                        carri.setCarritoPK(new CarritoPK(id_person,Integer.parseInt(idProductos[i])));
+                        c.create(carri);
+
+                    }
+                }
+                
+        }
+    }
+
+    public void eliminarCarritoProducto(String producto, String id_person) {
+
+            PersonaDAO p = new PersonaDAO();
+            List<Carrito> ca = p.readPersona(id_person).getCarritoList();
+            CarritoDAO c = new CarritoDAO();
+            
+            for (Carrito carro: ca) {
+                if(carro.getProducto().getId()==Integer.parseInt(producto)){
+                
+                    try {
+                        c.delete(carro.getCarritoPK());
+                        
+                    } catch (IllegalOrphanException ex) {
+                        Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NonexistentEntityException ex) {
+                        Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                    
+        }
+    }
+
 }
