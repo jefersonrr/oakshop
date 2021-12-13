@@ -117,6 +117,18 @@
         <servlet-name>DesactivarProducto</servlet-name>
         <servlet-class>ControladorVistas.DesactivarProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AgregarACarrito</servlet-name>
+        <servlet-class>ControladorVistas.AgregarACarrito</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuardarCarrito</servlet-name>
+        <servlet-class>ControladorVistas.GuardarCarrito</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>eliminarProductoCarrito</servlet-name>
+        <servlet-class>ControladorVistas.eliminarProductoCarrito</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
         <url-pattern>/cerrarSesion.do</url-pattern>
@@ -224,6 +236,18 @@
     <servlet-mapping>
         <servlet-name>DesactivarProducto</servlet-name>
         <url-pattern>/DesactivarProducto.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarACarrito</servlet-name>
+        <url-pattern>/AgregarACarrito.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuardarCarrito</servlet-name>
+        <url-pattern>/GuardarCarrito.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eliminarProductoCarrito</servlet-name>
+        <url-pattern>/eliminarProductoCarrito.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

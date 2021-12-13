@@ -6,6 +6,7 @@
 package DAO;
 
 import DTO.Carrito;
+import DTO.CarritoPK;
 import Persistencia.CarritoJpaController;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
@@ -37,7 +38,7 @@ public class CarritoDAO {
         return cit.findCarritoEntities();
     }
     
-    public Carrito readCarrito(String id){
+    public Carrito readCarrito(CarritoPK id){
         return cit.findCarrito(id);
     }
     
@@ -49,7 +50,7 @@ public class CarritoDAO {
         }
     }
     
-    public void delete(String id) throws IllegalOrphanException, NonexistentEntityException{
+    public void delete(CarritoPK id) throws IllegalOrphanException, NonexistentEntityException{
         
         try {
             cit.destroy(id);

@@ -125,8 +125,7 @@
                 </div>
             </div>
         </nav>
-                                    
-<form action="" method="post">
+                                
     <div class="container-fluid cont-padre">
         <div class="row">
             <div class="col start-title">
@@ -135,112 +134,9 @@
                 </div>
             </div>
         </div>
-        <div class="row m-10 mt-3">
-            <div class="row my-2">
-                <div class="col d-flex">
-                    <div>
-                        <img src="img/carrito.png" width="50" height="50"/>    
-                    </div>
-                    <div class="titulo-contenido bold mt-2 ms-5 d-flex">
-                        Carrito de compras
-                    </div>
-                </div>
-            </div>
-            
-            <div class="contenedor-inicial mt-5">
-                <div class="contenedor">
-                    <div class="row">
-                        
-<div class="table-responsive">                       
-<table class="table table-borderless table-hover align-middle">
-  <thead class="thead">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Foto</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Descripción</th>
-      <th scope="col">Precio</th>
-      <th scope="col">Descuento</th>
-      <th scope="col">Cantidad</th>
-      <th scope="col">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td class="foto-producto"><img src="<%=basePath%>img/product-01.jpg" class="img-fluid" alt="FOTO PRODUCTO"></td>
-      <td>Nombre producto</td>  
-      <td>Lorem ipsum holacomoestas loremipsum</td>
-      <td>$70.000</td>
-      <td>%10</td>
-      <td class="inp-cantidad"><input type = "number" min = "0" value = "1"></td>
-      <td><button type="button" class="btn-eliminar btn text-white">X</button></td>
-    </tr>
-    
-    <tr>
-      <th scope="row">2</th>
-      <td class="foto-producto"><img src="<%=basePath%>img/product-02.jpg" class="img-fluid" alt="FOTO PRODUCTO"></td>
-      <td>Nombre producto</td>  
-      <td>Lorem ipsum holacomoestas loremipsum</td>
-      <td>$70.000</td>
-      <td>%10</td>
-      <td class="inp-cantidad"><input type = "number" min = "0" value = "1"></td>
-      <td><button type="button" class="btn-eliminar btn text-white">X</button></td>
-    </tr>
-
-  </tbody>
-</table>
-</div>                        
-                    </div>
-                </div> 
-                
-                <div class="row mt-4 mod-pos btn-2">
-                    <div class="col">
-                        <div class="d-flex justify-content-end">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="contenedor-confirmar">
-                    <div class="mt-5">
-                        <div class="titulo-compra rounded mt-4">
-                            <div class="text-center">
-                                Resumen Compra
-                            </div>
-                        </div>
-                        <div class="border">
-                            <div class="mx-3 mt-4">
-                                <label class="bold my-1">Subtotal:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example" disabled>    
-                            </div>
-                            <div class="mx-3">
-                                <label class="bold my-1">Precio envio:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example" disabled>
-                            </div>
-                            <div class="mx-3">
-                                <label class="bold my-1">Descuento:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example" disabled>
-                            </div>
-                            <div class="mx-3 mb-4">
-                                <label class="bold my-1">Total a pagar:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example" disabled> 
-                            </div>
-                            
-                            <div class="d-flex justify-content-center">
-                                <a type="button" href="<%=basePath%>./jsp/medioPagoSeleccion.jsp" class="btn-continue-size btn btn-info text-white">Continuar</a>
-                            </div>
-                        </div>
-                    </div>
-
-            </div>
-
-            
-        </div>
-        
+        <%=request.getSession().getAttribute("carro")%>
+        <%request.getSession().setAttribute("esCarrito", "si");%>           
     </div>
-        </form>
                                     
          <div class="footer-dark">
         <footer>
@@ -283,5 +179,27 @@
         <!-- JS de Bootstrap -->      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="./js/sesion.js"></script>
+        <script>
+            function eliminar(){
+                
+                let id = window.event.target.id;
+                let padre = document.getElementById(id).parentNode.parentNode;
+                padre.parentNode.removeChild(padre);
+            }
+            
+            function enviarDatos(){
+                let tabla = document.getElementById("tabla");
+                let filas = tabla.childNodes[3].querySelectorAll('tr');
+                let idProducts = document.getElementById('idProducts');
+                let idCantidadesP = document.getElementById('cantidadesP');
+                for(let i=0; i<filas.length; i++){
+                    
+                    idProducts.value+=filas[i].childNodes[1].innerText+",";
+                    idCantidadesP.value+=filas[i].childNodes[11].querySelector('input').value+",";
+                }
+                document.carritoTablaForm.submit();
+            }
+            
+        </script>
     </body>
 </html>

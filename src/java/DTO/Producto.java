@@ -72,7 +72,7 @@ public class Producto implements Serializable {
     private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<DetalleCompra> detalleCompraList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
     private List<Carrito> carritoList;
     @JoinColumn(name = "idPublicacion", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -83,7 +83,7 @@ public class Producto implements Serializable {
     @JoinColumn(name = "idTalla", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Talla idTalla;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
     private List<Calificacion> calificacionList;
 
     public Producto() {

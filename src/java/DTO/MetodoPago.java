@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jefersonrr
+ * @author Cristian
  */
 @Entity
 @Table(name = "Metodo_Pago")
@@ -33,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "MetodoPago.findAll", query = "SELECT m FROM MetodoPago m")
     , @NamedQuery(name = "MetodoPago.findById", query = "SELECT m FROM MetodoPago m WHERE m.id = :id")
-    , @NamedQuery(name = "MetodoPago.findByNombre", query = "SELECT m FROM MetodoPago m WHERE m.nombre = :nombre")})
+    , @NamedQuery(name = "MetodoPago.findByNombre", query = "SELECT m FROM MetodoPago m WHERE m.nombre = :nombre")
+    , @NamedQuery(name = "MetodoPago.findByNumero", query = "SELECT m FROM MetodoPago m WHERE m.numero = :numero")})
 public class MetodoPago implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,8 +50,16 @@ public class MetodoPago implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "nombre")
     private String nombre;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "numero")
+    private String numero;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMetodoPago")
     private List<Compra> compraList;
+    @JoinColumn(name = "idCliente", referencedColumnName = "cedula")
+    @ManyToOne(optional = false)
+    private Persona idCliente;
 
     public MetodoPago() {
     }
@@ -57,9 +68,10 @@ public class MetodoPago implements Serializable {
         this.id = id;
     }
 
-    public MetodoPago(Integer id, String nombre) {
+    public MetodoPago(Integer id, String nombre, String numero) {
         this.id = id;
         this.nombre = nombre;
+        this.numero = numero;
     }
 
     public Integer getId() {
@@ -78,6 +90,14 @@ public class MetodoPago implements Serializable {
         this.nombre = nombre;
     }
 
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
     @XmlTransient
     public List<Compra> getCompraList() {
         return compraList;
@@ -85,6 +105,14 @@ public class MetodoPago implements Serializable {
 
     public void setCompraList(List<Compra> compraList) {
         this.compraList = compraList;
+    }
+
+    public Persona getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Persona idCliente) {
+        this.idCliente = idCliente;
     }
 
     @Override

@@ -8,21 +8,19 @@ package DTO;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Jefersonrr
+ * @author Cristian
  */
 @Entity
 @Table(name = "Carrito")
@@ -30,37 +28,46 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Carrito.findAll", query = "SELECT c FROM Carrito c")
     , @NamedQuery(name = "Carrito.findByCantidad", query = "SELECT c FROM Carrito c WHERE c.cantidad = :cantidad")
-    , @NamedQuery(name = "Carrito.findByIdCliente", query = "SELECT c FROM Carrito c WHERE c.idCliente = :idCliente")})
+    , @NamedQuery(name = "Carrito.findByIdCliente", query = "SELECT c FROM Carrito c WHERE c.carritoPK.idCliente = :idCliente")
+    , @NamedQuery(name = "Carrito.findByIdProducto", query = "SELECT c FROM Carrito c WHERE c.carritoPK.idProducto = :idProducto")})
 public class Carrito implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected CarritoPK carritoPK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "cantidad")
     private int cantidad;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "idCliente")
-    private String idCliente;
     @JoinColumn(name = "idCliente", referencedColumnName = "cedula", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Persona persona;
-    @JoinColumn(name = "idProducto", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Producto idProducto;
+    private Persona persona;
+    @JoinColumn(name = "idProducto", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Producto producto;
 
     public Carrito() {
     }
 
-    public Carrito(String idCliente) {
-        this.idCliente = idCliente;
+    public Carrito(CarritoPK carritoPK) {
+        this.carritoPK = carritoPK;
     }
 
-    public Carrito(String idCliente, int cantidad) {
-        this.idCliente = idCliente;
+    public Carrito(CarritoPK carritoPK, int cantidad) {
+        this.carritoPK = carritoPK;
         this.cantidad = cantidad;
+    }
+
+    public Carrito(String idCliente, int idProducto) {
+        this.carritoPK = new CarritoPK(idCliente, idProducto);
+    }
+
+    public CarritoPK getCarritoPK() {
+        return carritoPK;
+    }
+
+    public void setCarritoPK(CarritoPK carritoPK) {
+        this.carritoPK = carritoPK;
     }
 
     public int getCantidad() {
@@ -71,14 +78,6 @@ public class Carrito implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public String getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
-    }
-
     public Persona getPersona() {
         return persona;
     }
@@ -87,18 +86,18 @@ public class Carrito implements Serializable {
         this.persona = persona;
     }
 
-    public Producto getIdProducto() {
-        return idProducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setIdProducto(Producto idProducto) {
-        this.idProducto = idProducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idCliente != null ? idCliente.hashCode() : 0);
+        hash += (carritoPK != null ? carritoPK.hashCode() : 0);
         return hash;
     }
 
@@ -109,7 +108,7 @@ public class Carrito implements Serializable {
             return false;
         }
         Carrito other = (Carrito) object;
-        if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
+        if ((this.carritoPK == null && other.carritoPK != null) || (this.carritoPK != null && !this.carritoPK.equals(other.carritoPK))) {
             return false;
         }
         return true;
@@ -117,7 +116,7 @@ public class Carrito implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.Carrito[ idCliente=" + idCliente + " ]";
+        return "DTO.Carrito[ carritoPK=" + carritoPK + " ]";
     }
     
 }
