@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Persona")
@@ -78,6 +79,10 @@ public class Persona implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "contrase\u00f1a")
     private String contraseña;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "urlFoto")
+    private String urlFoto;
     @JoinColumn(name = "idRol", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Rol idRol;
@@ -89,6 +94,8 @@ public class Persona implements Serializable {
     private List<Calificacion> calificacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private List<Compra> compraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
+    private List<MetodoPago> metodoPagoList;
 
     public Persona() {
     }
@@ -163,6 +170,14 @@ public class Persona implements Serializable {
         this.contraseña = contraseña;
     }
 
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
+
     public Rol getIdRol() {
         return idRol;
     }
@@ -205,6 +220,15 @@ public class Persona implements Serializable {
 
     public void setCompraList(List<Compra> compraList) {
         this.compraList = compraList;
+    }
+
+    @XmlTransient
+    public List<MetodoPago> getMetodoPagoList() {
+        return metodoPagoList;
+    }
+
+    public void setMetodoPagoList(List<MetodoPago> metodoPagoList) {
+        this.metodoPagoList = metodoPagoList;
     }
 
     @Override

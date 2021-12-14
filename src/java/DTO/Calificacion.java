@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Calificacion")
@@ -33,9 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Calificacion.findAll", query = "SELECT c FROM Calificacion c")
     , @NamedQuery(name = "Calificacion.findByIdCliente", query = "SELECT c FROM Calificacion c WHERE c.calificacionPK.idCliente = :idCliente")
-    , @NamedQuery(name = "Calificacion.findByIdProducto", query = "SELECT c FROM Calificacion c WHERE c.calificacionPK.idProducto = :idProducto")
     , @NamedQuery(name = "Calificacion.findByFecha", query = "SELECT c FROM Calificacion c WHERE c.fecha = :fecha")
-    , @NamedQuery(name = "Calificacion.findByValor", query = "SELECT c FROM Calificacion c WHERE c.valor = :valor")})
+    , @NamedQuery(name = "Calificacion.findByValor", query = "SELECT c FROM Calificacion c WHERE c.valor = :valor")
+    , @NamedQuery(name = "Calificacion.findByIdProducto", query = "SELECT c FROM Calificacion c WHERE c.calificacionPK.idProducto = :idProducto")})
 public class Calificacion implements Serializable {
 
     private static final long serialVersionUID = 1L;

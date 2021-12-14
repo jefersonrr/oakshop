@@ -14,6 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Categoria")
@@ -33,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c")
     , @NamedQuery(name = "Categoria.findById", query = "SELECT c FROM Categoria c WHERE c.id = :id")
-    , @NamedQuery(name = "Categoria.findByNombre", query = "SELECT c FROM Categoria c WHERE c.nombre = :nombre")})
+    , @NamedQuery(name = "Categoria.findByNombre", query = "SELECT c FROM Categoria c WHERE c.nombre = :nombre")
+    , @NamedQuery(name = "Categoria.findByEstado", query = "SELECT c FROM Categoria c WHERE c.estado = :estado")})
 public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,6 +51,16 @@ public class Categoria implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "nombre")
     private String nombre;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "estado")
+    private String estado;
+    @JoinTable(name = "Categoria_Tipo", joinColumns = {
+        @JoinColumn(name = "idCategoria", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idTipo", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Tipo> tipoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoria")
     private List<Publicacion> publicacionList;
 
@@ -57,9 +71,10 @@ public class Categoria implements Serializable {
         this.id = id;
     }
 
-    public Categoria(Integer id, String nombre) {
+    public Categoria(Integer id, String nombre, String estado) {
         this.id = id;
         this.nombre = nombre;
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -76,6 +91,23 @@ public class Categoria implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    @XmlTransient
+    public List<Tipo> getTipoList() {
+        return tipoList;
+    }
+
+    public void setTipoList(List<Tipo> tipoList) {
+        this.tipoList = tipoList;
     }
 
     @XmlTransient

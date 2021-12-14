@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Tipo")
@@ -33,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Tipo.findAll", query = "SELECT t FROM Tipo t")
     , @NamedQuery(name = "Tipo.findById", query = "SELECT t FROM Tipo t WHERE t.id = :id")
-    , @NamedQuery(name = "Tipo.findByNombre", query = "SELECT t FROM Tipo t WHERE t.nombre = :nombre")})
+    , @NamedQuery(name = "Tipo.findByNombre", query = "SELECT t FROM Tipo t WHERE t.nombre = :nombre")
+    , @NamedQuery(name = "Tipo.findByEstado", query = "SELECT t FROM Tipo t WHERE t.estado = :estado")})
 public class Tipo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,6 +50,19 @@ public class Tipo implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "nombre")
     private String nombre;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "estado")
+    private String estado;
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "urlFoto")
+    private String urlFoto;
+    @ManyToMany(mappedBy = "tipoList")
+    private List<Categoria> categoriaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
     private List<Publicacion> publicacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
@@ -59,9 +75,11 @@ public class Tipo implements Serializable {
         this.id = id;
     }
 
-    public Tipo(Integer id, String nombre) {
+    public Tipo(Integer id, String nombre, String estado, String urlFoto) {
         this.id = id;
         this.nombre = nombre;
+        this.estado = estado;
+        this.urlFoto = urlFoto;
     }
 
     public Integer getId() {
@@ -78,6 +96,31 @@ public class Tipo implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
+
+    @XmlTransient
+    public List<Categoria> getCategoriaList() {
+        return categoriaList;
+    }
+
+    public void setCategoriaList(List<Categoria> categoriaList) {
+        this.categoriaList = categoriaList;
     }
 
     @XmlTransient

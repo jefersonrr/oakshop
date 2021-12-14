@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Detalle_Compra")
@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "DetalleCompra.findAll", query = "SELECT d FROM DetalleCompra d")
     , @NamedQuery(name = "DetalleCompra.findByIdCompra", query = "SELECT d FROM DetalleCompra d WHERE d.detalleCompraPK.idCompra = :idCompra")
-    , @NamedQuery(name = "DetalleCompra.findByIdProducto", query = "SELECT d FROM DetalleCompra d WHERE d.detalleCompraPK.idProducto = :idProducto")
-    , @NamedQuery(name = "DetalleCompra.findByCantidad", query = "SELECT d FROM DetalleCompra d WHERE d.cantidad = :cantidad")})
+    , @NamedQuery(name = "DetalleCompra.findByCantidad", query = "SELECT d FROM DetalleCompra d WHERE d.cantidad = :cantidad")
+    , @NamedQuery(name = "DetalleCompra.findByIdProducto", query = "SELECT d FROM DetalleCompra d WHERE d.detalleCompraPK.idProducto = :idProducto")})
 public class DetalleCompra implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,12 +39,12 @@ public class DetalleCompra implements Serializable {
     @NotNull
     @Column(name = "cantidad")
     private int cantidad;
-    @JoinColumn(name = "idCompra", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Compra compra;
     @JoinColumn(name = "idProducto", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Producto producto;
+    @JoinColumn(name = "idCompra", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Compra compra;
 
     public DetalleCompra() {
     }
@@ -78,20 +78,20 @@ public class DetalleCompra implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public Compra getCompra() {
-        return compra;
-    }
-
-    public void setCompra(Compra compra) {
-        this.compra = compra;
-    }
-
     public Producto getProducto() {
         return producto;
     }
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+
+    public Compra getCompra() {
+        return compra;
+    }
+
+    public void setCompra(Compra compra) {
+        this.compra = compra;
     }
 
     @Override

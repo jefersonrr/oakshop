@@ -23,7 +23,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 public class DomicilioJpaController implements Serializable {
 

@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 public class CarritoJpaController implements Serializable {
 
@@ -39,8 +39,8 @@ public class CarritoJpaController implements Serializable {
         if (carrito.getCarritoPK() == null) {
             carrito.setCarritoPK(new CarritoPK());
         }
-        carrito.getCarritoPK().setIdProducto(carrito.getProducto().getId());
         carrito.getCarritoPK().setIdCliente(carrito.getPersona().getCedula());
+        carrito.getCarritoPK().setIdProducto(carrito.getProducto().getId());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -78,8 +78,8 @@ public class CarritoJpaController implements Serializable {
     }
 
     public void edit(Carrito carrito) throws NonexistentEntityException, Exception {
-        carrito.getCarritoPK().setIdProducto(carrito.getProducto().getId());
         carrito.getCarritoPK().setIdCliente(carrito.getPersona().getCedula());
+        carrito.getCarritoPK().setIdProducto(carrito.getProducto().getId());
         EntityManager em = null;
         try {
             em = getEntityManager();

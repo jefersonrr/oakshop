@@ -1,0 +1,194 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5/12/2021, 01:12:38 AM
+    Author     : Luis
+*/
+a{
+    text-decoration: none !important;
+}
+
+.border{
+    padding: 10px
+}
+
+.img-w-15{
+    width: 15px;
+}
+.img-w-30{
+    width: 30px;
+}
+.general-img{
+    width: 100%;
+}
+.elemento-data{
+    background-color: #F1F1F1 !important;
+}
+.texto-contenido{
+    font-size: 18px !important;
+}
+.titulo-contenido{
+    font-size:22px;
+    color: #000000;
+}
+.contenedor{
+    width: 100%;
+}
+.bold{
+    font-weight: bold !important;
+}
+.normal{
+    font-weight: normal !important;
+}
+.titulo-compra{
+    background-color: #001357;
+    color: #FFFFFF;
+    height: 50px;
+    font-size: 22px;
+    padding: 8px;
+}
+.start-title{
+    background: #E8E8E8;
+    height: 60px;
+}
+.start-text{
+    font-size: 26px;
+    font-weight: bold;
+}
+.contenedor{
+    width: 100%;
+}
+.contenedor-confirmar{
+    width: 100%;
+    box-sizing: border-box;
+}
+.contenedor-inicial{
+    width: 100%;
+}
+.btn-eliminar{
+    background: red;
+}
+.btn-size{
+    width: 100% !important;
+    height: 100% !important;
+}
+.btn-content{
+    color: blue;
+}
+.btn-continue-size{
+    width: 100% !important;
+    height: 40px;
+    padding: 0 !important;
+    margin: 10px;
+}
+
+.guardar-carrito{
+        width: 200px;
+        height: 40px;
+        border-radius: 5px;
+        background: #36bdc9;
+        cursor: pointer;
+}
+.m-10{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+@media (min-width:800px){
+    .contenedor-inicial{
+        float:left !important;
+        width: 70% !important;
+        border-right: 1px solid #dee2e6!important;
+    }
+    .contenedor-confirmar{
+        width: 25% !important
+    }
+    .btn-continue-size{
+        width: 100px !important;
+    }
+    
+    .mod-pos{
+        margin-top: 20px !important;
+    }
+    .btn-2{
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    .vr-show{
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .btn-1{
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+}
+.w-1{
+    width: 1px !important;
+}
+.vr-show{
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+.btn-1{
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.btn-2{
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+.mod-pos{
+    margin-top: 700px;
+}
+.form-control[type=number]::-webkit-inner-spin-button,
+.form-control[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+.form-control[type=number] { -moz-appearance:textfield; }
+
+.table{
+    text-align: center;
+}
+.thead{
+    background: #001357;
+    color: #fff;
+}
+
+.foto-producto{
+    width: 100px;
+    height: 120px;
+}
+
+.foto-producto img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+
+.inp-cantidad input{
+    width: 80px;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0.45rem 0.8rem;
+    outline: 0;
+    border: 1px solid #505050;
+}
+
+.cont-padre{
+    margin-bottom: 50px;
+}
+
+

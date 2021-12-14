@@ -52,11 +52,7 @@ public class CalificacionDAO {
     
     public void delete(CalificacionPK id) throws IllegalOrphanException, NonexistentEntityException{
         
-        try {
-            cit.destroy(id);
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(CalificacionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cit.destroy(id);
         
     }
 }

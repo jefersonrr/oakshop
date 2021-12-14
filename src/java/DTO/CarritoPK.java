@@ -14,34 +14,26 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 @Embeddable
 public class CarritoPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idProducto")
-    private int idProducto;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "idCliente")
     private String idCliente;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idProducto")
+    private int idProducto;
 
     public CarritoPK() {
     }
 
-    public CarritoPK(int idProducto, String idCliente) {
-        this.idProducto = idProducto;
+    public CarritoPK(String idCliente, int idProducto) {
         this.idCliente = idCliente;
-    }
-
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
 
@@ -53,11 +45,19 @@ public class CarritoPK implements Serializable {
         this.idCliente = idCliente;
     }
 
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) idProducto;
         hash += (idCliente != null ? idCliente.hashCode() : 0);
+        hash += (int) idProducto;
         return hash;
     }
 
@@ -68,10 +68,10 @@ public class CarritoPK implements Serializable {
             return false;
         }
         CarritoPK other = (CarritoPK) object;
-        if (this.idProducto != other.idProducto) {
+        if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
             return false;
         }
-        if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
+        if (this.idProducto != other.idProducto) {
             return false;
         }
         return true;
@@ -79,7 +79,7 @@ public class CarritoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.CarritoPK[ idProducto=" + idProducto + ", idCliente=" + idCliente + " ]";
+        return "DTO.CarritoPK[ idCliente=" + idCliente + ", idProducto=" + idProducto + " ]";
     }
     
 }

@@ -78,6 +78,12 @@ public class PersonaDAO {
         
        Persona p = new Persona(cedula, nombre, apellido,  telef, direccion, correo, contrasenia);
        p.setIdRol(rol);
+       p.setUrlFoto("https://i.postimg.cc/9Qys23M0/585e4bf3cb11b227491c339a.png");
        this.create(p);
+    }
+      
+      public boolean usuarioValido(String cedula, String clave) {
+        Persona user = readPersona(cedula);
+        return user.getContraseña().equals(clave);
     }
 }

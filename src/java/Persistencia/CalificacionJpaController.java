@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 public class CalificacionJpaController implements Serializable {
 
@@ -39,8 +39,8 @@ public class CalificacionJpaController implements Serializable {
         if (calificacion.getCalificacionPK() == null) {
             calificacion.setCalificacionPK(new CalificacionPK());
         }
-        calificacion.getCalificacionPK().setIdProducto(calificacion.getProducto().getId());
         calificacion.getCalificacionPK().setIdCliente(calificacion.getPersona().getCedula());
+        calificacion.getCalificacionPK().setIdProducto(calificacion.getProducto().getId());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -78,8 +78,8 @@ public class CalificacionJpaController implements Serializable {
     }
 
     public void edit(Calificacion calificacion) throws NonexistentEntityException, Exception {
-        calificacion.getCalificacionPK().setIdProducto(calificacion.getProducto().getId());
         calificacion.getCalificacionPK().setIdCliente(calificacion.getPersona().getCedula());
+        calificacion.getCalificacionPK().setIdProducto(calificacion.getProducto().getId());
         EntityManager em = null;
         try {
             em = getEntityManager();

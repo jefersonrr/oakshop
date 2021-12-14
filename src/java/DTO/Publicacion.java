@@ -12,8 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Publicacion")
@@ -41,13 +39,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Publicacion.findByMarca", query = "SELECT p FROM Publicacion p WHERE p.marca = :marca")
     , @NamedQuery(name = "Publicacion.findByNombre", query = "SELECT p FROM Publicacion p WHERE p.nombre = :nombre")
     , @NamedQuery(name = "Publicacion.findByFecha", query = "SELECT p FROM Publicacion p WHERE p.fecha = :fecha")
-    , @NamedQuery(name = "Publicacion.findByDescripcion", query = "SELECT p FROM Publicacion p WHERE p.descripcion = :descripcion")})
+    , @NamedQuery(name = "Publicacion.findByDescripcion", query = "SELECT p FROM Publicacion p WHERE p.descripcion = :descripcion")
+    , @NamedQuery(name = "Publicacion.findByEstado", query = "SELECT p FROM Publicacion p WHERE p.estado = :estado")})
 public class Publicacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -70,6 +69,11 @@ public class Publicacion implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "descripcion")
     private String descripcion;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "estado")
+    private String estado;
     @JoinColumn(name = "id_categoria", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Categoria idCategoria;
@@ -88,12 +92,13 @@ public class Publicacion implements Serializable {
         this.id = id;
     }
 
-    public Publicacion(Integer id, String marca, String nombre, Date fecha, String descripcion) {
+    public Publicacion(Integer id, String marca, String nombre, Date fecha, String descripcion, String estado) {
         this.id = id;
         this.marca = marca;
         this.nombre = nombre;
         this.fecha = fecha;
         this.descripcion = descripcion;
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -134,6 +139,14 @@ public class Publicacion implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Categoria getIdCategoria() {

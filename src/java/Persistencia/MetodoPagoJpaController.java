@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import DTO.Persona;
 import DTO.Compra;
 import DTO.MetodoPago;
 import Persistencia.exceptions.IllegalOrphanException;
@@ -21,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 public class MetodoPagoJpaController implements Serializable {
 
@@ -42,6 +43,11 @@ public class MetodoPagoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Persona idCliente = metodoPago.getIdCliente();
+            if (idCliente != null) {
+                idCliente = em.getReference(idCliente.getClass(), idCliente.getCedula());
+                metodoPago.setIdCliente(idCliente);
+            }
             List<Compra> attachedCompraList = new ArrayList<Compra>();
             for (Compra compraListCompraToAttach : metodoPago.getCompraList()) {
                 compraListCompraToAttach = em.getReference(compraListCompraToAttach.getClass(), compraListCompraToAttach.getId());
@@ -49,6 +55,10 @@ public class MetodoPagoJpaController implements Serializable {
             }
             metodoPago.setCompraList(attachedCompraList);
             em.persist(metodoPago);
+            if (idCliente != null) {
+                idCliente.getMetodoPagoList().add(metodoPago);
+                idCliente = em.merge(idCliente);
+            }
             for (Compra compraListCompra : metodoPago.getCompraList()) {
                 MetodoPago oldIdMetodoPagoOfCompraListCompra = compraListCompra.getIdMetodoPago();
                 compraListCompra.setIdMetodoPago(metodoPago);
@@ -72,6 +82,8 @@ public class MetodoPagoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             MetodoPago persistentMetodoPago = em.find(MetodoPago.class, metodoPago.getId());
+            Persona idClienteOld = persistentMetodoPago.getIdCliente();
+            Persona idClienteNew = metodoPago.getIdCliente();
             List<Compra> compraListOld = persistentMetodoPago.getCompraList();
             List<Compra> compraListNew = metodoPago.getCompraList();
             List<String> illegalOrphanMessages = null;
@@ -86,6 +98,10 @@ public class MetodoPagoJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (idClienteNew != null) {
+                idClienteNew = em.getReference(idClienteNew.getClass(), idClienteNew.getCedula());
+                metodoPago.setIdCliente(idClienteNew);
+            }
             List<Compra> attachedCompraListNew = new ArrayList<Compra>();
             for (Compra compraListNewCompraToAttach : compraListNew) {
                 compraListNewCompraToAttach = em.getReference(compraListNewCompraToAttach.getClass(), compraListNewCompraToAttach.getId());
@@ -94,6 +110,14 @@ public class MetodoPagoJpaController implements Serializable {
             compraListNew = attachedCompraListNew;
             metodoPago.setCompraList(compraListNew);
             metodoPago = em.merge(metodoPago);
+            if (idClienteOld != null && !idClienteOld.equals(idClienteNew)) {
+                idClienteOld.getMetodoPagoList().remove(metodoPago);
+                idClienteOld = em.merge(idClienteOld);
+            }
+            if (idClienteNew != null && !idClienteNew.equals(idClienteOld)) {
+                idClienteNew.getMetodoPagoList().add(metodoPago);
+                idClienteNew = em.merge(idClienteNew);
+            }
             for (Compra compraListNewCompra : compraListNew) {
                 if (!compraListOld.contains(compraListNewCompra)) {
                     MetodoPago oldIdMetodoPagoOfCompraListNewCompra = compraListNewCompra.getIdMetodoPago();
@@ -144,6 +168,11 @@ public class MetodoPagoJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Persona idCliente = metodoPago.getIdCliente();
+            if (idCliente != null) {
+                idCliente.getMetodoPagoList().remove(metodoPago);
+                idCliente = em.merge(idCliente);
             }
             em.remove(metodoPago);
             em.getTransaction().commit();

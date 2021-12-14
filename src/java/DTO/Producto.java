@@ -11,9 +11,10 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Producto")
@@ -36,13 +37,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Producto.findById", query = "SELECT p FROM Producto p WHERE p.id = :id")
     , @NamedQuery(name = "Producto.findByReferencia", query = "SELECT p FROM Producto p WHERE p.referencia = :referencia")
     , @NamedQuery(name = "Producto.findByCosto", query = "SELECT p FROM Producto p WHERE p.costo = :costo")
-    , @NamedQuery(name = "Producto.findByDescuento", query = "SELECT p FROM Producto p WHERE p.descuento = :descuento")})
+    , @NamedQuery(name = "Producto.findByDescuento", query = "SELECT p FROM Producto p WHERE p.descuento = :descuento")
+    , @NamedQuery(name = "Producto.findByCantidad", query = "SELECT p FROM Producto p WHERE p.cantidad = :cantidad")
+    , @NamedQuery(name = "Producto.findByEstado", query = "SELECT p FROM Producto p WHERE p.estado = :estado")})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -52,28 +55,31 @@ public class Producto implements Serializable {
     private String referencia;
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "descripcion")
-    private String descripcion;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "costo")
     private double costo;
     @Basic(optional = false)
     @NotNull
     @Column(name = "descuento")
     private int descuento;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cantidad")
+    private int cantidad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "estado")
+    private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
     private List<DetalleCompra> detalleCompraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
     private List<Carrito> carritoList;
-    @JoinColumn(name = "idColor", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Color idColor;
     @JoinColumn(name = "idPublicacion", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Publicacion idPublicacion;
+    @JoinColumn(name = "idColor", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Color idColor;
     @JoinColumn(name = "idTalla", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Talla idTalla;
@@ -87,12 +93,13 @@ public class Producto implements Serializable {
         this.id = id;
     }
 
-    public Producto(Integer id, String referencia, String descripcion, double costo, int descuento) {
+    public Producto(Integer id, String referencia, double costo, int descuento, int cantidad, String estado) {
         this.id = id;
         this.referencia = referencia;
-        this.descripcion = descripcion;
         this.costo = costo;
         this.descuento = descuento;
+        this.cantidad = cantidad;
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -111,14 +118,6 @@ public class Producto implements Serializable {
         this.referencia = referencia;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public double getCosto() {
         return costo;
     }
@@ -133,6 +132,22 @@ public class Producto implements Serializable {
 
     public void setDescuento(int descuento) {
         this.descuento = descuento;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @XmlTransient
@@ -153,20 +168,20 @@ public class Producto implements Serializable {
         this.carritoList = carritoList;
     }
 
-    public Color getIdColor() {
-        return idColor;
-    }
-
-    public void setIdColor(Color idColor) {
-        this.idColor = idColor;
-    }
-
     public Publicacion getIdPublicacion() {
         return idPublicacion;
     }
 
     public void setIdPublicacion(Publicacion idPublicacion) {
         this.idPublicacion = idPublicacion;
+    }
+
+    public Color getIdColor() {
+        return idColor;
+    }
+
+    public void setIdColor(Color idColor) {
+        this.idColor = idColor;
     }
 
     public Talla getIdTalla() {

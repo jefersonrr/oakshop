@@ -20,16 +20,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Carrito")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Carrito.findAll", query = "SELECT c FROM Carrito c")
-    , @NamedQuery(name = "Carrito.findByIdProducto", query = "SELECT c FROM Carrito c WHERE c.carritoPK.idProducto = :idProducto")
     , @NamedQuery(name = "Carrito.findByCantidad", query = "SELECT c FROM Carrito c WHERE c.cantidad = :cantidad")
-    , @NamedQuery(name = "Carrito.findByIdCliente", query = "SELECT c FROM Carrito c WHERE c.carritoPK.idCliente = :idCliente")})
+    , @NamedQuery(name = "Carrito.findByIdCliente", query = "SELECT c FROM Carrito c WHERE c.carritoPK.idCliente = :idCliente")
+    , @NamedQuery(name = "Carrito.findByIdProducto", query = "SELECT c FROM Carrito c WHERE c.carritoPK.idProducto = :idProducto")})
 public class Carrito implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,8 +58,8 @@ public class Carrito implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public Carrito(int idProducto, String idCliente) {
-        this.carritoPK = new CarritoPK(idProducto, idCliente);
+    public Carrito(String idCliente, int idProducto) {
+        this.carritoPK = new CarritoPK(idCliente, idProducto);
     }
 
     public CarritoPK getCarritoPK() {
