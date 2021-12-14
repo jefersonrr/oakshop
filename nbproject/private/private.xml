@@ -3,6 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/mostrarDetalles.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/agregarPublicacion.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/FiltrarPublicaciones.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/adminPublicaciones.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/medioPagoConfirmar.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/detalle-producto.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/PublicacionesCategoria.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/DAO/PublicacionDAO.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/WEB-INF/web.xml</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/carrito.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/medioPagoData.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/editarProductoPublicacion.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/EditarProductosPublicacion.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/productos.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/MostrarDetallePublicacion.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/adminClientes.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/EditarPublicacion.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/agregarProducto.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/medioPagoSeleccion.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/AddCategoria.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/categoriasAdmin.jsp</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/Negocio/askshop.java</file>
+            <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/index.jsp</file>
+        </group>
+        <group>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/CrearPublicacion.java</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/agregarPublicacion.jsp</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/Registro.java</file>
@@ -100,6 +125,20 @@
             <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/productos.jsp</file>
         </group>
         <group>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/NotificacionSesion.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/EditarPerfil.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/index.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/mostrarDetalles.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/perfilUsu.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/CrearPublicacion.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/carrito.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/Negocio/askshop.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/css/styles.css</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/editarPub.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/editarProductoPublicacion.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/comprasUsu.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/ActualizarProductoPublicacion.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/AgregarTarjeta.java</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/ControladorVistas/AgregarMetodoPago.java</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/DAO/ColorDAO.java</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/agregarPublicacion.jsp</file>
@@ -226,6 +265,12 @@
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/jsp/medioPagoSeleccion.jsp</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/web/js/sesion.js</file>
             <file>file:/E:/2021-2/Proyectos%202021-2/AYD/oakshop/src/java/Negocio/askshop.java</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/index.jsp</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/Negocio/askshop.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/src/java/ControladorVistas/Facturar.java</file>
+            <file>file:/C:/Users/mcris/Desktop/oakshop/web/jsp/perfilUsu.jsp</file>
         </group>
     </open-files>
 </project-private>

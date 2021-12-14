@@ -8,7 +8,10 @@ package Negocio;
 import DAO.CarritoDAO;
 import DAO.CategoriaDAO;
 import DAO.ColorDAO;
+import DAO.DepartamentoDAO;
+import DAO.DomicilioDAO;
 import DAO.GaleriaimgDAO;
+import DAO.MetodoPagoDAO;
 import DAO.PersonaDAO;
 import DAO.ProductoDAO;
 import DAO.PublicacionDAO;
@@ -18,7 +21,10 @@ import DAO.TipoTallaDAO;
 import DTO.Carrito;
 import DTO.CarritoPK;
 import DTO.Categoria;
+import DTO.Ciudad;
 import DTO.Color;
+import DTO.Departamento;
+import DTO.Domicilio;
 import DTO.Compra;
 import DTO.Galeriaimg;
 import DTO.MetodoPago;
@@ -82,6 +88,13 @@ public class askshop {
         String fechad = formateador.format(fecha);
         String horas = formateador2.format(fecha);
         return "Dia: " + fechad.replace(" ", "") + "<br>Hora: " + horas;
+    }
+    
+    public String getSoloFecha(Date fecha){
+            SimpleDateFormat formateador = new SimpleDateFormat(
+                 "MM'/'dd'/'yyyy", new Locale("es_ES"));
+            String fechad = formateador.format(fecha);
+        return fechad;
     }
 
     public String getTipos() {
@@ -857,6 +870,149 @@ public class askshop {
        
         return rta;
     }
+
+    public String getDatosPersonales(String cedula) {
+
+         PersonaDAO p = new PersonaDAO();
+         Persona per = p.readPersona(cedula);
+         return per.getNombre()+","+per.getApellido()+","+per.getCedula()+","+per.getTelefono()+","
+                 +per.getCorreo()+","+per.getDireccion()+","+per.getContraseña();
+    }
+
+    public String getDireccionesUser(String cedula) {
+        
+        PersonaDAO p = new PersonaDAO();
+        Persona per = p.readPersona(cedula);
+        List<Domicilio> d = per.getDomicilioList();
+        String domicilios = "";
+        for (Domicilio dom : d) {
+            domicilios+=dom.getId()+","+dom.getIdCiudad().getIdDepartamento().getNombre()+
+                    ","+dom.getIdCiudad().getNombre()+","+dom.getBarrio()+","+dom.getDescripcion()+";";
+        }
+        return domicilios;
+    }
+
+    public String getTarjetasUser(String cedula) {
+
+        PersonaDAO p = new PersonaDAO();
+        Persona per = p.readPersona(cedula);
+        List<MetodoPago> metodos = per.getMetodoPagoList();
+        String metodo="";
+        for (MetodoPago m : metodos) {
+            String nombres[] = m.getNombrePropietario().split(" ");
+            metodo+=m.getId()+","+m.getNombre()+","+m.getNumero()+","+nombres[0]+" "+nombres[1]+
+                    ","+this.getSoloFecha(m.getFechaExpiracion())+","+m.getCvc()+","+m.getIdentificacion()+";";
+        }
+        return metodo;
+    }
+
+    public void actualizarPersona(String nombre, String apellido, String cedula, String telefono, String correo, String direccion,String pass) {
+            
+            System.out.println("este es el telefono "+telefono);
+            PersonaDAO p = new PersonaDAO();
+            Persona persona = p.readPersona(cedula);
+            persona.setNombre(nombre);
+            persona.setApellido(apellido);
+            persona.setTelefono(telefono);
+            persona.setCorreo(correo);
+            persona.setDireccion(direccion);
+            persona.setContraseña(pass);
+            p.update(persona);
+
+    }
+
+    public void agregarTarjeta(String cedula, String idTarjeta, String tipoTarjeta, String numTarjeta, String nombres, String fechaExp, String csv, String cedulaDue) {
+
+            MetodoPagoDAO metodo = new MetodoPagoDAO();
+            MetodoPago m;
+            PersonaDAO p = new PersonaDAO();
+            if(idTarjeta.isEmpty()){
+                m = new MetodoPago(0, tipoTarjeta, numTarjeta, nombres, new Date(fechaExp), Short.parseShort(csv), "CC", cedulaDue);
+                m.setIdCliente(p.readPersona(cedula));
+                metodo.create(m);
+            }else{
+                m = metodo.readMetodoPago(Integer.parseInt(idTarjeta));
+                m.setNombre(tipoTarjeta);
+                m.setNumero(numTarjeta);
+                m.setNombrePropietario(nombres);
+                m.setFechaExpiracion(new Date(fechaExp));
+                m.setCvc(Short.parseShort(csv));
+                m.setIdentificacion(cedulaDue);
+                metodo.update(m);
+            }
+            
+    }
+
+    public void agregarDomicilio(String d, String idDom, String departamento, String ciudad, String direccion) {
+
+            DomicilioDAO domici = new DomicilioDAO();
+            Domicilio domi;
+            PersonaDAO p = new PersonaDAO();
+            Departamento de = getDepart(departamento);
+            Ciudad c = getCiudad(ciudad, de);
+            if(idDom.isEmpty()){
+                domi = new Domicilio(0,direccion,direccion);
+                domi.setIdCiudad(c);
+                domi.setIdCliente(p.readPersona(d));
+                domi.setDescripcion(direccion);
+                domici.create(domi);
+            }else{
+                domi = domici.readDomicilio(Integer.parseInt(idDom));
+                domi.setIdCiudad(c);
+                domi.setIdCliente(p.readPersona(d));
+                domi.setDescripcion(direccion); 
+                domici.update(domi); 
+            }
+    }
+
+    private Ciudad getCiudad(String ciudad,Departamento departamento) {
+        List<Ciudad> ciudades = departamento.getCiudadList();
+        for (Ciudad c : ciudades) {
+            if(c.getNombre().equals(ciudad))
+                return c;
+        }
+        return null;
+        
+    }
+
+    private Departamento getDepart(String departamento) {
+
+        DepartamentoDAO d = new DepartamentoDAO();
+        List<Departamento> departamentos = d.read();
+        for (Departamento de: departamentos) {
+            if(de.getNombre().equals(departamento)){
+                return de;
+            }
+        }
+        return null;
+    }
+
+    public void eliminarTarjeta(String idT) {
+
+        try {
+            MetodoPagoDAO m = new MetodoPagoDAO();
+            m.delete(Integer.parseInt(idT));
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void eliminarDomicilio(String idD) {
+
+        DomicilioDAO d = new DomicilioDAO();
+        try {
+            d.delete(Integer.parseInt(idD));
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+
 
    public String formatoFecha(Date fecha) {
 

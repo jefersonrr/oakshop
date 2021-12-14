@@ -5,7 +5,6 @@
  */
 package ControladorVistas;
 
-import DAO.CarritoDAO;
 import Negocio.askshop;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Cristian
  */
-public class AgregarACarrito extends HttpServlet {
+public class EditarPerfil extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,25 +30,19 @@ public class AgregarACarrito extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");   
+        response.setContentType("text/html;charset=UTF-8");
         
-         askshop a = new askshop();
-        if(request.getParameter("tallas")==null){
-            
-          request.getSession().setAttribute("carro", a.generarCarro(request.getSession().getAttribute("usuario").toString()) );
-        request.getRequestDispatcher("./jsp/carrito.jsp").forward(request, response);
-        }
-       
+        String cedula = request.getSession().getAttribute("usuario").toString();
+        askshop a = new askshop();
+        String datosPersonales = a.getDatosPersonales(cedula);
+        String tarjetas = a.getTarjetasUser(cedula);
+        String direccionesUser = a.getDireccionesUser(cedula);
         
-        String talla = request.getParameter("tallas");
-        String colorId = request.getParameter("color");
-        String cantidad = request.getParameter("cantidad");
-        String id_person = request.getSession().getAttribute("usuario").toString();
-        String id_p = request.getSession().getAttribute("id_p").toString();
+        request.getSession().setAttribute("datosPersonales", datosPersonales);
+        request.getSession().setAttribute("tarjetas", tarjetas);
+        request.getSession().setAttribute("direccionesUser", direccionesUser);
+        request.getRequestDispatcher("jsp/perfilUsu.jsp").forward(request, response);
         
-        String carro = a.anadirAcarrito(id_person,Integer.parseInt(talla),Integer.parseInt(colorId),Integer.parseInt(cantidad),Integer.parseInt(id_p));
-        request.getSession().setAttribute("carro", carro);
-        request.getRequestDispatcher("jsp/carrito.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

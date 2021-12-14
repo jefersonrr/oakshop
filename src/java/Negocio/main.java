@@ -25,6 +25,9 @@ import java.util.Date;
  */
 public class main {
     public static void main(String[] args) {
+        
+        Date d = new Date("12/ 22 / 2021");
+        System.out.println(d);
 //        Date fecha = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 //        PublicacionDAO pu = new PublicacionDAO();
 //       askshop a = new askshop();

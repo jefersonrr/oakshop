@@ -158,6 +158,34 @@
         <servlet-class>ControladorVistas.eliminarProductoCarrito</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>EditarPerfil</servlet-name>
+        <servlet-class>ControladorVistas.EditarPerfil</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AgregarTarjeta</servlet-name>
+        <servlet-class>ControladorVistas.AgregarTarjeta</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActualizarDatosPer</servlet-name>
+        <servlet-class>ControladorVistas.ActualizarDatosPer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AgregarDomicilio</servlet-name>
+        <servlet-class>ControladorVistas.AgregarDomicilio</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarTarjeta</servlet-name>
+        <servlet-class>ControladorVistas.EliminarTarjeta</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarDomicilio</servlet-name>
+        <servlet-class>ControladorVistas.EliminarDomicilio</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IrAcarrito</servlet-name>
+        <servlet-class>ControladorVistas.IrAcarrito</servlet-class>
+         </servlet>
+        <servlet>
         <servlet-name>Facturar</servlet-name>
         <servlet-class>ControladorVistas.Facturar</servlet-class>
     </servlet>
@@ -302,6 +330,34 @@
         <url-pattern>/eliminarProductoCarrito.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>EditarPerfil</servlet-name>
+        <url-pattern>/EditarPerfil.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarTarjeta</servlet-name>
+        <url-pattern>/AgregarTarjeta.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarDatosPer</servlet-name>
+        <url-pattern>/ActualizarDatosPer.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarDomicilio</servlet-name>
+        <url-pattern>/AgregarDomicilio.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarTarjeta</servlet-name>
+        <url-pattern>/EliminarTarjeta.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarDomicilio</servlet-name>
+        <url-pattern>/EliminarDomicilio.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IrAcarrito</servlet-name>
+        <url-pattern>/IrAcarrito.do</url-pattern>
+          </servlet-mapping>
+         <servlet-mapping>
         <servlet-name>Facturar</servlet-name>
         <url-pattern>/Facturar.do</url-pattern>
     </servlet-mapping>
