@@ -180,7 +180,7 @@
 
                                         </div>
                                         <div class="col-3 align-items-center">
-                                            <a href="<%=basePath%>/MostrarMetodoPago.do"class="btn-content btn-size btn align-items-center">Modificar</a>
+                                            <a href="<%=basePath%>/jsp/medioPagoSeleccion.jsp"class="btn-content btn-size btn align-items-center">Modificar</a>
                                         </div>
                                     </div>
                                 </li>

@@ -145,6 +145,7 @@
                 </div>
             </div>
         </div>
+        <form action="<%=basePath%>/Facturar.do" method="post">
         <div class="row m-10 mt-3">
             <div class="row my-2">
                 <div class="col d-flex">
@@ -157,6 +158,7 @@
                 </div>
             </div>
        
+              
             <div class="contenedor-inicial mt-5">
                 <div class="contenedor">
                     <div class="w-100 texto-contenido bold">
@@ -176,7 +178,7 @@
                                 <div class="accordion-body elemento-data">
                                   <% for(Domicilio d : domicilios){%>
                                     <div class="form-check">
-                                        <input class="form-check-input" value="<%=d.getId()%>" name="direccion" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                        <input class="form-check-input" required value="<%=d.getId()%>" name="direccion" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                         <label class="form-check-label" for="flexRadioDefault1">
                                           <%=d.getDireccion() + "Barrio: " + d.getBarrio() %>
                                         </label>
@@ -225,7 +227,7 @@
                 </div>                
             </div>
             <div class="contenedor-confirmar">
-                <form action="" method="post">
+             
                     <div class="mt-5">
                         <div class="titulo-compra mt-4">
                             <div class="text-center">
@@ -249,16 +251,16 @@
 
                         <div class="row mt-4">
                             <div class="col">
-                                <a href="index.jsp" type="button" class="btn-size btn btn-info text-white">Confirmar compra</a>
+                                <button type="submit" class="btn-size btn btn-info text-white">Confirmar compra</button>>
                             </div>
                         </div>
                     </div>
 
-                </form>
+              
 
             </div>
         </div>
-                                    
+      </form>                                
                                     
                 <div class="footer-dark">
         <footer>

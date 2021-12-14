@@ -84,6 +84,14 @@ a{
     padding: 0 !important;
     margin: 10px;
 }
+
+.guardar-carrito{
+        width: 200px;
+        height: 40px;
+        border-radius: 5px;
+        background: #36bdc9;
+        cursor: pointer;
+}
 .m-10{
     margin-left: 5%;
     margin-right: 5%;

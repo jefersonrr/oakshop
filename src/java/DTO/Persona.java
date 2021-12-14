@@ -18,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jefersonrr
+ * @author Cristian
  */
 @Entity
 @Table(name = "Persona")
@@ -87,16 +86,16 @@ public class Persona implements Serializable {
     @JoinColumn(name = "idRol", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Rol idRol;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
-    private List<MetodoPago> metodoPagoList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
-    private Carrito carrito;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+    private List<Carrito> carritoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private List<Domicilio> domicilioList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
-    private Calificacion calificacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+    private List<Calificacion> calificacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private List<Compra> compraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
+    private List<MetodoPago> metodoPagoList;
 
     public Persona() {
     }
@@ -188,20 +187,12 @@ public class Persona implements Serializable {
     }
 
     @XmlTransient
-    public List<MetodoPago> getMetodoPagoList() {
-        return metodoPagoList;
+    public List<Carrito> getCarritoList() {
+        return carritoList;
     }
 
-    public void setMetodoPagoList(List<MetodoPago> metodoPagoList) {
-        this.metodoPagoList = metodoPagoList;
-    }
-
-     public Carrito getCarrito() {
-        return carrito;
-    }
-
-    public void setCarrito(Carrito carrito) {
-        this.carrito = carrito;
+    public void setCarritoList(List<Carrito> carritoList) {
+        this.carritoList = carritoList;
     }
 
     @XmlTransient
@@ -213,12 +204,13 @@ public class Persona implements Serializable {
         this.domicilioList = domicilioList;
     }
 
-    public Calificacion getCalificacion() {
-        return calificacion;
+    @XmlTransient
+    public List<Calificacion> getCalificacionList() {
+        return calificacionList;
     }
 
-    public void setCalificacion(Calificacion calificacion) {
-        this.calificacion = calificacion;
+    public void setCalificacionList(List<Calificacion> calificacionList) {
+        this.calificacionList = calificacionList;
     }
 
     @XmlTransient
@@ -229,6 +221,16 @@ public class Persona implements Serializable {
     public void setCompraList(List<Compra> compraList) {
         this.compraList = compraList;
     }
+
+    @XmlTransient
+    public List<MetodoPago> getMetodoPagoList() {
+        return metodoPagoList;
+    }
+
+    public void setMetodoPagoList(List<MetodoPago> metodoPagoList) {
+        this.metodoPagoList = metodoPagoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -40,7 +40,10 @@ public class mostrarDetalles extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PublicacionDAO pDao = new PublicacionDAO();
-        Publicacion pub = pDao.readPublicacion(Integer.parseInt(request.getParameter("id_publicacion")));
+        String idPub = request.getParameter("id_publicacion");
+        request.getSession().setAttribute("id_p", idPub);
+        Publicacion pub = pDao.readPublicacion(Integer.parseInt(idPub));
+        
         List <Producto> listPDao = pub.getProductoList();
         List <Galeriaimg> galeria = pub.getGaleriaimgList();
         JSONObject json = new JSONObject();

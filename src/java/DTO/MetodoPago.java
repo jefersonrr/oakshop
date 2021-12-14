@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jefersonrr
+ * @author Cristian
  */
 @Entity
 @Table(name = "Metodo_Pago")
@@ -92,6 +92,7 @@ public class MetodoPago implements Serializable {
     private Persona idCliente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMetodoPago")
     private List<Compra> compraList;
+   
 
     public MetodoPago() {
     }

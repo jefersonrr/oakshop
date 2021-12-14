@@ -11,7 +11,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <html>
         <%
             String path = request.getContextPath();
             String basePath = request.getScheme() + "://" + request.getServerName() + ":"
@@ -105,7 +104,7 @@
                         <template id="NoSesion">
                             <ul class="navbar-nav ml-auto m-4">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<%=basePath%>iniciarSesion.do">INICIAR SESIÓN</a>
+                                    <a class="nav-link" href="<%=basePath%>iniciarsesion.do">INICIAR SESIÓN</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
@@ -162,7 +161,7 @@
                             </div>
 
 
-                            <form action="action">
+                            <form action="AgregarACarrito.do">
                                 <div class="product-detail">
 
                                     <h4>Talla:</h4>
@@ -184,9 +183,9 @@
                                     </div>
 
                                     <div class="purchase-info2 d-flex justify-content-center">
-                                        <a type = "submit" href="<%=basePath%>./jsp/carrito.jsp" class = "btn" id="carrito">
+                                        <button type = "submit" class = "btn" id="carrito">
                                             Añadir al carrito <i class = "fas fa-shopping-cart"></i>
-                                        </a>
+                                        </button>
                                         <a  href="<%=basePath%>./jsp/medioPagoSeleccion.jsp" type = "submit" class = "btn" id="submit">Comprar</a>
                                     </div>
 

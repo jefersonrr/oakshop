@@ -34,6 +34,7 @@
         <!--Importar CSS -->
         <link href="<%=basePath%>css/menu.css" rel="stylesheet" type="text/css"/>
         <!--Importar CSS -->
+        <link rel="stylesheet" href="<%=basePath%>css/menu.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/iniciarsesion.css"/>
         <link rel="stylesheet" href="<%=basePath%>css/footer.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>

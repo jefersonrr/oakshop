@@ -5,6 +5,7 @@
  */
 package ControladorVistas;
 
+import Negocio.askshop;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author USUARIO
+ * @author Cristian
  */
-public class NewServlet extends HttpServlet {
+public class eliminarProductoCarrito extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,18 +31,18 @@ public class NewServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
+        String producto = request.getParameter("eliminarP");
+        String id_person = request.getSession().getAttribute("usuario").toString();
+        
+        askshop a = new askshop();
+        
+        a.eliminarCarritoProducto(producto,id_person);
+        String carro = a.generarCarro(id_person);
+        request.getSession().removeAttribute("carro");
+        request.getSession().setAttribute("carro", carro);
+        request.getRequestDispatcher("jsp/carrito.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
