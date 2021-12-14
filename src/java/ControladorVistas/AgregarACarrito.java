@@ -32,7 +32,9 @@ public class AgregarACarrito extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        if(request.getSession().getAttribute("usuario")==null){
+            request.getRequestDispatcher("./jsp/iniciarsesion.jsp").forward(request, response);
+        }
         askshop a = new askshop();
         
         String talla = request.getParameter("tallas");

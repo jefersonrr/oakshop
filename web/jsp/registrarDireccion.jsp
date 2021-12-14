@@ -3,6 +3,9 @@
     Created on : 5/12/2021, 02:15:52 AM
     Author     : Luis
 --%>
+<%@page import="DTO.Ciudad"%>
+<%@page import="DTO.Departamento"%>
+<%@page import="DAO.DepartamentoDAO"%>
 <%@page import="DTO.Categoria"%>
 <%@page import="DAO.CategoriaDAO"%>
 <%@page import="DTO.Tipo"%>
@@ -14,24 +17,18 @@
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                 + request.getServerPort() + path + "/";
-        String tipo = request.getSession().getAttribute("tipoTarjeta").toString();
-        if (tipo.equals("Crédito")) {
-            request.getSession().setAttribute("tipoT", "CREDITO");
-        } else {
-            request.getSession().setAttribute("tipoT", "DEBITO");
-        }
+
         CategoriaDAO cadao = new CategoriaDAO();
         List<Categoria> ca = cadao.readActivo();
 
         String subtotal = request.getSession().getAttribute("subtotal").toString();
         String envio = request.getSession().getAttribute("envio").toString();
         String total = request.getSession().getAttribute("total").toString();
+        DepartamentoDAO ddao = new DepartamentoDAO();
+        List<Departamento> departamentos = ddao.read();
+        String[][] array = new String[departamentos.size()][2];
 
-        if (request.getSession().getAttribute("esCarrito") != null) {
-            request.getSession().setAttribute("esCarrito", request.getSession().getAttribute("esCarrito"));
-        } else {
-            request.getSession().setAttribute("idProdcuto", request.getSession().getAttribute("idProducto"));
-        }
+
     %>
     <base href="<%=basePath%>">
     <head>
@@ -142,7 +139,7 @@
 
         <!-- CONTENIDO -->
 
-        <form action="<%=basePath%>/AgregarMetodoPago.do" method="post">
+        <form action="<%=basePath%>./RegistrarDirecccion.do" method="post">
             <div class="row">
                 <div class="col start-title">
                     <div class="text-center start-text p-2">
@@ -157,7 +154,7 @@
                             <img src="img/carrito.png" width="50" height="50"/>    
                         </div>
                         <div class="titulo-contenido mt-2 ms-5 d-flex">
-                            ¿ Como Quieres Pagar ?
+                            Registrar Direccion
                         </div>
                     </div>
                 </div>
@@ -168,61 +165,62 @@
                                 <li class="w-100">
                                     <div class="row">
                                         <div class="col-2">
-                                            <div class="d-flex justify-content-center my-3">
-                                                <img src="img/card.png" width="30" height="30"/>    
-                                            </div>
+
 
                                         </div>
                                         <div class="col-7">
                                             <div class="my-3 bold">
-                                                Tarjeta de <%=tipo%>    
+                                                Nueva Dirección 
                                             </div>
 
                                         </div>
                                         <div class="col-3 align-items-center">
-                                            <a href="<%=basePath%>/jsp/medioPagoSeleccion.jsp"class="btn-content btn-size btn align-items-center">Modificar</a>
+                                            <a href="<%=basePath%>/jsp/medioPagoConfirmar.jsp"class="btn-content btn-size btn align-items-center">Modificar</a>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
 
                             <div class="container">
-                                <div class="titulo-contenido my-5">
-                                    Ingresa los datos de tu tarjeta
-                                </div>
+
                                 <div class="container border p-5">
                                     <div class="row">
                                         <div class="col-8">
-                                            <input class="form-control form-control-lg border-bottom w-100" name="numero" type="number" required placeholder="Número de tarjeta" aria-label="default input example">         
+                                            <input class="form-control form-control-lg border-bottom w-100" name="direccion" type="text" required placeholder="Direccion" aria-label="default input example">         
                                         </div>
                                     </div>
                                     <div class="row my-2">
                                         <div class="col-8">
-                                            <input class="form-control form-control-lg border-bottom w-100" type="text" name="nombre" required placeholder="Nombre y Apellido" aria-label="default input example">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="text" name="barrio" required placeholder="Barrio" aria-label="default input example">
                                         </div>
                                     </div>
 
                                     <div class="row my-2">
                                         <div class="col-4">
-                                            <input class="form-control form-control-lg border-bottom w-100" type="date" name="fechaExpiracion" required onclick="limitarFecha()" id="fechaActual" placeholder="Fecha de Expiración" aria-label="default input example">
-                                        </div>
-                                        <div class="col-4">
-                                            <input class="form-control form-control-lg border-bottom w-100" type="number" min="0"  name="cvc" required placeholder="Codigo de Seguridad" aria-label="default input example">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="text" name="descripcion" placeholder="Descripcion" required   aria-label="default input example">
                                         </div>
                                     </div>
                                     <div class="row mt-2 mb-5">
                                         <div class="col-4">
-                                            <label class="texto-contenido bold">Tipo</label>
-                                            <select name="tipo" class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
-                                                <option selected value="CC">CC</option>
-                                                <option value="TI">TI</option>
+                                            <label class="texto-contenido bold">Departamento</label>
+                                            <select id="departamento" name="departamento" onchange="selectCiudad()" required class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
+                                                <option selected>Seleccione</option>
 
+                                                <%
+                                                    for (Departamento d : departamentos) {%>
+                                                <option   value="<%=d.getId()%>"><%=d.getNombre()%></option>
+
+                                                <%};%>
                                             </select>
                                         </div>
                                         <div class="col-4">
-                                            <label></label>
-                                            <input class="form-control form-control-lg border-bottom w-100"  name="identificacion" type="number" placeholder="Número" aria-label="default input example">
+                                            <label class="texto-contenido bold">Ciudad</label>
+                                            <select id="ciudad"  required name="ciudad" class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
+
+
+                                            </select>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +230,7 @@
                     <div class="row mt-4 mod-pos btn-2">
                         <div class="col">
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn-continue-size btn btn-info  text-white">Continuar</button>
+                                <button type="submit" class="btn-continue-size btn btn-info  text-white">Guardar</button>
                             </div>
                         </div>
                     </div>
@@ -297,16 +295,41 @@
             </footer>
         </div>
         <script>
-                                    
 
-                                function    limitarFecha() {
+            function selectCiudad() {
+                var seletD = document.querySelector('#departamento');
+                var seletC = document.querySelector('#ciudad');
+                console.log(seletD);
+                console.log(seletD.value);
+                var idDepartamento = seletD.value;
+                var options =  '<option selected>Seleccione</option>\n';
+                var lista = [];
 
-                                    inputFecha = document.querySelector('#fechaActual');
-                                    var utc = new Date().toJSON().slice(0, 10);
-                                    console.log(utc);
-                                    inputFecha.setAttribute("min", utc);
+                var i = 0;
 
-                                }
+            <%  
+                for (Departamento d : departamentos) {
+
+                    for (Ciudad c : d.getCiudadList()) {%>
+
+                lista[i] = ["<%=d.getId()%>", "<%=c.getId()%>", "<%=c.getNombre()%>"];
+                i ++;
+            <%};%>
+            <%};%>
+                var j;
+                
+                for (j = 0; j < lista.length; j++) {
+                    
+                    if (lista[j][0] === idDepartamento) {
+                        options += '<option  value="' + lista[j][1] + '">' + lista[j][2] + '</option>\n';
+                       
+                    }
+
+
+                }
+              
+                seletC.innerHTML = options;
+            }
         </script>
         <!-- JS de Bootstrap -->      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

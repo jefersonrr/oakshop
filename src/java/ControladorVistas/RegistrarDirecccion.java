@@ -5,6 +5,10 @@
  */
 package ControladorVistas;
 
+import DAO.CiudadDAO;
+import DAO.DomicilioDAO;
+import DAO.PersonaDAO;
+import DTO.Domicilio;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author USUARIO
+ * @author Jefersonrr
  */
-public class NewServlet extends HttpServlet {
+public class RegistrarDirecccion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,19 +33,21 @@ public class NewServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+       
+        if(request.getParameter("departamento")==null || request.getParameter("departamento").equals("")||request.getParameter("departamento")==null || request.getParameter("departamento").equals("") ){
+        
+         request.getRequestDispatcher("./jsp/medioPagoConfirmar.jsp").forward(request, response);
         }
+        
+        DomicilioDAO domia = new DomicilioDAO();
+        Domicilio domi = new Domicilio(null, request.getParameter("direccion"), request.getParameter("barrio"));
+        domi.setDescripcion(request.getParameter("descripcion"));
+        CiudadDAO cdao = new CiudadDAO();
+        PersonaDAO pdao = new PersonaDAO();
+        domi.setIdCiudad(cdao.readCiudad(Integer.parseInt(request.getParameter("ciudad"))));
+        domi.setIdCliente(pdao.readPersona(request.getSession().getAttribute("usuario").toString()));
+        domia.create(domi);
+         request.getRequestDispatcher("./jsp/medioPagoConfirmar.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

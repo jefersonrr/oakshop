@@ -3,6 +3,13 @@
     Created on : 5/12/2021, 02:15:52 AM
     Author     : Luis
 --%>
+<%@page import="DAO.PersonaDAO"%>
+<%@page import="DTO.Domicilio"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DTO.Tipo"%>
+<%@page import="DTO.Categoria"%>
+<%@page import="java.util.List"%>
+<%@page import="DAO.CategoriaDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,6 +17,18 @@
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                 + request.getServerPort() + path + "/";
+        CategoriaDAO cadao = new CategoriaDAO();
+        List<Categoria> ca = cadao.readActivo();
+         String subtotal = request.getSession().getAttribute("subtotal").toString();
+        String envio = request.getSession().getAttribute("envio").toString();
+        String total = request.getSession().getAttribute("total").toString();
+          PersonaDAO per = new PersonaDAO();
+        List<Domicilio> domicilios = per.readPersona(request.getSession().getAttribute("usuario").toString()).getDomicilioList();
+        
+        
+         
+           String tarjeta =  request.getSession().getAttribute("tarjetaOculta").toString() ;
+            
     %>
     <base href="<%=basePath%>">
     <head>
@@ -30,68 +49,67 @@
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
         
         <!-- MENÚ DE NAVEGACIÓN-->
-        <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
+
                 <a class="navbar-brand" href="index.jsp">
-                   <!-- <img src="#" alt="" width="140px" height="120px" /> -->
-                   Oakshop
+                    <!-- <img src="#" alt="" width="140px" height="120px" /> -->
+                    Oakshop
                 </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.jsp">INICIO</a>
+                            <a class="nav-link active" aria-current="page" href="#">INICIO</a>
                         </li>
+                        <% int k;
+                            if (ca.size() > 5) {
+                                k = 5;
+
+                            } else {
+                                k = ca.size();
+                            }
+                            for (int i = 0; i < k; i++) {%>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                HOMBRE
+                                <%=ca.get(i).getNombre()%>
                             </a>
+                            <%List<Tipo> tipos = ca.get(i).getTipoList();%>
+
+                            
+                            
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">POLOS</a></li>
-                                <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
-                                <li><a class="dropdown-item" href="#">JEANS</a></li>
-                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                                <%for (Tipo t : tipos) {%>
+
+
+                                <li><a class="dropdown-item" href="<%=basePath%>/PublicacionesCategoria.do?tipo=<%=t.getId() %>&cate=<%=ca.get(i).getId()%>"><%=t.getNombre()%> </a></li>
+
+
+                                <%};%>
+                            </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                MUJERES
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">BLUSAS</a></li>
-                                <li><a class="dropdown-item" href="#">VESTIDOS</a></li>
-                                <li><a class="dropdown-item" href="#">JEANS</a></li>
-                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                KIDS
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
-                                <li><a class="dropdown-item" href="#">BERMUDAS</a></li>
-                                <li><a class="dropdown-item" href="#">JEANS</a></li>
-                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
-                        </li>
+                        <%};%>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
                         </li>
                     </ul>
+
                     <template id="NoSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" href="<%=basePath%>/jsp/iniciarsesion.jsp">INICIAR SESIÓN</a>
+                                <a class="nav-link" href="<%=basePath%>iniciarSesion.do">INICIAR SESIÓN</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
                             </li>
                         </ul>
                     </template>
-                    <!-- USUARIO LOGUEADO -->
+                    <!-- Usuario logueado-->
                      <template id="SiSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item dropdown" style="list-style-type: none;">
@@ -106,12 +124,15 @@
                                     <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
                                 </ul>
                             </li>
+
                             <svg xmlns="http://www.w3.org/2000/svg" style="color:#fff" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                             </svg>
+
                         </ul>
                     </template>
+
                 </div>
             </div>
         </nav>
@@ -124,6 +145,7 @@
                 </div>
             </div>
         </div>
+        <form action="<%=basePath%>/Facturar.do" method="post">
         <div class="row m-10 mt-3">
             <div class="row my-2">
                 <div class="col d-flex">
@@ -136,12 +158,13 @@
                 </div>
             </div>
        
+              
             <div class="contenedor-inicial mt-5">
                 <div class="contenedor">
                     <div class="w-100 texto-contenido bold">
                         Detalles de la entrega
                         <div class="d-flex justify-content-end">
-                            <a href="#">Agregar nueva dirección</a>
+                            <a href="<%=basePath%>/jsp/registrarDireccion.jsp">Agregar nueva dirección</a>
                         </div>
                         <div>
                             <div class="accordion" id="accordionExample">
@@ -153,19 +176,14 @@
                               </h2>
                               <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                 <div class="accordion-body elemento-data">
-                                  
+                                  <% for(Domicilio d : domicilios){%>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                        <input class="form-check-input" required value="<%=d.getId()%>" name="direccion" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                         <label class="form-check-label" for="flexRadioDefault1">
-                                          Calle 9 #21-50
+                                          <%=d.getDireccion() + "Barrio: " + d.getBarrio() %>
                                         </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                        <label class="form-check-label" for="flexRadioDefault2">
-                                          Av 0 #54-87
-                                        </label>
-                                    </div>
+                                   <%};%>
                                 </div>
                               </div>
                             </div>
@@ -179,13 +197,13 @@
                                 <li class="w-100">
                                     <div class="row">
                                         <div class="col-9">
-                                            Tarjeta de crédito     ***8458
+                                            Tarjeta : ************ <%=tarjeta%>
                                             <br>
                                             No demores en pagar, solo podemos reservarte stock cuando el pago se acredite
 
                                         </div>
                                         <div class="col-3">
-                                            <button type="button" class="btn-content btn-size btn vertical-align-center">Modificar</button>
+                                            <a href="<%=basePath%>/MostrarMetodoPago.do" type="button" class="btn-content btn-size btn vertical-align-center">Modificar</a>
                                         </div>
                                     </div>
                                 </li>
@@ -197,11 +215,9 @@
                                         <div class="col-9">
                                             Datos para tu factura
                                             <br>
-                                            Nombre usuario - CC XXXXXXXXX
+                                            <%=request.getSession().getAttribute("nameUser")%> - CC <%=request.getSession().getAttribute("usuario")%>
                                         </div>
-                                        <div class="col-3 align-items-center">
-                                            <button type="button" class="btn-content btn-size btn align-items-center">Modificar</button>
-                                        </div>
+                                       
                                     </div>
                                 </li>
                             </ul>
@@ -211,7 +227,7 @@
                 </div>                
             </div>
             <div class="contenedor-confirmar">
-                <form action="" method="post">
+             
                     <div class="mt-5">
                         <div class="titulo-compra mt-4">
                             <div class="text-center">
@@ -220,47 +236,37 @@
                         </div>
                         <div class="border">
                             <div class="mx-3 mt-4">
-                                <label class="bold my-1">Subtotal:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">    
+                                <label class="bold my-1">Subtotal $: </label>
+                                <input class="form-control border text-center" type="number" name="subtotal"  value="<%=subtotal%>" readonly="false" aria-label="default input example">    
                             </div>
                             <div class="mx-3">
-                                <label class="bold my-1">Precio envio:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">
-                            </div>
-                            <div class="mx-3">
-                                <label class="bold my-1">Descuento:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">
+                                <label class="bold my-1">Precio envio $: </label>
+                                <input class="form-control border text-center" type="number" name="envio"  value="<%=envio%>" readonly="false" aria-label="default input example">
                             </div>
                             <div class="mx-3 mb-4">
-                                <label class="bold my-1">Total a pagar:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">
+                                <label class="bold my-1">Total a pagar $:  </label>
+                                <input class="form-control border text-center" type="number"name="total"  value="<%=total%>"readonly="false" aria-label="default input example">
                             </div>
                         </div>
+
                         <div class="row mt-4">
                             <div class="col">
-                                <a href="index.jsp" type="button" class="btn-size btn btn-info text-white">Confirmar compra</a>
+                                <button type="submit" class="btn-size btn btn-info text-white">Confirmar compra</button>>
                             </div>
                         </div>
                     </div>
 
-                </form>
+              
 
             </div>
         </div>
-                                    
+      </form>                                
                                     
                 <div class="footer-dark">
         <footer>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-6 col-md-3 item">
-                        <h3>Categorías</h3>
-                        <ul>
-                            <li><a href="#">Hombres</a></li>
-                            <li><a href="#">Mujer</a></li>
-                            <li><a href="#">Kids</a></li>
-                        </ul>
-                    </div>
+                   
                     <div class="col-sm-6 col-md-3 item">
                         <h3>Acerca de</h3>
                         <ul>

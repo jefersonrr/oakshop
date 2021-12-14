@@ -4,6 +4,10 @@
     Author     : Acer
 --%>
 
+<%@page import="DTO.Categoria"%>
+<%@page import="DAO.CategoriaDAO"%>
+<%@page import="java.util.List"%>
+<%@page import="DTO.Tipo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,7 +15,9 @@
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                 + request.getServerPort() + path + "/";
-
+        CategoriaDAO cadao = new CategoriaDAO();
+        List<Categoria> ca = cadao.readActivo();
+        
 
     %>
     <base href="<%=basePath%>">
@@ -42,66 +48,65 @@
         <!-- MENÚ DE NAVEGACIÓN-->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
+
                 <a class="navbar-brand" href="index.jsp">
-                   <!-- <img src="#" alt="" width="140px" height="120px" /> -->
-                   Oakshop
+                    <!-- <img src="#" alt="" width="140px" height="120px" /> -->
+                    Oakshop
                 </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.jsp">INICIO</a>
+                            <a class="nav-link active" aria-current="page" href="#">INICIO</a>
                         </li>
+                        <% int k;
+                            if (ca.size() > 5) {
+                                k = 5;
+
+                            } else {
+                                k = ca.size();
+                            }
+                            for (int i = 0; i < k; i++) {%>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                HOMBRE
+                                <%=ca.get(i).getNombre()%>
                             </a>
+                            <%List<Tipo> tipos = ca.get(i).getTipoList();%>
+
+                            
+                            
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">POLOS</a></li>
-                                <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
-                                <li><a class="dropdown-item" href="#">JEANS</a></li>
-                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
+                                <%for (Tipo t : tipos) {%>
+
+
+                                <li><a class="dropdown-item" href="<%=basePath%>/PublicacionesCategoria.do?tipo=<%=t.getId() %>&cate=<%=ca.get(i).getId()%>"><%=t.getNombre()%> </a></li>
+
+
+                                <%};%>
+                            </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                MUJERES
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">BLUSAS</a></li>
-                                <li><a class="dropdown-item" href="#">VESTIDOS</a></li>
-                                <li><a class="dropdown-item" href="#">JEANS</a></li>
-                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                KIDS
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
-                                <li><a class="dropdown-item" href="#">BERMUDAS</a></li>
-                                <li><a class="dropdown-item" href="#">JEANS</a></li>
-                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                             </ul>
-                        </li>
+                        <%};%>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
                         </li>
                     </ul>
+
                     <template id="NoSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" href="<%=basePath%>/jsp/iniciarsesion.jsp">INICIAR SESIÓN</a>
+                                <a class="nav-link" href="<%=basePath%>iniciarSesion.do">INICIAR SESIÓN</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
                             </li>
                         </ul>
                     </template>
-                    <!-- USUARIO LOGUEADO -->
+                    <!-- Usuario logueado-->
                      <template id="SiSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item dropdown" style="list-style-type: none;">
@@ -116,12 +121,15 @@
                                     <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
                                 </ul>
                             </li>
+
                             <svg xmlns="http://www.w3.org/2000/svg" style="color:#fff" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                             </svg>
+
                         </ul>
                     </template>
+
                 </div>
             </div>
         </nav>

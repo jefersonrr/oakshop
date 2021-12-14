@@ -6,6 +6,7 @@
 package DTO;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,7 +39,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MetodoPago.findAll", query = "SELECT m FROM MetodoPago m")
     , @NamedQuery(name = "MetodoPago.findById", query = "SELECT m FROM MetodoPago m WHERE m.id = :id")
     , @NamedQuery(name = "MetodoPago.findByNombre", query = "SELECT m FROM MetodoPago m WHERE m.nombre = :nombre")
-    , @NamedQuery(name = "MetodoPago.findByNumero", query = "SELECT m FROM MetodoPago m WHERE m.numero = :numero")})
+    , @NamedQuery(name = "MetodoPago.findByNumero", query = "SELECT m FROM MetodoPago m WHERE m.numero = :numero")
+    , @NamedQuery(name = "MetodoPago.findByNombrePropietario", query = "SELECT m FROM MetodoPago m WHERE m.nombrePropietario = :nombrePropietario")
+    , @NamedQuery(name = "MetodoPago.findByFechaExpiracion", query = "SELECT m FROM MetodoPago m WHERE m.fechaExpiracion = :fechaExpiracion")
+    , @NamedQuery(name = "MetodoPago.findByCvc", query = "SELECT m FROM MetodoPago m WHERE m.cvc = :cvc")
+    , @NamedQuery(name = "MetodoPago.findByTipoIdentificacion", query = "SELECT m FROM MetodoPago m WHERE m.tipoIdentificacion = :tipoIdentificacion")
+    , @NamedQuery(name = "MetodoPago.findByIdentificacion", query = "SELECT m FROM MetodoPago m WHERE m.identificacion = :identificacion")})
 public class MetodoPago implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,11 +63,36 @@ public class MetodoPago implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "numero")
     private String numero;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMetodoPago")
-    private List<Compra> compraList;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "nombrePropietario")
+    private String nombrePropietario;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fechaExpiracion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaExpiracion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cvc")
+    private short cvc;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "tipoIdentificacion")
+    private String tipoIdentificacion;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "identificacion")
+    private String identificacion;
     @JoinColumn(name = "idCliente", referencedColumnName = "cedula")
     @ManyToOne(optional = false)
     private Persona idCliente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMetodoPago")
+    private List<Compra> compraList;
+   
 
     public MetodoPago() {
     }
@@ -68,10 +101,15 @@ public class MetodoPago implements Serializable {
         this.id = id;
     }
 
-    public MetodoPago(Integer id, String nombre, String numero) {
+    public MetodoPago(Integer id, String nombre, String numero, String nombrePropietario, Date fechaExpiracion, short cvc, String tipoIdentificacion, String identificacion) {
         this.id = id;
         this.nombre = nombre;
         this.numero = numero;
+        this.nombrePropietario = nombrePropietario;
+        this.fechaExpiracion = fechaExpiracion;
+        this.cvc = cvc;
+        this.tipoIdentificacion = tipoIdentificacion;
+        this.identificacion = identificacion;
     }
 
     public Integer getId() {
@@ -98,13 +136,44 @@ public class MetodoPago implements Serializable {
         this.numero = numero;
     }
 
-    @XmlTransient
-    public List<Compra> getCompraList() {
-        return compraList;
+    public String getNombrePropietario() {
+        return nombrePropietario;
     }
 
-    public void setCompraList(List<Compra> compraList) {
-        this.compraList = compraList;
+    public void setNombrePropietario(String nombrePropietario) {
+        this.nombrePropietario = nombrePropietario;
+    }
+
+    public Date getFechaExpiracion() {
+        return fechaExpiracion;
+    }
+
+    public void setFechaExpiracion(Date fechaExpiracion) {
+        this.fechaExpiracion = fechaExpiracion;
+    }
+
+    public short getCvc() {
+        return cvc;
+    }
+
+    public void setCvc(short cvc) {
+        this.cvc = cvc;
+    }
+
+    public String getTipoIdentificacion() {
+        return tipoIdentificacion;
+    }
+
+    public void setTipoIdentificacion(String tipoIdentificacion) {
+        this.tipoIdentificacion = tipoIdentificacion;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
     }
 
     public Persona getIdCliente() {
@@ -114,6 +183,15 @@ public class MetodoPago implements Serializable {
     public void setIdCliente(Persona idCliente) {
         this.idCliente = idCliente;
     }
+     @XmlTransient
+    public List<Compra> getCompraList() {
+        return compraList;
+    }
+
+    public void setCompraList(List<Compra> compraList) {
+        this.compraList = compraList;
+    }
+
 
     @Override
     public int hashCode() {

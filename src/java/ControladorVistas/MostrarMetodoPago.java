@@ -5,6 +5,7 @@
  */
 package ControladorVistas;
 
+import DAO.ProductoDAO;
 import Negocio.askshop;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jefersonrr
  */
-public class FiltrarPublicaciones extends HttpServlet {
+public class MostrarMetodoPago extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,37 +31,29 @@ public class FiltrarPublicaciones extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+       
+       // request.getSession().setAttribute("esCarrito", "si");
         askshop as = new askshop();
-        String[] colores = null;
-        String talla = "";
-        String precio = "";
-        int ca = Integer.parseInt(request.getParameter("cate"));
-        request.getSession().setAttribute("cate", ca);
-        if (request.getParameter("color") != null) {
-
-            colores = request.getParameterValues("color");
-            request.getSession().setAttribute("colores",colores );
-        }
-
-        if (request.getParameter("talla") != null) {
-
-            talla = request.getParameter("talla");
-             request.getSession().setAttribute("sTalla",talla );
-        }
-
-        if (request.getParameter("precio") != null) {
-
-            precio = request.getParameter("precio");
-            request.getSession().setAttribute("sPrecio",precio);
-        }
+        if(request.getSession().getAttribute("esCarrito")!=null){
         
-        int tipo = Integer.parseInt(request.getSession().getAttribute("tipoId").toString());
-        request.getSession().setAttribute("tipoId",tipo);
-        request.getSession().setAttribute("productos", as.filtrarPublicaciones(colores, talla, precio, tipo,ca));
-        request.getRequestDispatcher("./jsp/productos.jsp").forward(request, response);
+            request.getSession().setAttribute("subtotal",request.getParameter("subtotal"));
+            request.getSession().setAttribute("envio", request.getParameter("envio"));
+            request.getSession().setAttribute("total",request.getParameter("total"));
+            request.getSession().setAttribute("esCarrito", request.getSession().getAttribute("esCarrito"));
+        }else{
+        int idProducto = Integer.parseInt(request.getSession().getAttribute("idProducto").toString());
+        ProductoDAO pdao = new ProductoDAO();
+        Double costo =  pdao.readProducto(idProducto).getCosto();
+        request.getSession().setAttribute("subtotal",costo);
+        request.getSession().setAttribute("envio", "15000");
+        request.getSession().setAttribute("total", costo+15000);
+        request.getSession().setAttribute("idProducto", request.getSession().getAttribute("idProducto"));
         
-        
+        }
+        String [] metodos = as.metodoPago(request.getSession().getAttribute("usuario").toString());
+        request.getSession().setAttribute("metodoCredito",metodos[0]);
+        request.getSession().setAttribute("metodoDebito", metodos[1]);
+        request.getRequestDispatcher("./jsp/medioPagoSeleccion.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

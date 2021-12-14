@@ -8,6 +8,8 @@
         <filter-name>validarSesion.do</filter-name>
         <url-pattern>/jsp/index.jsp</url-pattern>
         <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
+        <url-pattern>/jsp/medioPagoSeleccion.jsp</url-pattern>
+        <url-pattern>/jsp/MostrarMetodoPago.do</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>IniciarSesion</servlet-name>
@@ -118,6 +120,22 @@
         <servlet-class>ControladorVistas.DesactivarProducto</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>MostrarMetodoPago</servlet-name>
+        <servlet-class>ControladorVistas.MostrarMetodoPago</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RedireccionDomicilioMetodo</servlet-name>
+        <servlet-class>ControladorVistas.RedireccionDomicilioMetodo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AgregarMetodoPago</servlet-name>
+        <servlet-class>ControladorVistas.AgregarMetodoPago</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistrarDirecccion</servlet-name>
+        <servlet-class>ControladorVistas.RegistrarDirecccion</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AgregarACarrito</servlet-name>
         <servlet-class>ControladorVistas.AgregarACarrito</servlet-class>
     </servlet>
@@ -128,6 +146,10 @@
     <servlet>
         <servlet-name>eliminarProductoCarrito</servlet-name>
         <servlet-class>ControladorVistas.eliminarProductoCarrito</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Facturar</servlet-name>
+        <servlet-class>ControladorVistas.Facturar</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
@@ -238,8 +260,24 @@
         <url-pattern>/DesactivarProducto.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>MostrarMetodoPago</servlet-name>
+        <url-pattern>/MostrarMetodoPago.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RedireccionDomicilioMetodo</servlet-name>
+        <url-pattern>/RedireccionDomicilioMetodo.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarMetodoPago</servlet-name>
+        <url-pattern>/AgregarMetodoPago.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AgregarACarrito</servlet-name>
         <url-pattern>/AgregarACarrito.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistrarDirecccion</servlet-name>
+        <url-pattern>/RegistrarDirecccion.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GuardarCarrito</servlet-name>
@@ -248,6 +286,10 @@
     <servlet-mapping>
         <servlet-name>eliminarProductoCarrito</servlet-name>
         <url-pattern>/eliminarProductoCarrito.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Facturar</servlet-name>
+        <url-pattern>/Facturar.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
