@@ -45,7 +45,7 @@
     </head>
     <body oncontextmenu='return false' class='snippet-body' onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
          <!--menú -->
-        <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+           <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
                 <a class="navbar-brand" href="index.jsp">
@@ -90,6 +90,8 @@
                             </ul>
                         </li>
                         <%};%>
+
+
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
                         </li>
@@ -98,7 +100,7 @@
                     <template id="NoSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" href="<%=basePath%>iniciarSesion.do">INICIAR SESIÓN</a>
+                                <a class="nav-link" href="<%=basePath%>/jsp/iniciarsesion.jsp">INICIAR SESIÓN</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
@@ -106,7 +108,7 @@
                         </ul>
                     </template>
                     <!-- Usuario logueado-->
-                     <template id="SiSesion">
+                    <template id="SiSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item dropdown" style="list-style-type: none;">
                                 <a  class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -114,8 +116,8 @@
                                 </a>
                                 <ul class="dropdown-menu text-small "aria-labelledby="dropdownUser2"  >
                                     <li><a class="dropdown-item" href="#" >Mi Cuenta</a></li>
-                                    <li><a class="dropdown-item" href="<%=basePath%>MisVehiculos.do" >Mis Vehiculos</a></li>
-                                    <li><a class="dropdown-item" href="<%=basePath%>MisServiciosUsu.do" >Mis Servicios</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>AgregarACarrito.do" >Carrito</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>MostrarCompras.do" >Mis Compras</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
                                 </ul>
@@ -138,6 +140,7 @@
             String productos = request.getSession().getAttribute("productos").toString();
             String tipoName = request.getSession().getAttribute("tipo").toString();
             String tallas = request.getSession().getAttribute("selectTalla").toString();
+            request.getSession().setAttribute("tipoId",request.getSession().getAttribute("tipoId").toString());
             String sTalla = "";
             String sPrecio = "";
             if (request.getSession().getAttribute("sTalla") != null) {

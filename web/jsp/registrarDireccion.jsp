@@ -3,13 +3,13 @@
     Created on : 5/12/2021, 02:15:52 AM
     Author     : Luis
 --%>
-<%@page import="DAO.PersonaDAO"%>
-<%@page import="DTO.Domicilio"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="DTO.Tipo"%>
+<%@page import="DTO.Ciudad"%>
+<%@page import="DTO.Departamento"%>
+<%@page import="DAO.DepartamentoDAO"%>
 <%@page import="DTO.Categoria"%>
-<%@page import="java.util.List"%>
 <%@page import="DAO.CategoriaDAO"%>
+<%@page import="DTO.Tipo"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,18 +17,18 @@
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                 + request.getServerPort() + path + "/";
+
         CategoriaDAO cadao = new CategoriaDAO();
         List<Categoria> ca = cadao.readActivo();
-         String subtotal = request.getSession().getAttribute("subtotal").toString();
+
+        String subtotal = request.getSession().getAttribute("subtotal").toString();
         String envio = request.getSession().getAttribute("envio").toString();
         String total = request.getSession().getAttribute("total").toString();
-          PersonaDAO per = new PersonaDAO();
-        List<Domicilio> domicilios = per.readPersona(request.getSession().getAttribute("usuario").toString()).getDomicilioList();
-        
-        
-         
-           String tarjeta =  request.getSession().getAttribute("tarjetaOculta").toString() ;
-            
+        DepartamentoDAO ddao = new DepartamentoDAO();
+        List<Departamento> departamentos = ddao.read();
+        String[][] array = new String[departamentos.size()][2];
+
+
     %>
     <base href="<%=basePath%>">
     <head>
@@ -47,9 +47,9 @@
         <link rel="stylesheet" href="<%=basePath%>css/footer.css"/>
     </head>
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
-        
+
         <!-- MENÚ DE NAVEGACIÓN-->
-        <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+          <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
                 <a class="navbar-brand" href="index.jsp">
@@ -121,7 +121,7 @@
                                 <ul class="dropdown-menu text-small "aria-labelledby="dropdownUser2"  >
                                     <li><a class="dropdown-item" href="#" >Mi Cuenta</a></li>
                                     <li><a class="dropdown-item" href="<%=basePath%>AgregarACarrito.do" >Carrito</a></li>
-                                    <li><a class="dropdown-item" href="<%=basePath%>/MostrarCompras.do" >Mis Compras</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>MostrarCompras.do" >Mis Compras</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
                                 </ul>
@@ -138,163 +138,201 @@
                 </div>
             </div>
         </nav>
-                                    
+
         <!-- CONTENIDO -->
-        <div class="row">
-            <div class="col start-title">
-                <div class="text-center start-text p-2">
-                    OakShop
-                </div>
-            </div>
-        </div>
-        <form action="<%=basePath%>/Facturar.do" method="post">
-        <div class="row m-10 mt-3">
-            <div class="row my-2">
-                <div class="col d-flex">
-                    <div>
-                        <img src="img/carrito.png" width="50" height="50"/>    
-                    </div>
-                    <div class="titulo-contenido mt-2 ms-5 d-flex">
-                        Revisa y confirma tu compra
+
+        <form action="<%=basePath%>./RegistrarDirecccion.do" method="post">
+            <div class="row">
+                <div class="col start-title">
+                    <div class="text-center start-text p-2">
+                        Askshop
                     </div>
                 </div>
             </div>
-       
-              
-            <div class="contenedor-inicial mt-5">
-                <div class="contenedor">
-                    <div class="w-100 texto-contenido bold">
-                        Detalles de la entrega
-                        <div class="d-flex justify-content-end">
-                            <a href="<%=basePath%>/jsp/registrarDireccion.jsp">Agregar nueva dirección</a>
-                        </div>
+            <div class="row m-10 mt-3">
+                <div class="row my-2">
+                    <div class="col d-flex">
                         <div>
-                            <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                              <h2 class="accordion-header " id="headingThree">
-                                <button class="accordion-button collapsed elemento-data texto-contenido" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                  Dirección del Usuario
-                                </button>
-                              </h2>
-                              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body elemento-data">
-                                  <% for(Domicilio d : domicilios){%>
-                                    <div class="form-check">
-                                        <input class="form-check-input" required value="<%=d.getId()%>" name="direccion" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                          <%=d.getDireccion() + "Barrio: " + d.getBarrio() %>
-                                        </label>
-                                    </div>
-                                   <%};%>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                            <img src="img/carrito.png" width="50" height="50"/>    
+                        </div>
+                        <div class="titulo-contenido mt-2 ms-5 d-flex">
+                            Registrar Direccion
                         </div>
                     </div>
-                    <div class="w-100 texto-contenido mt-4 bold">
-                        Detalles del pago
-                        <div>
-                            <ul class="nav elemento-data mt-4">
+                </div>
+                <div class="contenedor-inicial mt-5">
+                    <div class="contenedor">
+                        <div class="w-100">
+                            <ul class="nav rounded elemento-data texto-contenido">
                                 <li class="w-100">
                                     <div class="row">
-                                        <div class="col-9">
-                                            Tarjeta : ************ <%=tarjeta%>
-                                            <br>
-                                            No demores en pagar, solo podemos reservarte stock cuando el pago se acredite
+                                        <div class="col-2">
+
 
                                         </div>
-                                        <div class="col-3">
-                                            <a href="<%=basePath%>/medioPagoSeleccion.do" type="button" class="btn-content btn-size btn vertical-align-center">Modificar</a>
+                                        <div class="col-7">
+                                            <div class="my-3 bold">
+                                                Nueva Dirección 
+                                            </div>
+
+                                        </div>
+                                        <div class="col-3 align-items-center">
+                                            <a href="<%=basePath%>/jsp/medioPagoConfirmar.jsp"class="btn-content btn-size btn align-items-center">Modificar</a>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
-                            
-                            <ul class="nav elemento-data mt-4">
-                                <li class="w-100">
+
+                            <div class="container">
+
+                                <div class="container border p-5">
                                     <div class="row">
-                                        <div class="col-9">
-                                            Datos para tu factura
-                                            <br>
-                                            <%=request.getSession().getAttribute("nameUser")%> - CC <%=request.getSession().getAttribute("usuario")%>
+                                        <div class="col-8">
+                                            <input class="form-control form-control-lg border-bottom w-100" name="direccion" type="text" required placeholder="Direccion" aria-label="default input example">         
                                         </div>
-                                       
                                     </div>
-                                </li>
-                            </ul>
+                                    <div class="row my-2">
+                                        <div class="col-8">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="text" name="barrio" required placeholder="Barrio" aria-label="default input example">
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-2">
+                                        <div class="col-4">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="text" name="descripcion" placeholder="Descripcion" required   aria-label="default input example">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2 mb-5">
+                                        <div class="col-4">
+                                            <label class="texto-contenido bold">Departamento</label>
+                                            <select id="departamento" name="departamento" onchange="selectCiudad()" required class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
+                                                <option selected>Seleccione</option>
+
+                                                <%
+                                                    for (Departamento d : departamentos) {%>
+                                                <option   value="<%=d.getId()%>"><%=d.getNombre()%></option>
+
+                                                <%};%>
+                                            </select>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="texto-contenido bold">Ciudad</label>
+                                            <select id="ciudad"  required name="ciudad" class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
+
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="row mt-4 mod-pos btn-2">
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn-continue-size btn btn-info  text-white">Guardar</button>
+                            </div>
                         </div>
                     </div>
-                    
-                </div>                
-            </div>
-            <div class="contenedor-confirmar">
-             
+                </div>
+                <div class="contenedor-confirmar">
                     <div class="mt-5">
-                        <div class="titulo-compra mt-4">
+                        <div class="titulo-compra rounded mt-4">
                             <div class="text-center">
                                 Resumen Compra
                             </div>
                         </div>
                         <div class="border">
                             <div class="mx-3 mt-4">
-                                <label class="bold my-1">Subtotal $: </label>
+                                <label class="bold my-1">Subtotal: </label>
                                 <input class="form-control border text-center" type="number" name="subtotal"  value="<%=subtotal%>" readonly="false" aria-label="default input example">    
                             </div>
                             <div class="mx-3">
-                                <label class="bold my-1">Precio envio $: </label>
+                                <label class="bold my-1">Precio envio:</label>
                                 <input class="form-control border text-center" type="number" name="envio"  value="<%=envio%>" readonly="false" aria-label="default input example">
                             </div>
                             <div class="mx-3 mb-4">
-                                <label class="bold my-1">Total a pagar $:  </label>
+                                <label class="bold my-1">Total a pagar:  </label>
                                 <input class="form-control border text-center" type="number"name="total"  value="<%=total%>"readonly="false" aria-label="default input example">
                             </div>
                         </div>
+                    </div>
 
-                        <div class="row mt-4">
-                            <div class="col">
-                                <button type="submit" class="btn-size btn btn-info text-white">Confirmar compra</button>>
-                            </div>
+                </div>
+
+
+            </div>
+        </form>
+
+
+        <div class="footer-dark">
+            <footer>
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-sm-6 col-md-3 item">
+                            <h3>Acerca de</h3>
+                            <ul>
+                                <li><a href="#">Empresa</a></li>
+                                <li><a href="#">Equipo</a></li>
+                                <li><a href="#">Corporativo</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 item text">
+                            <h3>Oakshop Store</h3>
+                            <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
                         </div>
                     </div>
-
-              
-
-            </div>
+                    <div class="row">
+                        <div class="item social">
+                            <a href="#"><i class="icon ion-social-facebook"></i></a>
+                            <a href="#"><i class="icon ion-social-twitter"></i></a>
+                            <a href="#"><i class="icon ion-social-instagram"></i></a>
+                        </div>
+                    </div>
+                    <p class="copyright">Oakshop Store © 2021</p>
+                </div>
+            </footer>
         </div>
-      </form>                                
-                                    
-                <div class="footer-dark">
-        <footer>
-            <div class="container">
-                <div class="row">
-                   
-                    <div class="col-sm-6 col-md-3 item">
-                        <h3>Acerca de</h3>
-                        <ul>
-                            <li><a href="#">Empresa</a></li>
-                            <li><a href="#">Equipo</a></li>
-                            <li><a href="#">Corporativo</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 item text">
-                        <h3>Oakshop Store</h3>
-                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="item social">
-                        <a href="#"><i class="icon ion-social-facebook"></i></a>
-                        <a href="#"><i class="icon ion-social-twitter"></i></a>
-                        <a href="#"><i class="icon ion-social-instagram"></i></a>
-                    </div>
-                </div>
-                <p class="copyright">Oakshop Store © 2021</p>
-            </div>
-        </footer>
-    </div>
-         
+        <script>
 
+            function selectCiudad() {
+                var seletD = document.querySelector('#departamento');
+                var seletC = document.querySelector('#ciudad');
+                console.log(seletD);
+                console.log(seletD.value);
+                var idDepartamento = seletD.value;
+                var options =  '<option selected>Seleccione</option>\n';
+                var lista = [];
+
+                var i = 0;
+
+            <%  
+                for (Departamento d : departamentos) {
+
+                    for (Ciudad c : d.getCiudadList()) {%>
+
+                lista[i] = ["<%=d.getId()%>", "<%=c.getId()%>", "<%=c.getNombre()%>"];
+                i ++;
+            <%};%>
+            <%};%>
+                var j;
+                
+                for (j = 0; j < lista.length; j++) {
+                    
+                    if (lista[j][0] === idDepartamento) {
+                        options += '<option  value="' + lista[j][1] + '">' + lista[j][2] + '</option>\n';
+                       
+                    }
+
+
+                }
+              
+                seletC.innerHTML = options;
+            }
+        </script>
         <!-- JS de Bootstrap -->      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="./js/sesion.js"></script>

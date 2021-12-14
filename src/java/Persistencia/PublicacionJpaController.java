@@ -25,7 +25,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 public class PublicacionJpaController implements Serializable {
 

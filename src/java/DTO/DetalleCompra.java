@@ -8,65 +8,66 @@ package DTO;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Detalle_Compra")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DetalleCompra.findAll", query = "SELECT d FROM DetalleCompra d")
-    , @NamedQuery(name = "DetalleCompra.findByIdCompra", query = "SELECT d FROM DetalleCompra d WHERE d.idCompra = :idCompra")
-    , @NamedQuery(name = "DetalleCompra.findByCantidad", query = "SELECT d FROM DetalleCompra d WHERE d.cantidad = :cantidad")})
+    , @NamedQuery(name = "DetalleCompra.findByIdCompra", query = "SELECT d FROM DetalleCompra d WHERE d.detalleCompraPK.idCompra = :idCompra")
+    , @NamedQuery(name = "DetalleCompra.findByCantidad", query = "SELECT d FROM DetalleCompra d WHERE d.cantidad = :cantidad")
+    , @NamedQuery(name = "DetalleCompra.findByIdProducto", query = "SELECT d FROM DetalleCompra d WHERE d.detalleCompraPK.idProducto = :idProducto")})
 public class DetalleCompra implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idCompra")
-    private Integer idCompra;
+    @EmbeddedId
+    protected DetalleCompraPK detalleCompraPK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "cantidad")
     private int cantidad;
-    @JoinColumn(name = "idProducto", referencedColumnName = "id")
+    @JoinColumn(name = "idProducto", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Producto idProducto;
+    private Producto producto;
     @JoinColumn(name = "idCompra", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Compra compra;
 
     public DetalleCompra() {
     }
 
-    public DetalleCompra(Integer idCompra) {
-        this.idCompra = idCompra;
+    public DetalleCompra(DetalleCompraPK detalleCompraPK) {
+        this.detalleCompraPK = detalleCompraPK;
     }
 
-    public DetalleCompra(Integer idCompra, int cantidad) {
-        this.idCompra = idCompra;
+    public DetalleCompra(DetalleCompraPK detalleCompraPK, int cantidad) {
+        this.detalleCompraPK = detalleCompraPK;
         this.cantidad = cantidad;
     }
 
-    public Integer getIdCompra() {
-        return idCompra;
+    public DetalleCompra(int idCompra, int idProducto) {
+        this.detalleCompraPK = new DetalleCompraPK(idCompra, idProducto);
     }
 
-    public void setIdCompra(Integer idCompra) {
-        this.idCompra = idCompra;
+    public DetalleCompraPK getDetalleCompraPK() {
+        return detalleCompraPK;
+    }
+
+    public void setDetalleCompraPK(DetalleCompraPK detalleCompraPK) {
+        this.detalleCompraPK = detalleCompraPK;
     }
 
     public int getCantidad() {
@@ -77,12 +78,12 @@ public class DetalleCompra implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public Producto getIdProducto() {
-        return idProducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setIdProducto(Producto idProducto) {
-        this.idProducto = idProducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public Compra getCompra() {
@@ -96,7 +97,7 @@ public class DetalleCompra implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idCompra != null ? idCompra.hashCode() : 0);
+        hash += (detalleCompraPK != null ? detalleCompraPK.hashCode() : 0);
         return hash;
     }
 
@@ -107,7 +108,7 @@ public class DetalleCompra implements Serializable {
             return false;
         }
         DetalleCompra other = (DetalleCompra) object;
-        if ((this.idCompra == null && other.idCompra != null) || (this.idCompra != null && !this.idCompra.equals(other.idCompra))) {
+        if ((this.detalleCompraPK == null && other.detalleCompraPK != null) || (this.detalleCompraPK != null && !this.detalleCompraPK.equals(other.detalleCompraPK))) {
             return false;
         }
         return true;
@@ -115,7 +116,7 @@ public class DetalleCompra implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.DetalleCompra[ idCompra=" + idCompra + " ]";
+        return "DTO.DetalleCompra[ detalleCompraPK=" + detalleCompraPK + " ]";
     }
     
 }

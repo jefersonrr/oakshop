@@ -57,15 +57,7 @@
         <link rel="stylesheet" href="<%=basePath%>css/menuAdministrador.css" />
     </head>
     <body>
-        <div class="sidebar">
-            <div class="logo-details">
-                <i class="fas fa-tire icon"></i>
-                <!-- Espacio entre mensaje Bienvenido-->
-                <div class="logo_name">Bienvenido</div>
-                <i class="bx bx-menu" id="btn"></i>
-            </div>
-
-              <div class="sidebar">
+     <div class="sidebar">
             <div class="logo-details">
                 <i class="fas fa-tire icon"></i> 
                 <!-- Espacio entre mensaje Bienvenido-->
@@ -105,21 +97,7 @@
                         <span class="links_name">Categorias</span>
                     </a>
                     <span class="tooltip">Categorias</span>
-                </li>
-                   <li>
-                    <a href="#">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="links_name">Pedidos</span>
-                    </a>
-                    <span class="tooltip">Pedidos</span>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="links_name">Productos</span>
-                    </a>
-                    <span class="tooltip">Productos</span>
-                </li>
+                </li>  
                 <!-- <li>
                   <a href="#">
                     <i class="fas fa-chart-pie"></i>
@@ -134,7 +112,6 @@
                     </a>
                 </li>
             </ul>
-        </div>
         </div>
 
         <section class="home-section">

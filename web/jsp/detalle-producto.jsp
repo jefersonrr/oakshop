@@ -46,12 +46,13 @@
             <link rel="stylesheet" href="<%=basePath%>css/detalle-producto.css"/>
             <script>
                 const datos = <%= request.getSession().getAttribute("detalle_producto")%>;
+                let direccion;
             </script>
         </head>
         <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
 
             <!--menú -->
-        <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+            <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
                 <a class="navbar-brand" href="index.jsp">
@@ -81,7 +82,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <%=ca.get(i).getNombre()%>
                             </a>
-                            <%List<Tipo > tipos = ca.get(i).getTipoList();%>
+                            <%List<Tipo> tipos = ca.get(i).getTipoList();%>
 
                             
                             
@@ -96,48 +97,50 @@
                             </ul>
                         </li>
                         <%};%>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
+                        </li>
+                    </ul>
+
+                    <template id="NoSesion">
+                        <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
+                                <a class="nav-link" href="<%=basePath%>/jsp/iniciarsesion.jsp">INICIAR SESIÓN</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
                             </li>
                         </ul>
+                    </template>
+                    <!-- Usuario logueado-->
+                    <template id="SiSesion">
+                        <ul class="navbar-nav ml-auto m-4">
+                            <li class="nav-item dropdown" style="list-style-type: none;">
+                                <a  class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                    <%=request.getSession().getAttribute("nameUser")%>
+                                </a>
+                                <ul class="dropdown-menu text-small "aria-labelledby="dropdownUser2"  >
+                                    <li><a class="dropdown-item" href="#" >Mi Cuenta</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>AgregarACarrito.do" >Carrito</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>MostrarCompras.do" >Mis Compras</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
+                                </ul>
+                            </li>
 
-                        <template id="NoSesion">
-                            <ul class="navbar-nav ml-auto m-4">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<%=basePath%>iniciarSesion.do">INICIAR SESIÓN</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
-                                </li>
-                            </ul>
-                        </template>
-                        <!-- Usuario logueado-->
-                        <template id="SiSesion">
-                            <ul class="navbar-nav ml-auto m-4">
-                                <li class="nav-item dropdown" style="list-style-type: none;">
-                                    <a  class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                                        <%=request.getSession().getAttribute("nameUser")%>
-                                    </a>
-                                    <ul class="dropdown-menu text-small "aria-labelledby="dropdownUser2"  >
-                                        <li><a class="dropdown-item" href="#" >Mi Cuenta</a></li>
-                                        <li><a class="dropdown-item" href="<%=basePath%>MisVehiculos.do" >Mis Vehiculos</a></li>
-                                        <li><a class="dropdown-item" href="<%=basePath%>MisServiciosUsu.do" >Mis Servicios</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
-                                    </ul>
-                                </li>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="color:#fff" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
 
-                                <svg xmlns="http://www.w3.org/2000/svg" style="color:#fff" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg>
+                        </ul>
+                    </template>
 
-                            </ul>
-                        </template>
-
-                    </div>
                 </div>
-            </nav>
+            </div>
+        </nav>
             <!--Fin menú -->      
             <main>
                 <div class = "card-wrapper">
@@ -179,14 +182,15 @@
                                     <h4>Cantidad</h4>
 
                                     <div class = "purchase-info">
-                                        <input type = "number" id="cantidad_dato" name="cantidad" min = "0" placeholder="0" onchange="agregarCantidadItem()">
+                                        <input type = "number" id="cantidad_dato" name="cantidad" min = "1" value="1" onchange="agregarCantidadItem()">
                                     </div>
 
                                     <div class="purchase-info2 d-flex justify-content-center">
                                         <button type = "submit" class = "btn" id="carrito">
                                             Añadir al carrito <i class = "fas fa-shopping-cart"></i>
                                         </button>
-                                        <a  href="<%=basePath%>./jsp/medioPagoSeleccion.jsp" type = "submit" class = "btn" id="submit">Comprar</a>
+                                        <input type="hidden" id="productoId" value=".">
+                                        <a  id="idProducto" href="#" type = "submit" class = "btn" id="submit">Comprar</a>
                                     </div>
 
                                 </div>

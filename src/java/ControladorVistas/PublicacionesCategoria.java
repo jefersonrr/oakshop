@@ -39,7 +39,9 @@ public class PublicacionesCategoria extends HttpServlet {
         request.getSession().setAttribute("cate",ca);
         request.getSession().setAttribute("tipoF",tipo);
 
+        request.getSession().setAttribute("tipoId",Integer.parseInt(request.getParameter("tipo")));
         request.getSession().setAttribute("tipo", tdao.readTipo(tipo).getNombre());
+        
         request.getSession().setAttribute("selectTalla", as.tallasTipo(tipo));
         request.getSession().setAttribute("productos", as.publicacionesTipoCliente(tipo,ca));
         request.getRequestDispatcher("./jsp/productos.jsp").forward(request, response);

@@ -171,6 +171,7 @@ public class PublicacionDAO {
                 } else if (pro.getCosto() >= inicio && pro.getCosto() <= limite) {
 
                     rta.add(p);
+                    break;
 
                 }
 

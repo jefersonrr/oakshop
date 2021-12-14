@@ -57,72 +57,62 @@
      <link rel="stylesheet" href="<%=basePath%>css/menuAdministrador.css" />
   </head>
   <body>
-    <div class="sidebar">
-      <div class="logo-details">
-        <i class="fas fa-tire icon"></i>
-        <!-- Espacio entre mensaje Bienvenido-->
-        <div class="logo_name">Bienvenido</div>
-        <i class="bx bx-menu" id="btn"></i>
-      </div>
-
-      <ul class="nav-list">
-        <li>
-          <div class="image-admin">
-            <div class="container-img">
-              <img
-                src="https://i.postimg.cc/50xpzL3N/user-admin.png"
-                alt="Administrador"
-              />
+     <div class="sidebar">
+            <div class="logo-details">
+                <i class="fas fa-tire icon"></i> 
+                <!-- Espacio entre mensaje Bienvenido-->
+                <div class="logo_name">Bienvenido</div>
+                <i class='bx bx-menu' id="btn" ></i>
             </div>
-            <div class="container-name">
-              <p><span class="links_name">n</span></p>
-            </div>
-          </div>
-        </li>
 
-        <li>
-          <a href="CitasAdmin.do">
-            <i class="far fa-calendar-alt"></i>
-            <span class="links_name">Publicaciones</span>
-          </a>
-          <span class="tooltip">Publicaciones</span>
-        </li>
-        <li>
-          <a href="/jsp/adminClientes.jsp">
-            <i class="icon fas fa-user"></i>
-            <span class="links_name">Clientes</span>
-          </a>
-          <span class="tooltip">Clientes</span>
-        </li>
-        <li>
-          <a href="MostrarServiciosAdmin.do">
-            <i class="fas fa-user-cog"></i>
-            <span class="links_name">Servicios</span>
-          </a>
-          <span class="tooltip">Servicios</span>
-        </li>
-        <li>
-          <a href="MostrarProductosAdmin.do">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="links_name">Productos</span>
-          </a>
-          <span class="tooltip">Productos</span>
-        </li>
-        <!-- <li>
+            <ul class="nav-list">
+                <li>
+                    <div class="image-admin">
+                        <div class="container-img">
+                            <img src="<%=basePath%>img/user-admin.png" alt="Administrador">
+                        </div>
+                        <div class="container-name">
+                            <p><span class="links_name"><%=request.getSession().getAttribute("nameUser")%></span></p>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="<%=basePath%>jsp/adminPublicaciones.jsp">
+                        <i class="far fa-calendar-alt"></i>
+                        <span class="links_name">Publicaciones</span>
+                    </a>
+                    <span class="tooltip">Publicaciones</span>
+                </li>
+                <li>
+                    <a href="<%=basePath%>./jsp/adminClientes.jsp">
+                        <i class="icon fas fa-user"></i>
+                        <span class="links_name">Clientes</span>
+                    </a>
+                    <span class="tooltip">Clientes</span>
+                </li>
+                <li>
+                    <a href="<%=basePath%>MostrarCategorias.do">
+                        <i class="fas fa-user-cog"></i>
+                        <span class="links_name">Categorias</span>
+                    </a>
+                    <span class="tooltip">Categorias</span>
+                </li>  
+                <!-- <li>
                   <a href="#">
                     <i class="fas fa-chart-pie"></i>
                     <span class="links_name">Reportes</span>
                   </a>
                   <span class="tooltip">Reportes</span>
                 </li> -->
-        <li class="profile">
-          <a href="cerrarSesion.do">
-            <i class="bx bx-log-out"></i>
-            <span class="links_name">Salir</span>
-          </a>
-        </li>
-      </ul>
-    </div>
+                <li class="profile">
+                    <a href="<%=basePath%>cerrarSesion.do">
+                        <i class='bx bx-log-out'></i>
+                        <span class="links_name">Salir</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
       <section class="home-section">
             <div class="title">            
                 <div class="titulo">
