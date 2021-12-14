@@ -138,6 +138,7 @@
             String productos = request.getSession().getAttribute("productos").toString();
             String tipoName = request.getSession().getAttribute("tipo").toString();
             String tallas = request.getSession().getAttribute("selectTalla").toString();
+            request.getSession().setAttribute("tipoId",request.getSession().getAttribute("tipoId").toString());
             String sTalla = "";
             String sPrecio = "";
             if (request.getSession().getAttribute("sTalla") != null) {

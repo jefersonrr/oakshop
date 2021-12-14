@@ -229,7 +229,7 @@
                             </div>
                             
                             <div class="d-flex justify-content-center">
-                                <a type="button" href="<%=basePath%>./jsp/medioPagoSeleccion.jsp" class="btn-continue-size btn btn-info text-white">Continuar</a>
+                                <a type="button" href="<%=basePath%>/MostrarMetodoPago.do" class="btn-continue-size btn btn-info text-white">Continuar</a>
                             </div>
                         </div>
                     </div>

@@ -3,6 +3,10 @@
     Created on : 5/12/2021, 02:15:52 AM
     Author     : Luis
 --%>
+<%@page import="DTO.Categoria"%>
+<%@page import="DAO.CategoriaDAO"%>
+<%@page import="DTO.Tipo"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,6 +14,24 @@
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":"
                 + request.getServerPort() + path + "/";
+        String tipo = request.getSession().getAttribute("tipoTarjeta").toString();
+        if (tipo.equals("Crédito")) {
+            request.getSession().setAttribute("tipoT", "CREDITO");
+        } else {
+            request.getSession().setAttribute("tipoT", "DEBITO");
+        }
+        CategoriaDAO cadao = new CategoriaDAO();
+        List<Categoria> ca = cadao.readActivo();
+
+        String subtotal = request.getSession().getAttribute("subtotal").toString();
+        String envio = request.getSession().getAttribute("envio").toString();
+        String total = request.getSession().getAttribute("total").toString();
+
+        if (request.getSession().getAttribute("esCarrito") != null) {
+            request.getSession().setAttribute("esCarrito", request.getSession().getAttribute("esCarrito"));
+        } else {
+            request.getSession().setAttribute("idProdcuto", request.getSession().getAttribute("idProducto"));
+        }
     %>
     <base href="<%=basePath%>">
     <head>
@@ -32,66 +54,65 @@
         <!-- MENÚ DE NAVEGACIÓN-->
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
+
                 <a class="navbar-brand" href="index.jsp">
                     <!-- <img src="#" alt="" width="140px" height="120px" /> -->
                     Oakshop
                 </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.jsp">INICIO</a>
+                            <a class="nav-link active" aria-current="page" href="#">INICIO</a>
                         </li>
+                        <% int k;
+                            if (ca.size() > 5) {
+                                k = 5;
+
+                            } else {
+                                k = ca.size();
+                            }
+                            for (int i = 0; i < k; i++) {%>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                HOMBRE
+                                <%=ca.get(i).getNombre()%>
                             </a>
+                            <%List<Tipo> tipos = ca.get(i).getTipoList();%>
+
+
+
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">POLOS</a></li>
-                                <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
-                                <li><a class="dropdown-item" href="#">JEANS</a></li>
-                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
+                                <%for (Tipo t : tipos) {%>
+
+
+                                <li><a class="dropdown-item" href="<%=basePath%>/PublicacionesCategoria.do?tipo=<%=t.getId()%>&cate=<%=ca.get(i).getId()%>"><%=t.getNombre()%> </a></li>
+
+
+                                <%};%>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                MUJERES
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">BLUSAS</a></li>
-                                <li><a class="dropdown-item" href="#">VESTIDOS</a></li>
-                                <li><a class="dropdown-item" href="#">JEANS</a></li>
-                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                KIDS
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">CAMISETAS</a></li>
-                                <li><a class="dropdown-item" href="#">BERMUDAS</a></li>
-                                <li><a class="dropdown-item" href="#">JEANS</a></li>
-                                <li><a class="dropdown-item" href="#">CALZADO</a></li>
-                            </ul>
-                        </li>
+                        <%};%>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
                         </li>
                     </ul>
+
                     <template id="NoSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" href="<%=basePath%>/jsp/iniciarsesion.jsp">INICIAR SESIÓN</a>
+                                <a class="nav-link" href="<%=basePath%>iniciarSesion.do">INICIAR SESIÓN</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
                             </li>
                         </ul>
                     </template>
-                    <!-- USUARIO LOGUEADO -->
+                    <!-- Usuario logueado-->
                     <template id="SiSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item dropdown" style="list-style-type: none;">
@@ -106,23 +127,26 @@
                                     <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
                                 </ul>
                             </li>
+
                             <svg xmlns="http://www.w3.org/2000/svg" style="color:#fff" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                             </svg>
+
                         </ul>
                     </template>
+
                 </div>
             </div>
-        </nav>
+        </nav> 
 
         <!-- CONTENIDO -->
 
-        <form action="" method="post">
+        <form action="<%=basePath%>/AgregarMetodoPago.do" method="post">
             <div class="row">
                 <div class="col start-title">
                     <div class="text-center start-text p-2">
-                        Nombre de tienda
+                        Askshop
                     </div>
                 </div>
             </div>
@@ -151,12 +175,12 @@
                                         </div>
                                         <div class="col-7">
                                             <div class="my-3 bold">
-                                                Tarjeta de Crédito    
+                                                Tarjeta de <%=tipo%>    
                                             </div>
 
                                         </div>
                                         <div class="col-3 align-items-center">
-                                            <button type="button" class="btn-content btn-size btn align-items-center">Modificar</button>
+                                            <a href="<%=basePath%>/MostrarMetodoPago.do"class="btn-content btn-size btn align-items-center">Modificar</a>
                                         </div>
                                     </div>
                                 </li>
@@ -169,36 +193,35 @@
                                 <div class="container border p-5">
                                     <div class="row">
                                         <div class="col-8">
-                                            <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Número de tarjeta" aria-label="default input example">         
+                                            <input class="form-control form-control-lg border-bottom w-100" name="numero" type="number" required placeholder="Número de tarjeta" aria-label="default input example">         
                                         </div>
                                     </div>
                                     <div class="row my-2">
                                         <div class="col-8">
-                                            <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Nombre y Apellido" aria-label="default input example">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="text" name="nombre" required placeholder="Nombre y Apellido" aria-label="default input example">
                                         </div>
                                     </div>
 
                                     <div class="row my-2">
                                         <div class="col-4">
-                                            <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Fecha de Expiración" aria-label="default input example">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="date" name="fechaExpiracion" required onclick="limitarFecha()" id="fechaActual" placeholder="Fecha de Expiración" aria-label="default input example">
                                         </div>
                                         <div class="col-4">
-                                            <input class="form-control form-control-lg border-bottom w-100" type="text" placeholder="Codigo de Seguridad" aria-label="default input example">
+                                            <input class="form-control form-control-lg border-bottom w-100" type="number" min="0"  name="cvc" required placeholder="Codigo de Seguridad" aria-label="default input example">
                                         </div>
                                     </div>
                                     <div class="row mt-2 mb-5">
                                         <div class="col-4">
                                             <label class="texto-contenido bold">Tipo</label>
-                                            <select class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
-                                                <option selected>CC</option>
-                                                <option value="1">TI</option>
-                                                <option value="2">---</option>
-                                                <option value="3">---</option>
+                                            <select name="tipo" class="mt-2 form-select border-0 border-bottom text-start" aria-label="Default select example">
+                                                <option selected value="CC">CC</option>
+                                                <option value="TI">TI</option>
+
                                             </select>
                                         </div>
                                         <div class="col-4">
                                             <label></label>
-                                            <input class="form-control form-control-lg border-bottom w-100" type="number" placeholder="Número" aria-label="default input example">
+                                            <input class="form-control form-control-lg border-bottom w-100"  name="identificacion" type="number" placeholder="Número" aria-label="default input example">
                                         </div>
                                     </div>
                                 </div>
@@ -209,7 +232,7 @@
                     <div class="row mt-4 mod-pos btn-2">
                         <div class="col">
                             <div class="d-flex justify-content-end">
-                                <a href="<%=basePath%>./jsp/medioPagoConfirmar.jsp"type="button" class="btn-continue-size btn btn-info  text-white">Continuar</a>
+                                <button type="submit" class="btn-continue-size btn btn-info  text-white">Continuar</button>
                             </div>
                         </div>
                     </div>
@@ -223,30 +246,20 @@
                         </div>
                         <div class="border">
                             <div class="mx-3 mt-4">
-                                <label class="bold my-1">Subtotal:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">    
+                                <label class="bold my-1">Subtotal: </label>
+                                <input class="form-control border text-center" type="number" name="subtotal"  value="<%=subtotal%>" readonly="false" aria-label="default input example">    
                             </div>
                             <div class="mx-3">
                                 <label class="bold my-1">Precio envio:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">
-                            </div>
-                            <div class="mx-3">
-                                <label class="bold my-1">Descuento:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">
+                                <input class="form-control border text-center" type="number" name="envio"  value="<%=envio%>" readonly="false" aria-label="default input example">
                             </div>
                             <div class="mx-3 mb-4">
-                                <label class="bold my-1">Total a pagar:</label>
-                                <input class="form-control border text-center" type="number" placeholder="$0.0" aria-label="default input example">
+                                <label class="bold my-1">Total a pagar:  </label>
+                                <input class="form-control border text-center" type="number"name="total"  value="<%=total%>"readonly="false" aria-label="default input example">
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-4 mod-pos btn-1">
-                        <div class="col">
-                            <div class="d-flex justify-content-end">
-                                <a href="<%=basePath%>./jsp/medioPagoConfirmar.jsp"type="button" class="btn-continue-size btn btn-info  text-white">Continuar</a>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
 
@@ -258,14 +271,7 @@
             <footer>
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-6 col-md-3 item">
-                            <h3>Categorías</h3>
-                            <ul>
-                                <li><a href="#">Hombres</a></li>
-                                <li><a href="#">Mujer</a></li>
-                                <li><a href="#">Kids</a></li>
-                            </ul>
-                        </div>
+
                         <div class="col-sm-6 col-md-3 item">
                             <h3>Acerca de</h3>
                             <ul>
@@ -290,7 +296,18 @@
                 </div>
             </footer>
         </div>
+        <script>
+                                    
 
+                                function    limitarFecha() {
+
+                                    inputFecha = document.querySelector('#fechaActual');
+                                    var utc = new Date().toJSON().slice(0, 10);
+                                    console.log(utc);
+                                    inputFecha.setAttribute("min", utc);
+
+                                }
+        </script>
         <!-- JS de Bootstrap -->      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="./js/sesion.js"></script>

@@ -87,6 +87,8 @@ public class Persona implements Serializable {
     @JoinColumn(name = "idRol", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Rol idRol;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
+    private List<MetodoPago> metodoPagoList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
     private Carrito carrito;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
@@ -185,7 +187,16 @@ public class Persona implements Serializable {
         this.idRol = idRol;
     }
 
-    public Carrito getCarrito() {
+    @XmlTransient
+    public List<MetodoPago> getMetodoPagoList() {
+        return metodoPagoList;
+    }
+
+    public void setMetodoPagoList(List<MetodoPago> metodoPagoList) {
+        this.metodoPagoList = metodoPagoList;
+    }
+
+     public Carrito getCarrito() {
         return carrito;
     }
 
@@ -218,7 +229,6 @@ public class Persona implements Serializable {
     public void setCompraList(List<Compra> compraList) {
         this.compraList = compraList;
     }
-
     @Override
     public int hashCode() {
         int hash = 0;
