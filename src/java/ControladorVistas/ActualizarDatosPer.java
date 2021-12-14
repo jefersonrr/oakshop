@@ -5,7 +5,6 @@
  */
 package ControladorVistas;
 
-import DAO.CarritoDAO;
 import Negocio.askshop;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Cristian
  */
-public class AgregarACarrito extends HttpServlet {
+public class ActualizarDatosPer extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,17 +32,16 @@ public class AgregarACarrito extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        String nombre = request.getParameter("nombreEd");
+        String apellido = request.getParameter("apellidoEd");
+        String cedula = request.getSession().getAttribute("usuario").toString();
+        String telefono = request.getParameter("telefonoEd");
+        String correo = request.getParameter("correoEd");
+        String direccion = request.getParameter("direccionEd");
+        String pass = request.getParameter("passEd");
         askshop a = new askshop();
-        
-        String talla = request.getParameter("tallas");
-        String colorId = request.getParameter("color");
-        String cantidad = request.getParameter("cantidad");
-        String id_person = request.getSession().getAttribute("usuario").toString();
-        String id_p = request.getSession().getAttribute("id_p").toString();
-        
-        String carro = a.anadirAcarrito(id_person,Integer.parseInt(talla),Integer.parseInt(colorId),Integer.parseInt(cantidad),Integer.parseInt(id_p));
-        request.getSession().setAttribute("carro", carro);
-        request.getRequestDispatcher("jsp/carrito.jsp").forward(request, response);
+        a.actualizarPersona(nombre,apellido,cedula,telefono,correo,direccion,pass);
+        request.getRequestDispatcher("EditarPerfil.do").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

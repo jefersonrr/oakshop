@@ -5,7 +5,6 @@
  */
 package ControladorVistas;
 
-import DAO.CarritoDAO;
 import Negocio.askshop;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Cristian
  */
-public class AgregarACarrito extends HttpServlet {
+public class AgregarDomicilio extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,18 +31,15 @@ public class AgregarACarrito extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        String idDom = request.getParameter("idDomi");
+        String d = request.getSession().getAttribute("usuario").toString();
+        String departamento = request.getParameter("departamentoEd");
+        String ciudad = request.getParameter("ciudadEd");
+        String direccion = request.getParameter("direccionEd");
         askshop a = new askshop();
-        
-        String talla = request.getParameter("tallas");
-        String colorId = request.getParameter("color");
-        String cantidad = request.getParameter("cantidad");
-        String id_person = request.getSession().getAttribute("usuario").toString();
-        String id_p = request.getSession().getAttribute("id_p").toString();
-        
-        String carro = a.anadirAcarrito(id_person,Integer.parseInt(talla),Integer.parseInt(colorId),Integer.parseInt(cantidad),Integer.parseInt(id_p));
-        request.getSession().setAttribute("carro", carro);
-        request.getRequestDispatcher("jsp/carrito.jsp").forward(request, response);
+        request.getSession().removeAttribute("idDomi");
+        a.agregarDomicilio(d,idDom,departamento,ciudad,direccion);
+        request.getRequestDispatcher("EditarPerfil.do").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

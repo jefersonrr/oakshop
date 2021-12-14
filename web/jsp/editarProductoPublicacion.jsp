@@ -633,8 +633,7 @@
                 modalBodyInput[2].value = datos[3].innerHTML; //email
                 modalBodyInput[3].value = datos[2].innerHTML; //celular
                 modalBodyInput[4].value = datos[4].innerHTML; //direccion
-                modalBodyInput[5].value =
-                        e.relatedTarget.getAttribute("data-bs-whatever"); //clave
+                modalBodyInput[5].value = e.relatedTarget.getAttribute("data-bs-whatever"); //clave
             });
         </script>
     </body>
