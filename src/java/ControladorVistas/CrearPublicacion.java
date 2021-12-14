@@ -41,10 +41,10 @@ public class CrearPublicacion extends HttpServlet {
         String imgs[] = request.getParameter("imgUrls").split(",");
         String colores[] = request.getParameter("colores").split(",");
         String cantidades[] = request.getParameter("cantidades").split(",");
-        String pub = request.getSession().getAttribute("editar").toString();
-        System.out.println("este es publicsacion        "+pub);
+      
+
         //publicacion
-        if(pub==null){
+        if(request.getSession().getAttribute("editar")==null){
             String nombre = request.getSession().getAttribute("nombre").toString();
             String marca = request.getSession().getAttribute("marca").toString();
             String categoria = request.getSession().getAttribute("categoria").toString();
@@ -55,6 +55,7 @@ public class CrearPublicacion extends HttpServlet {
             request.getRequestDispatcher("jsp/adminPublicaciones.jsp").forward(request, response);
         }else{
         
+            String pub = request.getSession().getAttribute("editar").toString();
             a.agregarProductosPublicacion(referencias,costos,descuentos,tallas,imgs,colores,cantidades,pub);
             request.getRequestDispatcher("jsp/editarPub.jsp").forward(request, response);
         }

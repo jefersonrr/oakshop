@@ -150,7 +150,7 @@ public class askshop {
         PublicacionDAO p = new PublicacionDAO();
         Date fecha = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         int id = hashPublicacion(fecha);
-        Publicacion pu = new Publicacion(id, marca, nombre, fecha, descripcion, null);
+        Publicacion pu = new Publicacion(id, marca, nombre, fecha, descripcion, "ACTIVO");
 
         CategoriaDAO ca = new CategoriaDAO();
         TipoDAO ti = new TipoDAO();
