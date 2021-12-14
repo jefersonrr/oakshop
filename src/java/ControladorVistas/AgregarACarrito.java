@@ -35,7 +35,14 @@ public class AgregarACarrito extends HttpServlet {
         if(request.getSession().getAttribute("usuario")==null){
             request.getRequestDispatcher("./jsp/iniciarsesion.jsp").forward(request, response);
         }
-        askshop a = new askshop();
+        
+         askshop a = new askshop();
+        if(request.getParameter("tallas")==null){
+            
+          request.getSession().setAttribute("carro", a.generarCarro(request.getSession().getAttribute("usuario").toString()) );
+        request.getRequestDispatcher("jsp/carrito.jsp").forward(request, response);
+        }
+       
         
         String talla = request.getParameter("tallas");
         String colorId = request.getParameter("color");

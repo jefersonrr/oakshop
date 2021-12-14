@@ -20,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Compra")
@@ -57,8 +56,8 @@ public class Compra implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "compra")
-    private DetalleCompra detalleCompra;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compra")
+    private List<DetalleCompra> detalleCompraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCompra")
     private List<Envio> envioList;
     @JoinColumn(name = "idCliente", referencedColumnName = "cedula")
@@ -105,12 +104,13 @@ public class Compra implements Serializable {
         this.fecha = fecha;
     }
 
-    public DetalleCompra getDetalleCompra() {
-        return detalleCompra;
+    @XmlTransient
+    public List<DetalleCompra> getDetalleCompraList() {
+        return detalleCompraList;
     }
 
-    public void setDetalleCompra(DetalleCompra detalleCompra) {
-        this.detalleCompra = detalleCompra;
+    public void setDetalleCompraList(List<DetalleCompra> detalleCompraList) {
+        this.detalleCompraList = detalleCompraList;
     }
 
     @XmlTransient

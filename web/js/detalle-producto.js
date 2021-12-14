@@ -40,18 +40,21 @@ function validateAll(){
     talla.value = talla_ref.talla_id;
     const color = document.querySelector('#color');
     color.value = talla_ref.color_id;
+    
     document.getElementById("nombre_producto").innerHTML = talla_ref.referencia_producto;
+    document.getElementById("productoId").value = talla_ref.producto_id;
+    document.getElementById("idProducto").href = "./MostrarMetodoPago.do?idProducto="+  talla_ref.producto_id;
     document.getElementById("precio_habitual").innerHTML = talla_ref.precio_habitual;
     document.getElementById("disponibles").innerHTML = talla_ref.cantidad;
     document.getElementById("descuento").innerHTML = talla_ref.precio_descuento+" ("+talla_ref.descuento+"%)";
     if(talla_ref.cantidad == 0){
         document.getElementById("cantidad_dato").disabled = true;
-        document.getElementById("submit").disabled = true;
+        document.getElementById("idProducto").disabled = true;
         document.getElementById("carrito").disabled = true;
         
     }else{
         document.getElementById("cantidad_dato").disabled = false;
-        document.getElementById("submit").disabled = false;
+        document.getElementById("idProducto").disabled = false;
         document.getElementById("carrito").disabled = false;
     }
     return talla_ref;

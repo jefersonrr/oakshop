@@ -6,10 +6,20 @@
     </filter>
     <filter-mapping>
         <filter-name>validarSesion.do</filter-name>
-        <url-pattern>/jsp/index.jsp</url-pattern>
         <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
         <url-pattern>/jsp/medioPagoSeleccion.jsp</url-pattern>
-        <url-pattern>/jsp/MostrarMetodoPago.do</url-pattern>
+        <url-pattern>/MostrarMetodoPago.do</url-pattern>
+         <url-pattern>/AgregarMetodoPago.do</url-pattern>
+         <url-pattern>/Facturar.do</url-pattern>
+         <url-pattern>/MostrarCompras.do</url-pattern>
+         <url-pattern>/RedireccionDomicilioMetodo.do</url-pattern>
+         <url-pattern>/RegistrarDireccion.do</url-pattern>
+         <url-pattern>/jsp/carrito.jsp</url-pattern>
+         <url-pattern>/jsp/comprasUsu.jsp</url-pattern>
+          <url-pattern>/jsp/medioPagoCofirmar.jsp</url-pattern>
+          <url-pattern>/jsp/medioPagoData.jsp</url-pattern>
+          <url-pattern>/jsp/medioPagoSeleccion.jsp</url-pattern>
+          <url-pattern>/jsp/registrarDireccion.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>IniciarSesion</servlet-name>
@@ -151,6 +161,10 @@
         <servlet-name>Facturar</servlet-name>
         <servlet-class>ControladorVistas.Facturar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MostrarCompras</servlet-name>
+        <servlet-class>ControladorVistas.MostrarCompras</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>cerrarSesion</servlet-name>
         <url-pattern>/cerrarSesion.do</url-pattern>
@@ -290,6 +304,10 @@
     <servlet-mapping>
         <servlet-name>Facturar</servlet-name>
         <url-pattern>/Facturar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MostrarCompras</servlet-name>
+        <url-pattern>/MostrarCompras.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
