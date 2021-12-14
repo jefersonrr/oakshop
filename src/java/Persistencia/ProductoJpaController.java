@@ -26,7 +26,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 public class ProductoJpaController implements Serializable {
 
@@ -70,7 +70,7 @@ public class ProductoJpaController implements Serializable {
             }
             List<DetalleCompra> attachedDetalleCompraList = new ArrayList<DetalleCompra>();
             for (DetalleCompra detalleCompraListDetalleCompraToAttach : producto.getDetalleCompraList()) {
-                detalleCompraListDetalleCompraToAttach = em.getReference(detalleCompraListDetalleCompraToAttach.getClass(), detalleCompraListDetalleCompraToAttach.getIdCompra());
+                detalleCompraListDetalleCompraToAttach = em.getReference(detalleCompraListDetalleCompraToAttach.getClass(), detalleCompraListDetalleCompraToAttach.getDetalleCompraPK());
                 attachedDetalleCompraList.add(detalleCompraListDetalleCompraToAttach);
             }
             producto.setDetalleCompraList(attachedDetalleCompraList);
@@ -100,12 +100,12 @@ public class ProductoJpaController implements Serializable {
                 idTalla = em.merge(idTalla);
             }
             for (DetalleCompra detalleCompraListDetalleCompra : producto.getDetalleCompraList()) {
-                Producto oldIdProductoOfDetalleCompraListDetalleCompra = detalleCompraListDetalleCompra.getIdProducto();
-                detalleCompraListDetalleCompra.setIdProducto(producto);
+                Producto oldProductoOfDetalleCompraListDetalleCompra = detalleCompraListDetalleCompra.getProducto();
+                detalleCompraListDetalleCompra.setProducto(producto);
                 detalleCompraListDetalleCompra = em.merge(detalleCompraListDetalleCompra);
-                if (oldIdProductoOfDetalleCompraListDetalleCompra != null) {
-                    oldIdProductoOfDetalleCompraListDetalleCompra.getDetalleCompraList().remove(detalleCompraListDetalleCompra);
-                    oldIdProductoOfDetalleCompraListDetalleCompra = em.merge(oldIdProductoOfDetalleCompraListDetalleCompra);
+                if (oldProductoOfDetalleCompraListDetalleCompra != null) {
+                    oldProductoOfDetalleCompraListDetalleCompra.getDetalleCompraList().remove(detalleCompraListDetalleCompra);
+                    oldProductoOfDetalleCompraListDetalleCompra = em.merge(oldProductoOfDetalleCompraListDetalleCompra);
                 }
             }
             for (Carrito carritoListCarrito : producto.getCarritoList()) {
@@ -158,7 +158,7 @@ public class ProductoJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain DetalleCompra " + detalleCompraListOldDetalleCompra + " since its idProducto field is not nullable.");
+                    illegalOrphanMessages.add("You must retain DetalleCompra " + detalleCompraListOldDetalleCompra + " since its producto field is not nullable.");
                 }
             }
             for (Carrito carritoListOldCarrito : carritoListOld) {
@@ -194,7 +194,7 @@ public class ProductoJpaController implements Serializable {
             }
             List<DetalleCompra> attachedDetalleCompraListNew = new ArrayList<DetalleCompra>();
             for (DetalleCompra detalleCompraListNewDetalleCompraToAttach : detalleCompraListNew) {
-                detalleCompraListNewDetalleCompraToAttach = em.getReference(detalleCompraListNewDetalleCompraToAttach.getClass(), detalleCompraListNewDetalleCompraToAttach.getIdCompra());
+                detalleCompraListNewDetalleCompraToAttach = em.getReference(detalleCompraListNewDetalleCompraToAttach.getClass(), detalleCompraListNewDetalleCompraToAttach.getDetalleCompraPK());
                 attachedDetalleCompraListNew.add(detalleCompraListNewDetalleCompraToAttach);
             }
             detalleCompraListNew = attachedDetalleCompraListNew;
@@ -240,12 +240,12 @@ public class ProductoJpaController implements Serializable {
             }
             for (DetalleCompra detalleCompraListNewDetalleCompra : detalleCompraListNew) {
                 if (!detalleCompraListOld.contains(detalleCompraListNewDetalleCompra)) {
-                    Producto oldIdProductoOfDetalleCompraListNewDetalleCompra = detalleCompraListNewDetalleCompra.getIdProducto();
-                    detalleCompraListNewDetalleCompra.setIdProducto(producto);
+                    Producto oldProductoOfDetalleCompraListNewDetalleCompra = detalleCompraListNewDetalleCompra.getProducto();
+                    detalleCompraListNewDetalleCompra.setProducto(producto);
                     detalleCompraListNewDetalleCompra = em.merge(detalleCompraListNewDetalleCompra);
-                    if (oldIdProductoOfDetalleCompraListNewDetalleCompra != null && !oldIdProductoOfDetalleCompraListNewDetalleCompra.equals(producto)) {
-                        oldIdProductoOfDetalleCompraListNewDetalleCompra.getDetalleCompraList().remove(detalleCompraListNewDetalleCompra);
-                        oldIdProductoOfDetalleCompraListNewDetalleCompra = em.merge(oldIdProductoOfDetalleCompraListNewDetalleCompra);
+                    if (oldProductoOfDetalleCompraListNewDetalleCompra != null && !oldProductoOfDetalleCompraListNewDetalleCompra.equals(producto)) {
+                        oldProductoOfDetalleCompraListNewDetalleCompra.getDetalleCompraList().remove(detalleCompraListNewDetalleCompra);
+                        oldProductoOfDetalleCompraListNewDetalleCompra = em.merge(oldProductoOfDetalleCompraListNewDetalleCompra);
                     }
                 }
             }
@@ -306,7 +306,7 @@ public class ProductoJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Producto (" + producto + ") cannot be destroyed since the DetalleCompra " + detalleCompraListOrphanCheckDetalleCompra + " in its detalleCompraList field has a non-nullable idProducto field.");
+                illegalOrphanMessages.add("This Producto (" + producto + ") cannot be destroyed since the DetalleCompra " + detalleCompraListOrphanCheckDetalleCompra + " in its detalleCompraList field has a non-nullable producto field.");
             }
             List<Carrito> carritoListOrphanCheck = producto.getCarritoList();
             for (Carrito carritoListOrphanCheckCarrito : carritoListOrphanCheck) {

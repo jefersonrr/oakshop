@@ -51,7 +51,7 @@
                 <li>
                     <div class="image-admin">
                         <div class="container-img">
-                            <img src="https://i.postimg.cc/50xpzL3N/user-admin.png" alt="Administrador">
+                            <img src="<%=basePath%>img/user-admin.png" alt="Administrador">
                         </div>
                         <div class="container-name">
                             <p><span class="links_name"><%=request.getSession().getAttribute("nameUser")%></span></p>
@@ -60,11 +60,11 @@
                 </li>
 
                 <li>
-                    <a href="<%=basePath%>CitasAdmin.do">
+                    <a href="<%=basePath%>jsp/adminPublicaciones.jsp">
                         <i class="far fa-calendar-alt"></i>
-                        <span class="links_name">Agendamientos</span>
+                        <span class="links_name">Publicaciones</span>
                     </a>
-                    <span class="tooltip">Agendamientos</span>
+                    <span class="tooltip">Publicaciones</span>
                 </li>
                 <li>
                     <a href="<%=basePath%>./jsp/adminClientes.jsp">
@@ -74,19 +74,12 @@
                     <span class="tooltip">Clientes</span>
                 </li>
                 <li>
-                    <a href="<%=basePath%>MostrarServiciosAdmin.do">
+                    <a href="<%=basePath%>MostrarCategorias.do">
                         <i class="fas fa-user-cog"></i>
-                        <span class="links_name">Servicios</span>
+                        <span class="links_name">Categorias</span>
                     </a>
-                    <span class="tooltip">Servicios</span>
-                </li>
-                <li>
-                    <a href="<%=basePath%>MostrarProductosAdmin.do">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="links_name">Productos</span>
-                    </a>
-                    <span class="tooltip">Productos</span>
-                </li>
+                    <span class="tooltip">Categorias</span>
+                </li>  
                 <!-- <li>
                   <a href="#">
                     <i class="fas fa-chart-pie"></i>

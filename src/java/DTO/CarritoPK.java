@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 @Embeddable
 public class CarritoPK implements Serializable {

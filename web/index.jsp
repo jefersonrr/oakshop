@@ -125,8 +125,8 @@
                                 </a>
                                 <ul class="dropdown-menu text-small "aria-labelledby="dropdownUser2"  >
                                     <li><a class="dropdown-item" href="#" >Mi Cuenta</a></li>
-                                    <li><a class="dropdown-item" href="<%=basePath%>MisVehiculos.do" >Carrito</a></li>
-                                    <li><a class="dropdown-item" href="<%=basePath%>MisServiciosUsu.do" >Mis Compras</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>AgregarACarrito.do" >Carrito</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>MostrarCompras.do" >Mis Compras</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
                                 </ul>

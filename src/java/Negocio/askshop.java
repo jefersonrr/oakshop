@@ -19,6 +19,7 @@ import DTO.Carrito;
 import DTO.CarritoPK;
 import DTO.Categoria;
 import DTO.Color;
+import DTO.Compra;
 import DTO.Galeriaimg;
 import DTO.MetodoPago;
 import DTO.Persona;
@@ -535,26 +536,26 @@ public class askshop {
 
     public void agregarProductosPublicacion(String[] referencias, String[] costos, String[] descuentos, String[] tallas, String[] imgs, String[] colores, String[] cantidades, String pub) {
 
-            PublicacionDAO p = new PublicacionDAO();
-            Publicacion pu = p.readPublicacion(Integer.parseInt(pub));
-            
-            ColorDAO c = new ColorDAO();
-            TallaDAO t = new TallaDAO();
-            ProductoDAO pro = new ProductoDAO();
-            GaleriaimgDAO ga = new GaleriaimgDAO();   
-            for (int i = 0; i < referencias.length; i++) {
-                
-                    Producto producto = new Producto(0, referencias[i],
-                         Double.parseDouble(costos[i]) , Integer.parseInt(descuentos[i]),Integer.parseInt(cantidades[i]),"ACTIVO");
-                    producto.setIdColor(c.readColor(Integer.parseInt(colores[i])));
-                    producto.setIdPublicacion(pu);
-                    producto.setIdTalla(t.readTalla(Integer.parseInt(tallas[i])));
-                    Galeriaimg g = new Galeriaimg(0, imgs[i]);
-                    g.setIdPublicacion(pu);
-                    ga.create(g);
-                    pro.create(producto);
-                 
-            }
+        PublicacionDAO p = new PublicacionDAO();
+        Publicacion pu = p.readPublicacion(Integer.parseInt(pub));
+
+        ColorDAO c = new ColorDAO();
+        TallaDAO t = new TallaDAO();
+        ProductoDAO pro = new ProductoDAO();
+        GaleriaimgDAO ga = new GaleriaimgDAO();
+        for (int i = 0; i < referencias.length; i++) {
+
+            Producto producto = new Producto(0, referencias[i],
+                    Double.parseDouble(costos[i]), Integer.parseInt(descuentos[i]), Integer.parseInt(cantidades[i]), "ACTIVO");
+            producto.setIdColor(c.readColor(Integer.parseInt(colores[i])));
+            producto.setIdPublicacion(pu);
+            producto.setIdTalla(t.readTalla(Integer.parseInt(tallas[i])));
+            Galeriaimg g = new Galeriaimg(0, imgs[i]);
+            g.setIdPublicacion(pu);
+            ga.create(g);
+            pro.create(producto);
+
+        }
     }
 
     public void desactivarProducto(int idp) {
@@ -579,24 +580,24 @@ public class askshop {
                 rta[0] += "<div class=\"form-check\">\n"
                         + "                                                <input class=\"form-check-input\"  value=" + '"' + m.getId() + '"' + " type=\"radio\" name=\"credi\" id=\"flexRadioDefault2\">\n"
                         + "                                                <label class=\"form-check-label\" for=\"flexRadioDefault2\">\n"
-                        + "                                                    Tarjeta: ************" + ocultarTarjeta(m.getNumero()) +  "\n"
+                        + "                                                    Tarjeta: ************" + ocultarTarjeta(m.getNumero()) + "\n"
                         + "                                                </label>\n"
                         + "                                            </div>";
-            }else{
-             rta[1] += "<div class=\"form-check\">\n"
+            } else {
+                rta[1] += "<div class=\"form-check\">\n"
                         + "                                                <input class=\"form-check-input\" value=" + '"' + m.getId() + '"' + " type=\"radio\" name=\"debi\" id=\"flexRadioDefault2\">\n"
                         + "                                                <label class=\"form-check-label\" for=\"flexRadioDefault2\">\n"
-                        + "                                                    Tarjeta: ************" + ocultarTarjeta(m.getNumero())+  "\n"
+                        + "                                                    Tarjeta: ************" + ocultarTarjeta(m.getNumero()) + "\n"
                         + "                                                </label>\n"
                         + "                                            </div>";
             }
         }
-       
+
         return rta;
     }
 
     public String anadirAcarrito(String idPerson, int tallaId, int colorId, int cantidad, int idP) {
-        
+
         PublicacionDAO pu = new PublicacionDAO();
         Publicacion p = pu.readPublicacion(idP);
         List<Producto> productos = p.getProductoList();
@@ -604,23 +605,23 @@ public class askshop {
         PersonaDAO personadao = new PersonaDAO();
         Persona per = personadao.readPersona(idPerson);
         List<Carrito> carP = per.getCarritoList();
-        
+
         for (Producto producto : productos) {
-            
-            if(producto.getIdColor().getId()==colorId && producto.getIdTalla().getId()==tallaId){ 
+
+            if (producto.getIdColor().getId() == colorId && producto.getIdTalla().getId() == tallaId) {
                 //bucar si l producto esta en el carro
                 boolean existe = false;
                 for (Carrito car : carP) {
-                     if(car.getProducto().getId()==producto.getId()){
+                    if (car.getProducto().getId() == producto.getId()) {
                         int cant = car.getCantidad();
-                        car.setCantidad(cant+cantidad);
-                        existe=true;
+                        car.setCantidad(cant + cantidad);
+                        existe = true;
                         c.update(car);
-                     }
                     }
-                
-                if(!existe){
-                    Carrito carri = new Carrito(idPerson,producto.getId());
+                }
+
+                if (!existe) {
+                    Carrito carri = new Carrito(idPerson, producto.getId());
                     carri.setPersona(per);
                     carri.setProducto(producto);
                     carri.setCantidad(cantidad);
@@ -632,185 +633,236 @@ public class askshop {
         }
         return generarCarro(per.getCedula());
     }
-    
-    public String ocultarTarjeta(String numero){
-    
-        return  numero.substring(numero.length() - 4, numero.length());
+
+    public String ocultarTarjeta(String numero) {
+
+        return numero.substring(numero.length() - 4, numero.length());
     }
 
-
-    public String generarCarro(String pers){
+    public String generarCarro(String pers) {
         PersonaDAO personadao = new PersonaDAO();
         Persona per = personadao.readPersona(pers);
         CarritoDAO ca = new CarritoDAO();
         List<Carrito> carritos = per.getCarritoList();
-        double subtotal=0;
+        double subtotal = 0;
         double total = 0;
-        String rta = " <div class=\"row m-10 mt-3\">\n" +
-                    "            <div class=\"row my-2\">\n" +
-                    "                <div class=\"col d-flex\">\n" +
-                    "                    <div>\n" +
-                    "                        <img src=\"img/carrito.png\" width=\"50\" height=\"50\"/>    \n" +
-                    "                    </div>\n" +
-                    "                    <div class=\"titulo-contenido bold mt-2 ms-5 d-flex\">\n" +
-                    "                        Carrito de compras\n" +
-                    "                    </div>\n" +
-                    "                </div>\n" +
-                    "            </div>\n" +
-                    "            \n" +
-                    "            <div class=\"contenedor-inicial mt-5\">\n" +
-                    "                <div class=\"contenedor\">\n" +
-                    "                    <div class=\"row\">\n" +
-                    "                        \n" +
-                    "<div class=\"table-responsive\">                       \n" +
-                    "<table id=\"tabla\" class=\"table table-borderless table-hover align-middle\">\n" +
-                    "  <thead class=\"thead\">\n" +
-                    "    <tr>\n" +
-                    "      <th scope=\"col\">ID</th>\n" +
-                    "      <th scope=\"col\">Referencia</th>\n" +
-                    "      <th scope=\"col\">Descripción</th>\n" +
-                    "      <th scope=\"col\">Precio</th>\n" +
-                    "      <th scope=\"col\">Descuento</th>\n" +
-                    "      <th scope=\"col\">Cantidad</th>\n" +
-                    "      <th scope=\"col\">Acciones</th>\n" +
-                    "    </tr>\n" +
-                    "  </thead>\n" +
-                    "  <tbody>\n";
+        String rta = " <div class=\"row m-10 mt-3\">\n"
+                + "            <div class=\"row my-2\">\n"
+                + "                <div class=\"col d-flex\">\n"
+                + "                    <div>\n"
+                + "                        <img src=\"img/carrito.png\" width=\"50\" height=\"50\"/>    \n"
+                + "                    </div>\n"
+                + "                    <div class=\"titulo-contenido bold mt-2 ms-5 d-flex\">\n"
+                + "                        Carrito de compras\n"
+                + "                    </div>\n"
+                + "                </div>\n"
+                + "            </div>\n"
+                + "            \n"
+                + "            <div class=\"contenedor-inicial mt-5\">\n"
+                + "                <div class=\"contenedor\">\n"
+                + "                    <div class=\"row\">\n"
+                + "                        \n"
+                + "<div class=\"table-responsive\">                       \n"
+                + "<table id=\"tabla\" class=\"table table-borderless table-hover align-middle\">\n"
+                + "  <thead class=\"thead\">\n"
+                + "    <tr>\n"
+                + "      <th scope=\"col\">ID</th>\n"
+                + "      <th scope=\"col\">Referencia</th>\n"
+                + "      <th scope=\"col\">Descripción</th>\n"
+                + "      <th scope=\"col\">Precio</th>\n"
+                + "      <th scope=\"col\">Descuento</th>\n"
+                + "      <th scope=\"col\">Cantidad</th>\n"
+                + "      <th scope=\"col\">Acciones</th>\n"
+                + "    </tr>\n"
+                + "  </thead>\n"
+                + "  <tbody>\n";
 
-                for(Carrito carro: carritos){
-                        Producto p = carro.getProducto();
-                            rta+="    <tr>\n" +
-                            "      <th scope=\"row\">"+p.getId()+"</th>\n" +
-                            "      <td>"+p.getReferencia()+"</td>  \n" +
-                            "      <td>"+p.getIdPublicacion().getDescripcion()+"</td>\n" +
-                            "      <td>"+p.getCosto()+"</td>\n" +
-                            "      <td>"+p.getDescuento()+"%</td>\n" +
-                            "      <td class=\"inp-cantidad\"><input type = \"number\" min = \"1\" value = \""+carro.getCantidad()+"\"></td>\n" +
-                            "      <td>"
-                                    + "<form action=\"eliminarProductoCarrito.do\">"
-                                    + "<input hidden value=\""+p.getId()+"\" name=\"eliminarP\"/>"
-                                    + "<button type=\"submit\" class=\"btn-eliminar btn\" id=\""+p.getId()+"\" text-white\">X</button></form></td>\n" +
-                            "    </tr>\n" +
-                            "    \n";
-                            subtotal+=p.getCosto()*carro.getCantidad();
-                            
-                    
-        }total=subtotal+15000;
-                    rta+="\n" +
-                    "  </tbody>\n" +
-                    "</table>\n" +
-                     "<form name=\"carritoTablaForm\" action=\"GuardarCarrito.do\">"
-                                    + "<input hidden id=\"idProducts\" name=\"idProductos\" value=\"\">"
-                                    + "<input hidden id=\"cantidadesP\" name=\"cantidades\" value=\"\">"
+        for (Carrito carro : carritos) {
+            Producto p = carro.getProducto();
+            rta += "    <tr>\n"
+                    + "      <th scope=\"row\">" + p.getId() + "</th>\n"
+                    + "      <td>" + p.getReferencia() + "</td>  \n"
+                    + "      <td>" + p.getIdPublicacion().getDescripcion() + "</td>\n"
+                    + "      <td>" + p.getCosto() + "</td>\n"
+                    + "      <td>" + p.getDescuento() + "%</td>\n"
+                    + "      <td class=\"inp-cantidad\"><input type = \"number\" min = \"1\" value = \"" + carro.getCantidad() + "\"></td>\n"
+                    + "      <td>"
+                    + "<form action=\"eliminarProductoCarrito.do\">"
+                    + "<input hidden value=\"" + p.getId() + "\" name=\"eliminarP\"/>"
+                    + "<button type=\"submit\" class=\"btn-eliminar btn\" id=\"" + p.getId() + "\" text-white\">X</button></form></td>\n"
+                    + "    </tr>\n"
+                    + "    \n";
+            subtotal += p.getCosto() * carro.getCantidad();
 
-                                    + "<button class=\"guardar-carrito text-white\" onclick=\"enviarDatos()\">Guardar Carrito</button>\n" 
-                            + "</form>"+
-                    "</div>                        \n" +
-                            "                    </div>\n" +
-                            "                </div> \n" +
-                            "                \n" +
-                            "                <div class=\"row mt-4 mod-pos btn-2\">\n" +
-                            "                    <div class=\"col\">\n" +
-                            "                        <div class=\"d-flex justify-content-end\">\n" +
-                            "                            \n" +
-                            "                        </div>\n" +
-                            "                    </div>\n" +
-                            "                </div>\n" +
-                            "            </div>\n" +
-                            "            \n" +
-                            "            <div class=\"contenedor-confirmar\">\n"
-                            + "<form action=\"MostrarMetodoPago.do\">" +
-                            "                    <div class=\"mt-5\">\n" +
-                            "                        <div class=\"titulo-compra rounded mt-4\">\n" +
-                            "                            <div class=\"text-center\">\n" +
-                            "                                Resumen Compra\n" +
-                            "                            </div>\n" +
-                            "                        </div>\n" +
-                            "                        <div class=\"border\">\n" +
-                            "                            <div class=\"mx-3 mt-4\">\n" +
-                            "                                <label class=\"bold my-1\">Subtotal:</label>\n" +
-                            "                                <input class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\""+subtotal+"\" aria-label=\"default input example\" disabled>    \n"
-                            + "                             <input hidden name=\"subtotal\" class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\""+subtotal+"\" aria-label=\"default input example\">" +
-                            "                            </div>\n" +
-                            "                            <div class=\"mx-3\">\n" +
-                            "                                <label class=\"bold my-1\">Precio envio:</label>\n" +
-                            "                                <input class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"15000\" aria-label=\"default input example\" disabled>\n"
-                            + "                              <input hidden name=\"envio\" class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"15000\" aria-label=\"default input example\">\n" +
-                            "                            </div>\n" +
-                            "                            <div class=\"mx-3 mb-4\">\n" +
-                            "                                <label class=\"bold my-1\">Total a pagar:</label>\n" +
-                            "                                <input class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\""+total+"\" aria-label=\"default input example\" disabled> \n"
-                            + "                               <input hidden name=\"total\" class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\""+total+"\" aria-label=\"default input example\"> \n" +
-                            "                            </div>\n" +
-                            "                            \n" +
-                            "                            <div class=\"d-flex justify-content-center\">\n" +
-                            "                                <button type=\"submit\" class=\"btn-continue-size btn btn-info text-white\">Continuar</button>\n" +
-                            "                            </div>\n"
-                            + "" +
-                            "                        </div>\n"
-                            + "</form>" +
-                            "                    </div>\n" +
-                            "\n" +
-                            "            </div>\n" +
-                            "\n" +
-                            "            \n" +
-                            "        </div>";
-                    return rta;
+        }
+        total = subtotal + 15000;
+        rta += "\n"
+                + "  </tbody>\n"
+                + "</table>\n"
+                + "<form name=\"carritoTablaForm\" action=\"GuardarCarrito.do\">"
+                + "<input hidden id=\"idProducts\" name=\"idProductos\" value=\"\">"
+                + "<input hidden id=\"cantidadesP\" name=\"cantidades\" value=\"\">"
+                + "<button class=\"guardar-carrito text-white\" onclick=\"enviarDatos()\">Guardar Carrito</button>\n"
+                + "</form>"
+                + "</div>                        \n"
+                + "                    </div>\n"
+                + "                </div> \n"
+                + "                \n"
+                + "                <div class=\"row mt-4 mod-pos btn-2\">\n"
+                + "                    <div class=\"col\">\n"
+                + "                        <div class=\"d-flex justify-content-end\">\n"
+                + "                            \n"
+                + "                        </div>\n"
+                + "                    </div>\n"
+                + "                </div>\n"
+                + "            </div>\n"
+                + "            \n"
+                + "            <div class=\"contenedor-confirmar\">\n"
+                + "<form action=\"MostrarMetodoPago.do\">"
+                + "                    <div class=\"mt-5\">\n"
+                + "                        <div class=\"titulo-compra rounded mt-4\">\n"
+                + "                            <div class=\"text-center\">\n"
+                + "                                Resumen Compra\n"
+                + "                            </div>\n"
+                + "                        </div>\n"
+                + "                        <div class=\"border\">\n"
+                + "                            <div class=\"mx-3 mt-4\">\n"
+                + "                                <label class=\"bold my-1\">Subtotal:</label>\n"
+                + "                                <input class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"" + subtotal + "\" aria-label=\"default input example\" disabled>    \n"
+                + "                             <input hidden name=\"subtotal\" class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"" + subtotal + "\" aria-label=\"default input example\">"
+                + "                            </div>\n"
+                + "                            <div class=\"mx-3\">\n"
+                + "                                <label class=\"bold my-1\">Precio envio:</label>\n"
+                + "                                <input class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"15000\" aria-label=\"default input example\" disabled>\n"
+                + "                              <input hidden name=\"envio\" class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"15000\" aria-label=\"default input example\">\n"
+                + "                            </div>\n"
+                + "                            <div class=\"mx-3 mb-4\">\n"
+                + "                                <label class=\"bold my-1\">Total a pagar:</label>\n"
+                + "                                <input class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"" + total + "\" aria-label=\"default input example\" disabled> \n"
+                + "                               <input hidden name=\"total\" class=\"form-control border text-center\" type=\"number\" placeholder=\"$0.0\" value=\"" + total + "\" aria-label=\"default input example\"> \n"
+                + "                            </div>\n"
+                + "                            \n"
+                + "                            <div class=\"d-flex justify-content-center\">\n"
+                + "                                <button type=\"submit\" class=\"btn-continue-size btn btn-info text-white\">Continuar</button>\n"
+                + "                            </div>\n"
+                + ""
+                + "                        </div>\n"
+                + "</form>"
+                + "                    </div>\n"
+                + "\n"
+                + "            </div>\n"
+                + "\n"
+                + "            \n"
+                + "        </div>";
+        return rta;
     }
 
     public void guardarCarrito(String id_person, String[] idProductos, String[] cantidades) {
 
-            CarritoDAO c = new CarritoDAO();
-            PersonaDAO pers = new PersonaDAO();
-            Persona per = pers.readPersona(id_person);
-            List<Carrito> carrito = per.getCarritoList();
-            ProductoDAO product = new ProductoDAO();
-            
-            boolean existe=false;
-            for (Carrito carro: carrito) {
-                
-                for (int i = 0; i < idProductos.length; i++) {
-                        int id = Integer.parseInt(idProductos[i]);
-                        if(carro.getPersona().getCedula().equals(id_person) && carro.getProducto().getId()==id){
-                            existe =true;
-                            carro.setCantidad(Integer.parseInt(cantidades[i]));
-                            c.update(carro);
-                        }
-                        if(!existe && i==idProductos.length-1){
+        CarritoDAO c = new CarritoDAO();
+        PersonaDAO pers = new PersonaDAO();
+        Persona per = pers.readPersona(id_person);
+        List<Carrito> carrito = per.getCarritoList();
+        ProductoDAO product = new ProductoDAO();
 
-                        Carrito carri = new Carrito(id_person,Integer.parseInt(idProductos[i]));
-                        carri.setPersona(per);
-                        carri.setProducto(product.readProducto(Integer.parseInt(idProductos[i])));
-                        carri.setCantidad(Integer.parseInt(cantidades[i]));
-                        carri.setCarritoPK(new CarritoPK(id_person,Integer.parseInt(idProductos[i])));
-                        c.create(carri);
+        boolean existe = false;
+        for (Carrito carro : carrito) {
 
-                    }
+            for (int i = 0; i < idProductos.length; i++) {
+                int id = Integer.parseInt(idProductos[i]);
+                if (carro.getPersona().getCedula().equals(id_person) && carro.getProducto().getId() == id) {
+                    existe = true;
+                    carro.setCantidad(Integer.parseInt(cantidades[i]));
+                    c.update(carro);
                 }
-                
+                if (!existe && i == idProductos.length - 1) {
+
+                    Carrito carri = new Carrito(id_person, Integer.parseInt(idProductos[i]));
+                    carri.setPersona(per);
+                    carri.setProducto(product.readProducto(Integer.parseInt(idProductos[i])));
+                    carri.setCantidad(Integer.parseInt(cantidades[i]));
+                    carri.setCarritoPK(new CarritoPK(id_person, Integer.parseInt(idProductos[i])));
+                    c.create(carri);
+
+                }
+            }
+
         }
     }
 
     public void eliminarCarritoProducto(String producto, String id_person) {
 
-            PersonaDAO p = new PersonaDAO();
-            List<Carrito> ca = p.readPersona(id_person).getCarritoList();
-            CarritoDAO c = new CarritoDAO();
-            
-            for (Carrito carro: ca) {
-                if(carro.getProducto().getId()==Integer.parseInt(producto)){
-                
-                    try {
-                        c.delete(carro.getCarritoPK());
-                        
-                    } catch (IllegalOrphanException ex) {
-                        Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (NonexistentEntityException ex) {
-                        Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+        PersonaDAO p = new PersonaDAO();
+        List<Carrito> ca = p.readPersona(id_person).getCarritoList();
+        CarritoDAO c = new CarritoDAO();
+
+        for (Carrito carro : ca) {
+            if (carro.getProducto().getId() == Integer.parseInt(producto)) {
+
+                try {
+                    c.delete(carro.getCarritoPK());
+
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(askshop.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                    
+            }
+
         }
     }
 
+    public String misCompras(String cedula) {
+
+        String rta = "";
+        PersonaDAO perdao = new PersonaDAO();
+        Persona p = perdao.readPersona(cedula);
+        for(Compra c : p.getCompraList()){
+        rta += " <div class=\"compra\">\n"
+                + "                    <div class=\"row\">\n"
+                + "                        <div class=\"col fecha-c\">\n"
+                + "                            <h5>"+formatoFecha(c.getFecha())+"</h5>\n"
+                + "                        </div>\n"
+                + "                    </div>\n"
+                + "                    <hr>\n"
+                + "                    <div class=\"row\">\n"
+                + "                        <div class=\"col-md-5 nombre-c\">\n"
+                + "                            <div>\n"
+                + "                                <h6 class=\"text-danger\">"+c.getDetalleCompraList().get(0).getProducto().getIdPublicacion().getNombre()+ " " + c.getDetalleCompraList().get(0).getProducto().getIdColor().getNombre()+ " "+ c.getDetalleCompraList().get(0).getProducto().getIdTalla().getValor()+"</h6>\n"
+                + "                            </div>\n"
+                + "                            <div class=\"nombre-p\">\n"
+                + "                                <p><span>"+c.getDetalleCompraList().size()+ " Unidades"+"</span></p>\n"
+                + "                            </div>\n"
+                + "                        </div>\n"
+                + "\n"
+                + "                        <div class=\"col-md-2 estado-c\">\n"
+                + "                            <div>\n"
+                + "                                <h5 class=\"text-success\">"+c.getEnvioList().get(0).getEstado()+"</h5>\n"
+                + "                            </div>\n"
+                + "                            <div class=\"estado-p\">\n"
+                + "                                <p>"+c.getEnvioList().get(0).getDescripcion()+"</p>\n"
+                + "                            </div>\n"
+                + "                        </div>\n"
+                + " <div class=\"col-md-2 boton-d\">\n" +
+"                            <div>\n" +
+"                                <a href=\"#\" class=\"btn btn-primary\">\n" +
+"                                    Ver detalles\n" +
+"                                </a>\n" +
+"                            </div>\n" +
+"                        </div>\n" +
+"                    </div>\n" +
+"                </div>"
+                + "";
+        }
+       
+        return rta;
+    }
+
+   public String formatoFecha(Date fecha) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+        String[] split = formatter.format(fecha).split(" ");
+        String[] split2 = split[0].split("/");
+        return split2[0] + "/" + split2[1] + "/" + split2[2];
+    }
 }

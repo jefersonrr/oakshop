@@ -52,7 +52,7 @@
     <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
 
         <!-- MENÚ DE NAVEGACIÓN-->
-        <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+          <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
                 <a class="navbar-brand" href="index.jsp">
@@ -84,19 +84,21 @@
                             </a>
                             <%List<Tipo> tipos = ca.get(i).getTipoList();%>
 
-
-
+                            
+                            
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <%for (Tipo t : tipos) {%>
 
 
-                                <li><a class="dropdown-item" href="<%=basePath%>/PublicacionesCategoria.do?tipo=<%=t.getId()%>&cate=<%=ca.get(i).getId()%>"><%=t.getNombre()%> </a></li>
+                                <li><a class="dropdown-item" href="<%=basePath%>/PublicacionesCategoria.do?tipo=<%=t.getId() %>&cate=<%=ca.get(i).getId()%>"><%=t.getNombre()%> </a></li>
 
 
                                 <%};%>
                             </ul>
                         </li>
                         <%};%>
+
+
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">CONTACTO</a>
                         </li>
@@ -105,7 +107,7 @@
                     <template id="NoSesion">
                         <ul class="navbar-nav ml-auto m-4">
                             <li class="nav-item">
-                                <a class="nav-link" href="<%=basePath%>iniciarSesion.do">INICIAR SESIÓN</a>
+                                <a class="nav-link" href="<%=basePath%>/jsp/iniciarsesion.jsp">INICIAR SESIÓN</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%=basePath%>jsp/registrarse.jsp">REGISTRARSE</a>
@@ -121,8 +123,8 @@
                                 </a>
                                 <ul class="dropdown-menu text-small "aria-labelledby="dropdownUser2"  >
                                     <li><a class="dropdown-item" href="#" >Mi Cuenta</a></li>
-                                    <li><a class="dropdown-item" href="<%=basePath%>MisVehiculos.do" >Mis Vehiculos</a></li>
-                                    <li><a class="dropdown-item" href="<%=basePath%>MisServiciosUsu.do" >Mis Servicios</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>AgregarACarrito.do" >Carrito</a></li>
+                                    <li><a class="dropdown-item" href="<%=basePath%>MostrarCompras.do" >Mis Compras</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
                                 </ul>
@@ -138,7 +140,7 @@
 
                 </div>
             </div>
-        </nav> 
+        </nav>
 
         <!-- CONTENIDO -->
 

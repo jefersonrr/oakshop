@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 @Entity
 @Table(name = "Metodo_Pago")
@@ -87,12 +87,11 @@ public class MetodoPago implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "identificacion")
     private String identificacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMetodoPago")
+    private List<Compra> compraList;
     @JoinColumn(name = "idCliente", referencedColumnName = "cedula")
     @ManyToOne(optional = false)
     private Persona idCliente;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMetodoPago")
-    private List<Compra> compraList;
-   
 
     public MetodoPago() {
     }
@@ -176,14 +175,7 @@ public class MetodoPago implements Serializable {
         this.identificacion = identificacion;
     }
 
-    public Persona getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Persona idCliente) {
-        this.idCliente = idCliente;
-    }
-     @XmlTransient
+    @XmlTransient
     public List<Compra> getCompraList() {
         return compraList;
     }
@@ -192,6 +184,13 @@ public class MetodoPago implements Serializable {
         this.compraList = compraList;
     }
 
+    public Persona getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Persona idCliente) {
+        this.idCliente = idCliente;
+    }
 
     @Override
     public int hashCode() {

@@ -12,14 +12,17 @@ import DAO.DomicilioDAO;
 import DAO.EnvioDAO;
 import DAO.MetodoPagoDAO;
 import DAO.PersonaDAO;
+import DAO.ProductoDAO;
 import DTO.Carrito;
 import static DTO.Categoria_.estado;
 import DTO.Compra;
 import DTO.DetalleCompra;
+import DTO.DetalleCompraPK;
 import static DTO.Domicilio_.descripcion;
 import DTO.Envio;
 import DTO.MetodoPago;
 import DTO.Persona;
+import DTO.Producto;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.io.IOException;
@@ -52,9 +55,9 @@ public class Facturar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, IllegalOrphanException, NonexistentEntityException {
-      
+
         MetodoPagoDAO mdao = new MetodoPagoDAO();
-        MetodoPago metodo = mdao.readMetodoPago( Integer.parseInt(request.getSession().getAttribute("idTarjeta").toString()));
+        MetodoPago metodo = mdao.readMetodoPago(Integer.parseInt(request.getSession().getAttribute("idTarjeta").toString()));
         PersonaDAO pdao = new PersonaDAO();
         Persona per = pdao.readPersona(request.getSession().getAttribute("usuario").toString());
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC-5"));
@@ -71,19 +74,37 @@ public class Facturar extends HttpServlet {
         en.setIdDomicilio(domidao.readDomicilio(Integer.parseInt(request.getParameter("direccion"))));
         endao.create(en);
         DetalleCompraDAO dcompradao = new DetalleCompraDAO();
-        CarritoDAO cadao = new CarritoDAO();
-        List<Carrito> carrito = per.getCarritoList();
-        for(Carrito c:carrito){
-            DetalleCompra dcompra = new DetalleCompra(null, c.getCantidad());
-            dcompra.setIdCompra(compra.getId());
-            dcompra.setIdProducto(c.getProducto());
+
+        ProductoDAO prodao = new ProductoDAO();
+        if (request.getSession().getAttribute("esCarrito") != null) {
+            CarritoDAO cadao = new CarritoDAO();
+            List<Carrito> carrito = per.getCarritoList();
+
+            for (Carrito c : carrito) {
+
+                Producto p = c.getProducto();
+                DetalleCompra dcompra = new DetalleCompra(new DetalleCompraPK(compra.getId(), p.getId()), c.getCantidad());
+                dcompra.setCompra(compra);
+                dcompra.setProducto(p);
+                p.setCantidad(p.getCantidad() - c.getCantidad());
+                dcompradao.create(dcompra);
+                prodao.update(p);
+                cadao.delete(c.getCarritoPK());
+
+            }
+        } else {
+
+            Producto p = prodao.readProducto(Integer.parseInt(request.getSession().getAttribute("idProducto").toString()));
+            DetalleCompra dcompra = new DetalleCompra(new DetalleCompraPK(compra.getId(), p.getId()), 1);
+            dcompra.setCompra(compra);
+            dcompra.setProducto(p);
+            p.setCantidad(p.getCantidad() - 1);
+            prodao.update(p);
             dcompradao.create(dcompra);
-            cadao.delete(c.getCarritoPK());
-        
         }
-        
-        request.getRequestDispatcher("./jsp/comprasUsu.jsp").forward(request, response);
-        
+
+        request.getRequestDispatcher("./MostrarCompras.do").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

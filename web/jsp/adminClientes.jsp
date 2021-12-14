@@ -16,7 +16,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lubrillantas Jezreel AG - Administración</title>
+        <title>Lubrillantas Jezreel AG - Administración</title><title>Catalogo de prendas de vestir y calzado - Administración</title>
 
         <!-- Fuente de google: Open Sans - Regular 400 -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
@@ -75,21 +75,7 @@
                         <span class="links_name">Categorias</span>
                     </a>
                     <span class="tooltip">Categorias</span>
-                </li>
-                   <li>
-                    <a href="#">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="links_name">Pedidos</span>
-                    </a>
-                    <span class="tooltip">Pedidos</span>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="links_name">Productos</span>
-                    </a>
-                    <span class="tooltip">Productos</span>
-                </li>
+                </li>  
                 <!-- <li>
                   <a href="#">
                     <i class="fas fa-chart-pie"></i>

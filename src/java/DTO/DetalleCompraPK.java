@@ -10,39 +10,37 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author Jefersonrr
  */
 @Embeddable
-public class CalificacionPK implements Serializable {
+public class DetalleCompraPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "idCliente")
-    private String idCliente;
+    @Column(name = "idCompra")
+    private int idCompra;
     @Basic(optional = false)
     @NotNull
     @Column(name = "idProducto")
     private int idProducto;
 
-    public CalificacionPK() {
+    public DetalleCompraPK() {
     }
 
-    public CalificacionPK(String idCliente, int idProducto) {
-        this.idCliente = idCliente;
+    public DetalleCompraPK(int idCompra, int idProducto) {
+        this.idCompra = idCompra;
         this.idProducto = idProducto;
     }
 
-    public String getIdCliente() {
-        return idCliente;
+    public int getIdCompra() {
+        return idCompra;
     }
 
-    public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
+    public void setIdCompra(int idCompra) {
+        this.idCompra = idCompra;
     }
 
     public int getIdProducto() {
@@ -56,7 +54,7 @@ public class CalificacionPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idCliente != null ? idCliente.hashCode() : 0);
+        hash += (int) idCompra;
         hash += (int) idProducto;
         return hash;
     }
@@ -64,11 +62,11 @@ public class CalificacionPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CalificacionPK)) {
+        if (!(object instanceof DetalleCompraPK)) {
             return false;
         }
-        CalificacionPK other = (CalificacionPK) object;
-        if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
+        DetalleCompraPK other = (DetalleCompraPK) object;
+        if (this.idCompra != other.idCompra) {
             return false;
         }
         if (this.idProducto != other.idProducto) {
@@ -79,7 +77,7 @@ public class CalificacionPK implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.CalificacionPK[ idCliente=" + idCliente + ", idProducto=" + idProducto + " ]";
+        return "DTO.DetalleCompraPK[ idCompra=" + idCompra + ", idProducto=" + idProducto + " ]";
     }
     
 }

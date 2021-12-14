@@ -27,7 +27,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Cristian
+ * @author Jefersonrr
  */
 public class PersonaJpaController implements Serializable {
 
@@ -109,15 +109,6 @@ public class PersonaJpaController implements Serializable {
                     oldPersonaOfCarritoListCarrito = em.merge(oldPersonaOfCarritoListCarrito);
                 }
             }
-            for (MetodoPago metodoPagoListMetodoPago : persona.getMetodoPagoList()) {
-                Persona oldIdClienteOfMetodoPagoListMetodoPago = metodoPagoListMetodoPago.getIdCliente();
-                metodoPagoListMetodoPago.setIdCliente(persona);
-                metodoPagoListMetodoPago = em.merge(metodoPagoListMetodoPago);
-                if (oldIdClienteOfMetodoPagoListMetodoPago != null) {
-                    oldIdClienteOfMetodoPagoListMetodoPago.getMetodoPagoList().remove(metodoPagoListMetodoPago);
-                    oldIdClienteOfMetodoPagoListMetodoPago = em.merge(oldIdClienteOfMetodoPagoListMetodoPago);
-                }
-            }
             for (Domicilio domicilioListDomicilio : persona.getDomicilioList()) {
                 Persona oldIdClienteOfDomicilioListDomicilio = domicilioListDomicilio.getIdCliente();
                 domicilioListDomicilio.setIdCliente(persona);
@@ -192,14 +183,6 @@ public class PersonaJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Carrito " + carritoListOldCarrito + " since its persona field is not nullable.");
-                }
-            }
-            for (MetodoPago metodoPagoListOldMetodoPago : metodoPagoListOld) {
-                if (!metodoPagoListNew.contains(metodoPagoListOldMetodoPago)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain MetodoPago " + metodoPagoListOldMetodoPago + " since its idCliente field is not nullable.");
                 }
             }
             for (Domicilio domicilioListOldDomicilio : domicilioListOld) {
@@ -293,17 +276,6 @@ public class PersonaJpaController implements Serializable {
                     if (oldPersonaOfCarritoListNewCarrito != null && !oldPersonaOfCarritoListNewCarrito.equals(persona)) {
                         oldPersonaOfCarritoListNewCarrito.getCarritoList().remove(carritoListNewCarrito);
                         oldPersonaOfCarritoListNewCarrito = em.merge(oldPersonaOfCarritoListNewCarrito);
-                    }
-                }
-            }
-            for (MetodoPago metodoPagoListNewMetodoPago : metodoPagoListNew) {
-                if (!metodoPagoListOld.contains(metodoPagoListNewMetodoPago)) {
-                    Persona oldIdClienteOfMetodoPagoListNewMetodoPago = metodoPagoListNewMetodoPago.getIdCliente();
-                    metodoPagoListNewMetodoPago.setIdCliente(persona);
-                    metodoPagoListNewMetodoPago = em.merge(metodoPagoListNewMetodoPago);
-                    if (oldIdClienteOfMetodoPagoListNewMetodoPago != null && !oldIdClienteOfMetodoPagoListNewMetodoPago.equals(persona)) {
-                        oldIdClienteOfMetodoPagoListNewMetodoPago.getMetodoPagoList().remove(metodoPagoListNewMetodoPago);
-                        oldIdClienteOfMetodoPagoListNewMetodoPago = em.merge(oldIdClienteOfMetodoPagoListNewMetodoPago);
                     }
                 }
             }
