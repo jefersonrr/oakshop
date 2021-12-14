@@ -116,7 +116,7 @@ public class validarSesion implements Filter {
             
             if(user == null){
                 req.setAttribute("msg","null");
-                res.sendRedirect("../jsp/NotificacionSesion.jsp");
+                res.sendRedirect("./jsp/NotificacionSesion.jsp");
                 return;
             }
                 chain.doFilter(request, response);
