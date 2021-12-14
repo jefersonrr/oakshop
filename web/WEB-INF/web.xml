@@ -9,7 +9,7 @@
         <url-pattern>/jsp/adiminClientes.jsp</url-pattern>
         <url-pattern>/jsp/medioPagoSeleccion.jsp</url-pattern>
         <url-pattern>/MostrarMetodoPago.do</url-pattern>
-         <url-pattern>/AgregarMetodoPago.do</url-pattern>
+         <url-pattern>/AgregarACarrito.do</url-pattern>
          <url-pattern>/Facturar.do</url-pattern>
          <url-pattern>/MostrarCompras.do</url-pattern>
          <url-pattern>/RedireccionDomicilioMetodo.do</url-pattern>

@@ -31,16 +31,13 @@ public class AgregarACarrito extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        if(request.getSession().getAttribute("usuario")==null){
-            request.getRequestDispatcher("./jsp/iniciarsesion.jsp").forward(request, response);
-        }
+        response.setContentType("text/html;charset=UTF-8");   
         
          askshop a = new askshop();
         if(request.getParameter("tallas")==null){
             
           request.getSession().setAttribute("carro", a.generarCarro(request.getSession().getAttribute("usuario").toString()) );
-        request.getRequestDispatcher("jsp/carrito.jsp").forward(request, response);
+        request.getRequestDispatcher("./jsp/carrito.jsp").forward(request, response);
         }
        
         
