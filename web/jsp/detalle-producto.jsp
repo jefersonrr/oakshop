@@ -52,7 +52,7 @@
         <body onload="sesion('<%=request.getSession().getAttribute("usuario")%>')">
 
             <!--menú -->
-            <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+                <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <div class="container-fluid">
 
                 <a class="navbar-brand" href="index.jsp">
@@ -122,8 +122,8 @@
                                     <%=request.getSession().getAttribute("nameUser")%>
                                 </a>
                                 <ul class="dropdown-menu text-small "aria-labelledby="dropdownUser2"  >
-                                    <li><a class="dropdown-item" href="#" >Mi Cuenta</a></li>
-                                    <li><a class="dropdown-item" href="<%=basePath%>AgregarACarrito.do" >Carrito</a></li>
+                                    <li><a class="dropdown-item" href="EditarPerfil.do" >Mi Cuenta</a></li>
+                                    <li><a class="dropdown-item" href="IrAcarrito.do" >Carrito</a></li>
                                     <li><a class="dropdown-item" href="<%=basePath%>MostrarCompras.do" >Mis Compras</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="./cerrarSesion.do">Salir</a></li>
