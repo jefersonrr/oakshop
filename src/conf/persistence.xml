@@ -24,10 +24,10 @@
     <class>DTO.Rol</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://oakshop.ayd.ingsistemasufps.co:3306/oakshop_tpc?serverTimeZone=UTC"/>
-      <property name="javax.persistence.jdbc.user" value="oakshop_admin"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://oakshopu.cpdidorwsqxs.us-east-1.rds.amazonaws.com:3306/oakshop?serverTimeZone=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="admin"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="Admin0721"/>
+      <property name="javax.persistence.jdbc.password" value="admin2022"/>
     </properties>
   </persistence-unit>
 </persistence>

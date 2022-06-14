@@ -181,7 +181,7 @@ public class askshop {
     }
 
     public int hashPublicacion(Date fecha) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHss");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMddHHss");
         int h = Integer.parseInt(sdf.format(fecha));;
         return h;
 
