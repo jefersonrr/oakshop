@@ -5,10 +5,16 @@
  */
 package ControladorVistas;
 
+import DAO.CategoriaDAO;
+import DAO.CategoriaTipoDAO;
 import DAO.TipoDAO;
+import DTO.Categoria;
+import DTO.CategoriaTipo;
 import DTO.Tipo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +38,14 @@ public class AddTipo extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-      TipoDAO tdao   = new TipoDAO();
-     
-              tdao.create(new Tipo(null,request.getParameter("nombre"),"ACTIVO",null));
+        TipoDAO tdao   = new TipoDAO();
+        CategoriaTipoDAO catidao = new CategoriaTipoDAO();
+        CategoriaDAO cadao = new CategoriaDAO();
+        
+              Tipo tipo = new Tipo(null,request.getParameter("nombre"),"ACTIVO",request.getParameter("url_foto"));
+              Categoria categoria = cadao.readCategoria(Integer.parseInt(request.getParameter("categoria")));
+              tdao.create(tipo);
+              catidao.create(new CategoriaTipo(null,categoria,tipo));
               request.getRequestDispatcher("./MostrarCategorias.do").forward(request, response);
     }
 

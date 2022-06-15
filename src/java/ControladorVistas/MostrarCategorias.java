@@ -33,6 +33,7 @@ public class MostrarCategorias extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         askshop a = new askshop();
         request.getSession().setAttribute("categorias", a.mostrarCategoriasAdmin());
+        request.getSession().setAttribute("categorias_tipo", a.mostrar_categoria_tipo());
         request.getSession().setAttribute("tipos", a.mostrarTiposAdmin());
         request.getRequestDispatcher("./jsp/categoriasAdmin.jsp").forward(request, response);
     }

@@ -290,6 +290,31 @@ public class askshop {
         }
         return rta;
     }
+    
+    
+    public String mostrar_categoria_tipo(){
+        
+        CategoriaDAO cdao = new CategoriaDAO();
+        List<Categoria> categorias = cdao.read();
+        String rta = "";
+        String dato ="";
+        int select = 0;
+        
+         for (Categoria c : categorias) {
+             if (c.getEstado().equals("ACTIVO")){
+         if (select==0){
+            dato = "selected=\"selected\"";
+            select =1;
+         }else{
+         
+         dato = "";}
+         rta += "<option "+ dato +" value="+ c.getId() +">"+ c.getNombre() + "</option> \n";
+             }
+         }
+        
+        return rta;
+    
+    }
 
     public String mostrarTiposAdmin() {
         TipoDAO tdao = new TipoDAO();
@@ -297,10 +322,14 @@ public class askshop {
         String rta = "";
         for (Tipo t : tipos) {
 
+        for (Categoria ca : t.getCategoriaList()) {
+
+        
             rta += "    <tr>\n"
                     + "                                        <td>" + t.getId() + "</td>\n"
                     + "                                        <td>" + t.getNombre() + "</td>\n"
                     + "                                        <td>" + t.getEstado() + "</td>\n"
+                    + "                                        <td>" + ca.getNombre()+ "</td>\n"
                     + "                                        <!-- Acciones: editar y cancelar. -->\n"
                     + "                                        <td>\n"
                     + "                                            <div class=\"icons-acciones\">\n"
@@ -311,6 +340,8 @@ public class askshop {
                     + "                                        </td>\n"
                     + "                                    </tr>";
 
+        }
+        
         }
         return rta;
     }

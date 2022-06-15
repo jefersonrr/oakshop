@@ -39,6 +39,7 @@
 
             String categorias = request.getSession().getAttribute("categorias").toString();
             String tipos = request.getSession().getAttribute("tipos").toString();
+            String categoria_tipo = request.getSession().getAttribute("categorias_tipo").toString();
         %>
        <div class="sidebar">
             <div class="logo-details">
@@ -157,6 +158,7 @@
                                         <th class="enc" scope="col">Id Tipo</th>
                                         <th class="enc" scope="col">Nombre</th>
                                         <th class="enc" scope="col">Estado</th>
+                                        <th class="enc" scope="col">Categoria</th>
                                         <th class="enc" scope="col">Acciones</th>
                                     </tr>
                                 </thead>
@@ -230,6 +232,35 @@
                                     <div class="mb-3 ">
                                         <label for="exampleInputNombre" class="form-label">Nombre</label>
                                         <input type="text" class="form-control " id="recipient-name" name="nombre"  required>
+                                        
+                                        
+
+
+                                    </div>
+
+
+                                </div>
+                                
+                                <div class="col-md-6">
+                                     <div class="mb-3">
+                                        <label for="clase"  class="form-label">Categoria</label>
+                                        <select id="select1" name="categoria" class="form-select" aria-label="Default select example">
+                                            <%=categoria_tipo%>    
+                                        </select>
+
+                                    </div>
+                                    
+                                    </div>
+                                
+                                 <div class="col-md-12">
+
+                                    <div class="mb-3 ">
+                                      
+                                        
+                                        <label for="url_foto" class="form-label">Url Foto</label>
+                                        <input type="text" class="form-control " id="recipient-name" name="url_foto"  required>
+                                        
+
 
                                     </div>
 

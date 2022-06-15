@@ -40,22 +40,23 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Categoria.findByEstado", query = "SELECT c FROM Categoria c WHERE c.estado = :estado")})
 public class Categoria implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "nombre")
+    private String nombre;
+    @Size(max = 20)
+    @Column(name = "estado")
+    private String estado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoria")
+    private List<CategoriaTipo> categoriaTipoList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre")
-    private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "estado")
-    private String estado;
     @JoinTable(name = "Categoria_Tipo", joinColumns = {
         @JoinColumn(name = "idCategoria", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "idTipo", referencedColumnName = "id")})
@@ -85,21 +86,6 @@ public class Categoria implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 
     @XmlTransient
     public List<Tipo> getTipoList() {
@@ -142,6 +128,31 @@ public class Categoria implements Serializable {
     @Override
     public String toString() {
         return "DTO.Categoria[ id=" + id + " ]";
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    @XmlTransient
+    public List<CategoriaTipo> getCategoriaTipoList() {
+        return categoriaTipoList;
+    }
+
+    public void setCategoriaTipoList(List<CategoriaTipo> categoriaTipoList) {
+        this.categoriaTipoList = categoriaTipoList;
     }
     
 }

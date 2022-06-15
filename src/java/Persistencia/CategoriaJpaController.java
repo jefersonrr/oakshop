@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Persistencia;
 
@@ -15,6 +14,7 @@ import DTO.Tipo;
 import java.util.ArrayList;
 import java.util.List;
 import DTO.Publicacion;
+import DTO.CategoriaTipo;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Jefersonrr
+ * @author jefer
  */
 public class CategoriaJpaController implements Serializable {
 
@@ -42,6 +42,9 @@ public class CategoriaJpaController implements Serializable {
         if (categoria.getPublicacionList() == null) {
             categoria.setPublicacionList(new ArrayList<Publicacion>());
         }
+        if (categoria.getCategoriaTipoList() == null) {
+            categoria.setCategoriaTipoList(new ArrayList<CategoriaTipo>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -58,6 +61,12 @@ public class CategoriaJpaController implements Serializable {
                 attachedPublicacionList.add(publicacionListPublicacionToAttach);
             }
             categoria.setPublicacionList(attachedPublicacionList);
+            List<CategoriaTipo> attachedCategoriaTipoList = new ArrayList<CategoriaTipo>();
+            for (CategoriaTipo categoriaTipoListCategoriaTipoToAttach : categoria.getCategoriaTipoList()) {
+                categoriaTipoListCategoriaTipoToAttach = em.getReference(categoriaTipoListCategoriaTipoToAttach.getClass(), categoriaTipoListCategoriaTipoToAttach.getId());
+                attachedCategoriaTipoList.add(categoriaTipoListCategoriaTipoToAttach);
+            }
+            categoria.setCategoriaTipoList(attachedCategoriaTipoList);
             em.persist(categoria);
             for (Tipo tipoListTipo : categoria.getTipoList()) {
                 tipoListTipo.getCategoriaList().add(categoria);
@@ -70,6 +79,15 @@ public class CategoriaJpaController implements Serializable {
                 if (oldIdCategoriaOfPublicacionListPublicacion != null) {
                     oldIdCategoriaOfPublicacionListPublicacion.getPublicacionList().remove(publicacionListPublicacion);
                     oldIdCategoriaOfPublicacionListPublicacion = em.merge(oldIdCategoriaOfPublicacionListPublicacion);
+                }
+            }
+            for (CategoriaTipo categoriaTipoListCategoriaTipo : categoria.getCategoriaTipoList()) {
+                Categoria oldIdCategoriaOfCategoriaTipoListCategoriaTipo = categoriaTipoListCategoriaTipo.getIdCategoria();
+                categoriaTipoListCategoriaTipo.setIdCategoria(categoria);
+                categoriaTipoListCategoriaTipo = em.merge(categoriaTipoListCategoriaTipo);
+                if (oldIdCategoriaOfCategoriaTipoListCategoriaTipo != null) {
+                    oldIdCategoriaOfCategoriaTipoListCategoriaTipo.getCategoriaTipoList().remove(categoriaTipoListCategoriaTipo);
+                    oldIdCategoriaOfCategoriaTipoListCategoriaTipo = em.merge(oldIdCategoriaOfCategoriaTipoListCategoriaTipo);
                 }
             }
             em.getTransaction().commit();
@@ -90,6 +108,8 @@ public class CategoriaJpaController implements Serializable {
             List<Tipo> tipoListNew = categoria.getTipoList();
             List<Publicacion> publicacionListOld = persistentCategoria.getPublicacionList();
             List<Publicacion> publicacionListNew = categoria.getPublicacionList();
+            List<CategoriaTipo> categoriaTipoListOld = persistentCategoria.getCategoriaTipoList();
+            List<CategoriaTipo> categoriaTipoListNew = categoria.getCategoriaTipoList();
             List<String> illegalOrphanMessages = null;
             for (Publicacion publicacionListOldPublicacion : publicacionListOld) {
                 if (!publicacionListNew.contains(publicacionListOldPublicacion)) {
@@ -97,6 +117,14 @@ public class CategoriaJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Publicacion " + publicacionListOldPublicacion + " since its idCategoria field is not nullable.");
+                }
+            }
+            for (CategoriaTipo categoriaTipoListOldCategoriaTipo : categoriaTipoListOld) {
+                if (!categoriaTipoListNew.contains(categoriaTipoListOldCategoriaTipo)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain CategoriaTipo " + categoriaTipoListOldCategoriaTipo + " since its idCategoria field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -116,6 +144,13 @@ public class CategoriaJpaController implements Serializable {
             }
             publicacionListNew = attachedPublicacionListNew;
             categoria.setPublicacionList(publicacionListNew);
+            List<CategoriaTipo> attachedCategoriaTipoListNew = new ArrayList<CategoriaTipo>();
+            for (CategoriaTipo categoriaTipoListNewCategoriaTipoToAttach : categoriaTipoListNew) {
+                categoriaTipoListNewCategoriaTipoToAttach = em.getReference(categoriaTipoListNewCategoriaTipoToAttach.getClass(), categoriaTipoListNewCategoriaTipoToAttach.getId());
+                attachedCategoriaTipoListNew.add(categoriaTipoListNewCategoriaTipoToAttach);
+            }
+            categoriaTipoListNew = attachedCategoriaTipoListNew;
+            categoria.setCategoriaTipoList(categoriaTipoListNew);
             categoria = em.merge(categoria);
             for (Tipo tipoListOldTipo : tipoListOld) {
                 if (!tipoListNew.contains(tipoListOldTipo)) {
@@ -137,6 +172,17 @@ public class CategoriaJpaController implements Serializable {
                     if (oldIdCategoriaOfPublicacionListNewPublicacion != null && !oldIdCategoriaOfPublicacionListNewPublicacion.equals(categoria)) {
                         oldIdCategoriaOfPublicacionListNewPublicacion.getPublicacionList().remove(publicacionListNewPublicacion);
                         oldIdCategoriaOfPublicacionListNewPublicacion = em.merge(oldIdCategoriaOfPublicacionListNewPublicacion);
+                    }
+                }
+            }
+            for (CategoriaTipo categoriaTipoListNewCategoriaTipo : categoriaTipoListNew) {
+                if (!categoriaTipoListOld.contains(categoriaTipoListNewCategoriaTipo)) {
+                    Categoria oldIdCategoriaOfCategoriaTipoListNewCategoriaTipo = categoriaTipoListNewCategoriaTipo.getIdCategoria();
+                    categoriaTipoListNewCategoriaTipo.setIdCategoria(categoria);
+                    categoriaTipoListNewCategoriaTipo = em.merge(categoriaTipoListNewCategoriaTipo);
+                    if (oldIdCategoriaOfCategoriaTipoListNewCategoriaTipo != null && !oldIdCategoriaOfCategoriaTipoListNewCategoriaTipo.equals(categoria)) {
+                        oldIdCategoriaOfCategoriaTipoListNewCategoriaTipo.getCategoriaTipoList().remove(categoriaTipoListNewCategoriaTipo);
+                        oldIdCategoriaOfCategoriaTipoListNewCategoriaTipo = em.merge(oldIdCategoriaOfCategoriaTipoListNewCategoriaTipo);
                     }
                 }
             }
@@ -176,6 +222,13 @@ public class CategoriaJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Categoria (" + categoria + ") cannot be destroyed since the Publicacion " + publicacionListOrphanCheckPublicacion + " in its publicacionList field has a non-nullable idCategoria field.");
+            }
+            List<CategoriaTipo> categoriaTipoListOrphanCheck = categoria.getCategoriaTipoList();
+            for (CategoriaTipo categoriaTipoListOrphanCheckCategoriaTipo : categoriaTipoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Categoria (" + categoria + ") cannot be destroyed since the CategoriaTipo " + categoriaTipoListOrphanCheckCategoriaTipo + " in its categoriaTipoList field has a non-nullable idCategoria field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Persistencia;
 
@@ -14,8 +13,9 @@ import DTO.Categoria;
 import java.util.ArrayList;
 import java.util.List;
 import DTO.Publicacion;
-import DTO.Tipo;
 import DTO.TipoTalla;
+import DTO.CategoriaTipo;
+import DTO.Tipo;
 import Persistencia.exceptions.IllegalOrphanException;
 import Persistencia.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
@@ -23,7 +23,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Jefersonrr
+ * @author jefer
  */
 public class TipoJpaController implements Serializable {
 
@@ -45,6 +45,9 @@ public class TipoJpaController implements Serializable {
         }
         if (tipo.getTipoTallaList() == null) {
             tipo.setTipoTallaList(new ArrayList<TipoTalla>());
+        }
+        if (tipo.getCategoriaTipoList() == null) {
+            tipo.setCategoriaTipoList(new ArrayList<CategoriaTipo>());
         }
         EntityManager em = null;
         try {
@@ -68,6 +71,12 @@ public class TipoJpaController implements Serializable {
                 attachedTipoTallaList.add(tipoTallaListTipoTallaToAttach);
             }
             tipo.setTipoTallaList(attachedTipoTallaList);
+            List<CategoriaTipo> attachedCategoriaTipoList = new ArrayList<CategoriaTipo>();
+            for (CategoriaTipo categoriaTipoListCategoriaTipoToAttach : tipo.getCategoriaTipoList()) {
+                categoriaTipoListCategoriaTipoToAttach = em.getReference(categoriaTipoListCategoriaTipoToAttach.getClass(), categoriaTipoListCategoriaTipoToAttach.getId());
+                attachedCategoriaTipoList.add(categoriaTipoListCategoriaTipoToAttach);
+            }
+            tipo.setCategoriaTipoList(attachedCategoriaTipoList);
             em.persist(tipo);
             for (Categoria categoriaListCategoria : tipo.getCategoriaList()) {
                 categoriaListCategoria.getTipoList().add(tipo);
@@ -91,6 +100,15 @@ public class TipoJpaController implements Serializable {
                     oldIdTipoOfTipoTallaListTipoTalla = em.merge(oldIdTipoOfTipoTallaListTipoTalla);
                 }
             }
+            for (CategoriaTipo categoriaTipoListCategoriaTipo : tipo.getCategoriaTipoList()) {
+                Tipo oldIdTipoOfCategoriaTipoListCategoriaTipo = categoriaTipoListCategoriaTipo.getIdTipo();
+                categoriaTipoListCategoriaTipo.setIdTipo(tipo);
+                categoriaTipoListCategoriaTipo = em.merge(categoriaTipoListCategoriaTipo);
+                if (oldIdTipoOfCategoriaTipoListCategoriaTipo != null) {
+                    oldIdTipoOfCategoriaTipoListCategoriaTipo.getCategoriaTipoList().remove(categoriaTipoListCategoriaTipo);
+                    oldIdTipoOfCategoriaTipoListCategoriaTipo = em.merge(oldIdTipoOfCategoriaTipoListCategoriaTipo);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -111,6 +129,8 @@ public class TipoJpaController implements Serializable {
             List<Publicacion> publicacionListNew = tipo.getPublicacionList();
             List<TipoTalla> tipoTallaListOld = persistentTipo.getTipoTallaList();
             List<TipoTalla> tipoTallaListNew = tipo.getTipoTallaList();
+            List<CategoriaTipo> categoriaTipoListOld = persistentTipo.getCategoriaTipoList();
+            List<CategoriaTipo> categoriaTipoListNew = tipo.getCategoriaTipoList();
             List<String> illegalOrphanMessages = null;
             for (Publicacion publicacionListOldPublicacion : publicacionListOld) {
                 if (!publicacionListNew.contains(publicacionListOldPublicacion)) {
@@ -126,6 +146,14 @@ public class TipoJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain TipoTalla " + tipoTallaListOldTipoTalla + " since its idTipo field is not nullable.");
+                }
+            }
+            for (CategoriaTipo categoriaTipoListOldCategoriaTipo : categoriaTipoListOld) {
+                if (!categoriaTipoListNew.contains(categoriaTipoListOldCategoriaTipo)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain CategoriaTipo " + categoriaTipoListOldCategoriaTipo + " since its idTipo field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -152,6 +180,13 @@ public class TipoJpaController implements Serializable {
             }
             tipoTallaListNew = attachedTipoTallaListNew;
             tipo.setTipoTallaList(tipoTallaListNew);
+            List<CategoriaTipo> attachedCategoriaTipoListNew = new ArrayList<CategoriaTipo>();
+            for (CategoriaTipo categoriaTipoListNewCategoriaTipoToAttach : categoriaTipoListNew) {
+                categoriaTipoListNewCategoriaTipoToAttach = em.getReference(categoriaTipoListNewCategoriaTipoToAttach.getClass(), categoriaTipoListNewCategoriaTipoToAttach.getId());
+                attachedCategoriaTipoListNew.add(categoriaTipoListNewCategoriaTipoToAttach);
+            }
+            categoriaTipoListNew = attachedCategoriaTipoListNew;
+            tipo.setCategoriaTipoList(categoriaTipoListNew);
             tipo = em.merge(tipo);
             for (Categoria categoriaListOldCategoria : categoriaListOld) {
                 if (!categoriaListNew.contains(categoriaListOldCategoria)) {
@@ -184,6 +219,17 @@ public class TipoJpaController implements Serializable {
                     if (oldIdTipoOfTipoTallaListNewTipoTalla != null && !oldIdTipoOfTipoTallaListNewTipoTalla.equals(tipo)) {
                         oldIdTipoOfTipoTallaListNewTipoTalla.getTipoTallaList().remove(tipoTallaListNewTipoTalla);
                         oldIdTipoOfTipoTallaListNewTipoTalla = em.merge(oldIdTipoOfTipoTallaListNewTipoTalla);
+                    }
+                }
+            }
+            for (CategoriaTipo categoriaTipoListNewCategoriaTipo : categoriaTipoListNew) {
+                if (!categoriaTipoListOld.contains(categoriaTipoListNewCategoriaTipo)) {
+                    Tipo oldIdTipoOfCategoriaTipoListNewCategoriaTipo = categoriaTipoListNewCategoriaTipo.getIdTipo();
+                    categoriaTipoListNewCategoriaTipo.setIdTipo(tipo);
+                    categoriaTipoListNewCategoriaTipo = em.merge(categoriaTipoListNewCategoriaTipo);
+                    if (oldIdTipoOfCategoriaTipoListNewCategoriaTipo != null && !oldIdTipoOfCategoriaTipoListNewCategoriaTipo.equals(tipo)) {
+                        oldIdTipoOfCategoriaTipoListNewCategoriaTipo.getCategoriaTipoList().remove(categoriaTipoListNewCategoriaTipo);
+                        oldIdTipoOfCategoriaTipoListNewCategoriaTipo = em.merge(oldIdTipoOfCategoriaTipoListNewCategoriaTipo);
                     }
                 }
             }
@@ -230,6 +276,13 @@ public class TipoJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Tipo (" + tipo + ") cannot be destroyed since the TipoTalla " + tipoTallaListOrphanCheckTipoTalla + " in its tipoTallaList field has a non-nullable idTipo field.");
+            }
+            List<CategoriaTipo> categoriaTipoListOrphanCheck = tipo.getCategoriaTipoList();
+            for (CategoriaTipo categoriaTipoListOrphanCheckCategoriaTipo : categoriaTipoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Tipo (" + tipo + ") cannot be destroyed since the CategoriaTipo " + categoriaTipoListOrphanCheckCategoriaTipo + " in its categoriaTipoList field has a non-nullable idTipo field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

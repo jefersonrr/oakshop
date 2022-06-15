@@ -39,12 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Tipo.findByEstado", query = "SELECT t FROM Tipo t WHERE t.estado = :estado")})
 public class Tipo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -61,6 +55,15 @@ public class Tipo implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "urlFoto")
     private String urlFoto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
+    private List<CategoriaTipo> categoriaTipoList;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @ManyToMany(mappedBy = "tipoList")
     private List<Categoria> categoriaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
@@ -90,29 +93,6 @@ public class Tipo implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getUrlFoto() {
-        return urlFoto;
-    }
-
-    public void setUrlFoto(String urlFoto) {
-        this.urlFoto = urlFoto;
-    }
 
     @XmlTransient
     public List<Categoria> getCategoriaList() {
@@ -164,6 +144,39 @@ public class Tipo implements Serializable {
     @Override
     public String toString() {
         return "DTO.Tipo[ id=" + id + " ]";
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
+
+    @XmlTransient
+    public List<CategoriaTipo> getCategoriaTipoList() {
+        return categoriaTipoList;
+    }
+
+    public void setCategoriaTipoList(List<CategoriaTipo> categoriaTipoList) {
+        this.categoriaTipoList = categoriaTipoList;
     }
     
 }
