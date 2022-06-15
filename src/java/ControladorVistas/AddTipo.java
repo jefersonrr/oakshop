@@ -7,10 +7,14 @@ package ControladorVistas;
 
 import DAO.CategoriaDAO;
 import DAO.CategoriaTipoDAO;
+import DAO.TallaDAO;
 import DAO.TipoDAO;
+import DAO.TipoTallaDAO;
 import DTO.Categoria;
 import DTO.CategoriaTipo;
+import DTO.Talla;
 import DTO.Tipo;
+import DTO.TipoTalla;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -39,13 +43,32 @@ public class AddTipo extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         TipoDAO tdao   = new TipoDAO();
-        CategoriaTipoDAO catidao = new CategoriaTipoDAO();
-        CategoriaDAO cadao = new CategoriaDAO();
         
-              Tipo tipo = new Tipo(null,request.getParameter("nombre"),"ACTIVO",request.getParameter("url_foto"));
-              Categoria categoria = cadao.readCategoria(Integer.parseInt(request.getParameter("categoria")));
+        CategoriaDAO cadao = new CategoriaDAO();
+        CategoriaTipoDAO catidao = new CategoriaTipoDAO();
+        
+              Tipo tipo = new Tipo(null,request.getParameter("nombre"), "ACTIVO",request.getParameter("url_foto"));
               tdao.create(tipo);
-              catidao.create(new CategoriaTipo(null,categoria,tipo));
+              Categoria categoria = cadao.readCategoria(Integer.parseInt(request.getParameter("categoria")));
+              
+              
+              CategoriaTipo cate = new CategoriaTipo();
+              cate.setIdCategoria(categoria);
+              cate.setIdTipo(tipo);
+              catidao.create(cate);
+              TallaDAO ta = new TallaDAO();
+              List<Talla> tallas = ta.read();
+              TipoTallaDAO tita = new TipoTallaDAO();
+              
+              for(Talla t : tallas){
+              
+                  TipoTalla tip = new TipoTalla();
+                  tip.setIdTalla(t);
+                  tip.setIdTipo(tipo);
+                  tita.create(tip);
+              }
+              
+              System.out.println("--------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
               request.getRequestDispatcher("./MostrarCategorias.do").forward(request, response);
     }
 

@@ -21,6 +21,7 @@ import DAO.TipoTallaDAO;
 import DTO.Carrito;
 import DTO.CarritoPK;
 import DTO.Categoria;
+import DTO.CategoriaTipo;
 import DTO.Ciudad;
 import DTO.Color;
 import DTO.Departamento;
@@ -321,15 +322,20 @@ public class askshop {
         List<Tipo> tipos = tdao.read();
         String rta = "";
         for (Tipo t : tipos) {
+            System.out.println("---->");
+            System.out.println(t.getNombre());
 
-        for (Categoria ca : t.getCategoriaList()) {
+        for (CategoriaTipo ca : t.getCategoriaTipoList()) {
+            System.out.println("----!!!!!!!!!!!!");
+            System.out.println(ca.getIdCategoria().getNombre());
+            
 
         
             rta += "    <tr>\n"
                     + "                                        <td>" + t.getId() + "</td>\n"
                     + "                                        <td>" + t.getNombre() + "</td>\n"
                     + "                                        <td>" + t.getEstado() + "</td>\n"
-                    + "                                        <td>" + ca.getNombre()+ "</td>\n"
+                    + "                                        <td>" + ca.getIdCategoria().getNombre()+ "</td>\n"
                     + "                                        <!-- Acciones: editar y cancelar. -->\n"
                     + "                                        <td>\n"
                     + "                                            <div class=\"icons-acciones\">\n"
@@ -455,7 +461,9 @@ public class askshop {
 
             rta += seccionIndexCart(c, l);
             l++;
-            List<Tipo> tipoBody = c.getTipoList();
+            List<Tipo> tipoBody = c.listTipoCate();
+            System.out.println("********************************************************************>");
+            System.out.println(tipoBody.toString());
             int i = tipoBody.size();
 
             if (i > 0) {

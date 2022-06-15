@@ -84,7 +84,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <%=ca.get(i).getNombre()%>
                             </a>
-                            <%List<Tipo> tipos = ca.get(i).getTipoList();%>
+                                <% List<Tipo> tipos = ca.get(i).listTipoCate();%>
 
                             
                             

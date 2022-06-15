@@ -6,6 +6,7 @@
 package DTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -153,6 +154,21 @@ public class Categoria implements Serializable {
 
     public void setCategoriaTipoList(List<CategoriaTipo> categoriaTipoList) {
         this.categoriaTipoList = categoriaTipoList;
+    }
+    
+    
+    public List<Tipo> listTipoCate() {
+        
+        List<Tipo> tipos = new ArrayList<Tipo>();
+        
+        for(CategoriaTipo ca : this.categoriaTipoList){
+            
+            
+            tipos.add(ca.getIdTipo());
+        
+        }
+        
+        return tipos;
     }
     
 }
