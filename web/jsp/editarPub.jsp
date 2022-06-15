@@ -132,7 +132,7 @@
                List<Producto> productos = pu.getProductoList();
                 if (productos.isEmpty()) {%>
             <div class = "container-fluid" style="display: flex; align-content: center; align-items: center;justify-content: center">
-                <h1 style="color:#ff0000" align="center">En estos momentos no existen publicaciones</h1>
+                <h1 style="color:#ff0000" align="center">En estos momentos no existen productos</h1>
             </div>
             <%} else {%>
             <div class="table-responsive table-style">

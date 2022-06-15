@@ -312,6 +312,7 @@
                                 </div>
 
 
+                                
                                 <div class="col-md-6">
 
 
@@ -357,7 +358,7 @@
                               </button> -->
                     </div>
                     <div class="modal-body ">
-                        <form action="<%=basePath%>Update.do" method="POST">
+                        <form action="<%=basePath%>UpdateTipo.do" method="POST">
                             <div class="row text-center m-3">
                                 <div class="col-md-6">
                                     <input  style="display: none" type="text" name ="idTipo" class="form-control " id="recipient-namategoriae" name="nombre"  required>
@@ -370,6 +371,23 @@
 
                                 </div>
 
+                                
+                               
+                                
+                                 <div class="col-md-12">
+
+                                    <div class="mb-3 ">
+                                      
+                                        
+                                        <label for="url_foto" class="form-label">Url Foto</label>
+                                        <input type="text" class="form-control " id="recipient-name" name="url_foto"  required>
+                                        
+
+
+                                    </div>
+
+
+                                </div>
 
                                 <div class="col-md-6">
 

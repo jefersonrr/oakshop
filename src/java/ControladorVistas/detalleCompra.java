@@ -5,20 +5,24 @@
  */
 package ControladorVistas;
 
-import DAO.TipoDAO;
-import DTO.Tipo;
+import DTO.DetalleCompra;
+import DTO.Producto;
+import Negocio.askshop;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Jefersonrr
+ * @author Acer
  */
-public class UpdateTipo extends HttpServlet {
+@WebServlet(name = "detalleCompra", urlPatterns = {"/detalleCompra.do"})
+public class detalleCompra extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,20 +36,14 @@ public class UpdateTipo extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-          TipoDAO tdao = new TipoDAO();
-          Tipo t = tdao.readTipo(Integer.parseInt(request.getParameter("idTipo")));
-          if(request.getParameter("estado").equals("1")){
-          t.setEstado("ACTIVO");
-          }else{
-            t.setEstado("INACTIVO");
-          }
-          
-          t.setUrlFoto(request.getParameter("url_foto"));
-       
+        int idCompra = Integer.parseInt(request.getParameter("idCompra").toString());
+        askshop a = new askshop();
+        List<DetalleCompra> detalle = a.getProductos(idCompra);
         
-          t.setNombre(request.getParameter("nombre"));
-          tdao.update(t);
-          request.getRequestDispatcher("./MostrarCategorias.do").forward(request, response);
+        request.getSession().setAttribute("detalles", detalle);
+        
+        
+          request.getRequestDispatcher("jsp/detalleCompra.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
