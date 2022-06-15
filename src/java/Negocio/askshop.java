@@ -8,6 +8,7 @@ package Negocio;
 import DAO.CarritoDAO;
 import DAO.CategoriaDAO;
 import DAO.ColorDAO;
+import DAO.CompraDAO;
 import DAO.DepartamentoDAO;
 import DAO.DomicilioDAO;
 import DAO.GaleriaimgDAO;
@@ -26,6 +27,7 @@ import DTO.Color;
 import DTO.Departamento;
 import DTO.Domicilio;
 import DTO.Compra;
+import DTO.DetalleCompra;
 import DTO.Galeriaimg;
 import DTO.MetodoPago;
 import DTO.Persona;
@@ -889,9 +891,10 @@ public class askshop {
                 + "                        </div>\n"
                 + " <div class=\"col-md-2 boton-d\">\n" +
 "                            <div>\n" +
-"                                <a href=\"#\" class=\"btn btn-primary\">\n" +
+"                                <form action=\"detalleCompra.do\">"
+                + "                    <input name=\"idCompra\" value=\""+c.getId()+"\"hidden/><button type=\"submit\" class=\"btn btn-primary\">\n" +
 "                                    Ver detalles\n" +
-"                                </a>\n" +
+"                                </button></form>\n" +
 "                            </div>\n" +
 "                        </div>\n" +
 "                    </div>\n" +
@@ -1051,5 +1054,13 @@ public class askshop {
         String[] split = formatter.format(fecha).split(" ");
         String[] split2 = split[0].split("/");
         return split2[0] + "/" + split2[1] + "/" + split2[2];
+    }
+
+    public List<DetalleCompra> getProductos(int idCompra) {
+        
+        CompraDAO c = new CompraDAO();
+        Compra com = c.readCompra(idCompra);
+        
+        return com.getDetalleCompraList();
     }
 }
